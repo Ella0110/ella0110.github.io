@@ -87,7 +87,7 @@
 <meta property="og:description" content="终于开始搭建自己的个人博客，迈出记录的第一步！该博客基于Github page + Hexo + Next，目前还不完美，逐步优化中。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-19T08:33:14.690Z">
-<meta property="article:modified_time" content="2025-01-19T13:13:59.732Z">
+<meta property="article:modified_time" content="2025-01-19T13:32:43.587Z">
 <meta property="article:author" content="Ella">
 <meta name="twitter:card" content="summary">
 
@@ -302,10 +302,10 @@
         <p>终于开始搭建自己的个人博客，迈出记录的第一步！该博客基于Github page + Hexo + Next，目前还不完美，逐步优化中。</p>
 <span id="more"></span>
 <h2 id="Github-page"><a href="#Github-page" class="headerlink" title="Github page"></a>Github page</h2><p>Ref: <a target="_blank" rel="noopener" href="https://mini-pi.github.io/2024/02/28/how-to-make-blog-wedsite/">https://mini-pi.github.io/2024/02/28/how-to-make-blog-wedsite/</a><br>Ref: <a target="_blank" rel="noopener" href="https://zhengyujie.github.io/categories/Hexo%E6%A1%86%E6%9E%B6/">https://zhengyujie.github.io/categories/Hexo%E6%A1%86%E6%9E%B6/</a><br>Ref: <a target="_blank" rel="noopener" href="https://www.yuanguohuo.com/2018/05/23/build-hexo-blog/">https://www.yuanguohuo.com/2018/05/23/build-hexo-blog/</a></p>
-<h4 id="1-创建-github-io-仓库"><a href="#1-创建-github-io-仓库" class="headerlink" title="1: 创建&lt;username&gt;.github.io 仓库"></a>1: 创建<code>&lt;username&gt;.github.io</code> 仓库</h4><ul>
+<h4 id="创建-github-io-仓库"><a href="#创建-github-io-仓库" class="headerlink" title="创建&lt;username&gt;.github.io 仓库"></a>创建<code>&lt;username&gt;.github.io</code> 仓库</h4><ul>
 <li>New repository -&gt; add Repository name (eg. <code>Username.github.io</code>) -&gt; Create repository</li>
 </ul>
-<h4 id="2-在本地部署-Hexo-环境"><a href="#2-在本地部署-Hexo-环境" class="headerlink" title="2: 在本地部署 Hexo 环境"></a>2: 在本地部署 Hexo 环境</h4><ul>
+<h4 id="在本地部署-Hexo-环境"><a href="#在本地部署-Hexo-环境" class="headerlink" title="在本地部署 Hexo 环境"></a>在本地部署 Hexo 环境</h4><ul>
 <li>安装 Hexo： <code>npm install -g hexo-cli</code></li>
 <li>初始化 Hexo 框架：<code>hexo init blog</code></li>
 <li>进入上条命令所创建的 blog 文件夹中：<code>cd blog</code></li>
@@ -315,7 +315,7 @@
 <li>访问默认界面，测试是否安装成功：浏览器访问<code>localhost:4000</code></li>
 <li>ref：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">https://hexo.io/zh-cn/</a></li>
 </ul>
-<h4 id="3：配置-Next-主题"><a href="#3：配置-Next-主题" class="headerlink" title="3：配置 Next 主题"></a>3：配置 Next 主题</h4><ul>
+<h4 id="配置-Next-主题"><a href="#配置-Next-主题" class="headerlink" title="配置 Next 主题"></a>配置 Next 主题</h4><ul>
 <li>进入上一步创建的 blog 文件夹中，将 Next 主题相关文件从 github 克隆到 themes 文件夹中<ul>
 <li>命令：<code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></li>
 </ul>
@@ -325,18 +325,18 @@
 </ul>
 </li>
 </ul>
-<h4 id="4：添加博客内容"><a href="#4：添加博客内容" class="headerlink" title="4：添加博客内容"></a>4：添加博客内容</h4><ul>
+<h4 id="添加博客内容"><a href="#添加博客内容" class="headerlink" title="添加博客内容"></a>添加博客内容</h4><ul>
 <li>将写好的 Markdown 放到 <code>source\_posts</code> 目录</li>
 <li>将相应的图片放到 <code>source\images</code>目录</li>
 <li>启动 Hexo 服务（如果之前没有关闭，请忽略此步骤）</li>
 <li>通过浏览器访问博客主页，可以发现更改已生效</li>
 </ul>
-<h4 id="5：对-Next-主题进行小修改"><a href="#5：对-Next-主题进行小修改" class="headerlink" title="5：对 Next 主题进行小修改"></a>5：对 Next 主题进行小修改</h4><p><strong>优化：<strong>Next 主题默认首页文章不折叠，但是个人认为这种不美观，所以</strong>配置首页文章折叠</strong></p>
+<h4 id="对-Next-主题进行小修改"><a href="#对-Next-主题进行小修改" class="headerlink" title="对 Next 主题进行小修改"></a>对 Next 主题进行小修改</h4><p><strong>优化：<strong>Next 主题默认首页文章不折叠，但是个人认为这种不美观，所以</strong>配置首页文章折叠</strong></p>
 <ul>
 <li><p>在<code>主题配置文件</code>中找到<code>auto_excerpt</code>，这个属性可以设置为自动折叠，比如设置成只显示<code>300</code>个字，这样的后面的内容就会折叠起来，配置如下：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">auto_excerpt:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">length:</span> <span class="number">300</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h4 id="6：将生成的静态页面部署到-github-上"><a href="#6：将生成的静态页面部署到-github-上" class="headerlink" title="6：将生成的静态页面部署到 github 上"></a>6：将生成的静态页面部署到 github 上</h4><p><strong>具体操作</strong>：修改站点配置文件<code>_config.yml</code>的最后部分</p>
+<h4 id="将生成的静态页面部署到-github-上"><a href="#将生成的静态页面部署到-github-上" class="headerlink" title="将生成的静态页面部署到 github 上"></a>将生成的静态页面部署到 github 上</h4><p><strong>具体操作</strong>：修改站点配置文件<code>_config.yml</code>的最后部分</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:username/username.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
 
 <p>要先安装deploy-git，才能用命令部署到GitHub</p>
@@ -357,7 +357,7 @@
 <h4 id="自定义文章顺序"><a href="#自定义文章顺序" class="headerlink" title="自定义文章顺序"></a>自定义文章顺序</h4><ul>
 <li><p>在hexo博客中，文章默认是按照发布日期进行排序。如果想把文章按照自定义顺序进行排序，按照以下方式解决：</p>
 </li>
-<li><p><strong>解决方式</strong>：先卸载 hexo-generator-index，然后安装hexo-generator-index-pin-top</p>
+<li><p><strong>解决方式</strong>：先卸载 hexo-generator-index，然后安装hexo-generator-index-pin-top，在front_matter里加上top属性，top的值表示这篇文章的权重，权重越大，排序越靠前。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-generator-index --save</span><br><span class="line">npm install hexo-generator-index-pin-top --save</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h4 id="中文Post-侧边目录点击失效无法跳转"><a href="#中文Post-侧边目录点击失效无法跳转" class="headerlink" title="中文Post,侧边目录点击失效无法跳转"></a>中文Post,侧边目录点击失效无法跳转</h4><ul>
@@ -512,7 +512,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-page"><span class="nav-number">1.</span> <span class="nav-text">Github page</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA-github-io-%E4%BB%93%E5%BA%93"><span class="nav-number">1.0.1.</span> <span class="nav-text">1: 创建&lt;username&gt;.github.io 仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9C%A8%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2-Hexo-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.0.2.</span> <span class="nav-text">2: 在本地部署 Hexo 环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%9A%E9%85%8D%E7%BD%AE-Next-%E4%B8%BB%E9%A2%98"><span class="nav-number">1.0.3.</span> <span class="nav-text">3：配置 Next 主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%9A%E6%B7%BB%E5%8A%A0%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9"><span class="nav-number">1.0.4.</span> <span class="nav-text">4：添加博客内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%9A%E5%AF%B9-Next-%E4%B8%BB%E9%A2%98%E8%BF%9B%E8%A1%8C%E5%B0%8F%E4%BF%AE%E6%94%B9"><span class="nav-number">1.0.5.</span> <span class="nav-text">5：对 Next 主题进行小修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%EF%BC%9A%E5%B0%86%E7%94%9F%E6%88%90%E7%9A%84%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E9%83%A8%E7%BD%B2%E5%88%B0-github-%E4%B8%8A"><span class="nav-number">1.0.6.</span> <span class="nav-text">6：将生成的静态页面部署到 github 上</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hexo-deploy-%E6%8A%A5%E9%94%99"><span class="nav-number">2.0.1.</span> <span class="nav-text">Hexo deploy 报错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E4%B8%8D%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.0.2.</span> <span class="nav-text">图片不加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%87%E7%AB%A0%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.0.3.</span> <span class="nav-text">自定义文章顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E6%96%87Post-%E4%BE%A7%E8%BE%B9%E7%9B%AE%E5%BD%95%E7%82%B9%E5%87%BB%E5%A4%B1%E6%95%88%E6%97%A0%E6%B3%95%E8%B7%B3%E8%BD%AC"><span class="nav-number">2.0.4.</span> <span class="nav-text">中文Post,侧边目录点击失效无法跳转</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-page"><span class="nav-number">1.</span> <span class="nav-text">Github page</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-github-io-%E4%BB%93%E5%BA%93"><span class="nav-number">1.0.1.</span> <span class="nav-text">创建&lt;username&gt;.github.io 仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2-Hexo-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.0.2.</span> <span class="nav-text">在本地部署 Hexo 环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-Next-%E4%B8%BB%E9%A2%98"><span class="nav-number">1.0.3.</span> <span class="nav-text">配置 Next 主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9"><span class="nav-number">1.0.4.</span> <span class="nav-text">添加博客内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9-Next-%E4%B8%BB%E9%A2%98%E8%BF%9B%E8%A1%8C%E5%B0%8F%E4%BF%AE%E6%94%B9"><span class="nav-number">1.0.5.</span> <span class="nav-text">对 Next 主题进行小修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E7%94%9F%E6%88%90%E7%9A%84%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E9%83%A8%E7%BD%B2%E5%88%B0-github-%E4%B8%8A"><span class="nav-number">1.0.6.</span> <span class="nav-text">将生成的静态页面部署到 github 上</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hexo-deploy-%E6%8A%A5%E9%94%99"><span class="nav-number">2.0.1.</span> <span class="nav-text">Hexo deploy 报错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E4%B8%8D%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.0.2.</span> <span class="nav-text">图片不加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%87%E7%AB%A0%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.0.3.</span> <span class="nav-text">自定义文章顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E6%96%87Post-%E4%BE%A7%E8%BE%B9%E7%9B%AE%E5%BD%95%E7%82%B9%E5%87%BB%E5%A4%B1%E6%95%88%E6%97%A0%E6%B3%95%E8%B7%B3%E8%BD%AC"><span class="nav-number">2.0.4.</span> <span class="nav-text">中文Post,侧边目录点击失效无法跳转</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
