@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="终于开始搭建自己的个人博客，迈出记录的第一步！该博客基于Github page + Hexo + Next，目前还不完美，逐步优化中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github pages + Hexo + Next 博客搭建">
+<meta property="og:url" content="https://ella0110.github.io/2025/01/19/blog-hexo-next/index.html">
+<meta property="og:site_name" content="Ella&#39;s Blog">
+<meta property="og:description" content="终于开始搭建自己的个人博客，迈出记录的第一步！该博客基于Github page + Hexo + Next，目前还不完美，逐步优化中。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-01-19T08:33:14.690Z">
+<meta property="article:modified_time" content="2025-01-19T12:36:27.670Z">
+<meta property="article:author" content="Ella">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ella0110.github.io/2025/01/19/blog-hexo-next/"/>
+
+
+
+
+
+  <title>Github pages + Hexo + Next 博客搭建 | Ella's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ella's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ella0110.github.io/2025/01/19/blog-hexo-next/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ella's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Github pages + Hexo + Next 博客搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-01-19T16:33:14+08:00">
+                2025-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>终于开始搭建自己的个人博客，迈出记录的第一步！该博客基于Github page + Hexo + Next，目前还不完美，逐步优化中。</p>
+<span id="more"></span>
+<h2 id="Github-page"><a href="#Github-page" class="headerlink" title="Github page"></a>Github page</h2><p>Ref: <a target="_blank" rel="noopener" href="https://mini-pi.github.io/2024/02/28/how-to-make-blog-wedsite/">https://mini-pi.github.io/2024/02/28/how-to-make-blog-wedsite/</a></p>
+<p>Ref: <a target="_blank" rel="noopener" href="https://zhengyujie.github.io/categories/Hexo%E6%A1%86%E6%9E%B6/">https://zhengyujie.github.io/categories/Hexo%E6%A1%86%E6%9E%B6/</a></p>
+<h4 id="1-创建-github-io-仓库"><a href="#1-创建-github-io-仓库" class="headerlink" title="1: 创建&lt;username&gt;.github.io 仓库"></a>1: 创建<code>&lt;username&gt;.github.io</code> 仓库</h4><ul>
+<li>New repository -&gt; add Repository name (eg. <code>Username.github.io</code>) -&gt; Create repository</li>
+</ul>
+<h4 id="2-在本地部署-Hexo-环境"><a href="#2-在本地部署-Hexo-环境" class="headerlink" title="2: 在本地部署 Hexo 环境"></a>2: 在本地部署 Hexo 环境</h4><ul>
+<li>安装 Hexo： <code>npm install -g hexo-cli</code></li>
+<li>初始化 Hexo 框架：<code>hexo init blog</code></li>
+<li>进入上条命令所创建的 blog 文件夹中：<code>cd blog</code></li>
+<li>安装swig：<code>npm i hexo-renderer-swig</code></li>
+<li>安装其他依赖：<code>npm install</code></li>
+<li>启动 Hexo 服务：<code>hexo server</code></li>
+<li>访问默认界面，测试是否安装成功：浏览器访问<code>localhost:4000</code></li>
+<li>ref：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">https://hexo.io/zh-cn/</a></li>
+</ul>
+<h4 id="3：配置-Next-主题"><a href="#3：配置-Next-主题" class="headerlink" title="3：配置 Next 主题"></a>3：配置 Next 主题</h4><ul>
+<li>进入上一步创建的 blog 文件夹中，将 Next 主题相关文件从 github 克隆到 themes 文件夹中<ul>
+<li>命令：<code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></li>
+</ul>
+</li>
+<li>配置 Hexo 的主题参数（在根目录的 <code>_config.yml</code> 文件中），选择使用 Next 主题<ul>
+<li>修改参数为：<code>theme: next</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="4：添加博客内容"><a href="#4：添加博客内容" class="headerlink" title="4：添加博客内容"></a>4：添加博客内容</h4><ul>
+<li>将写好的 Markdown 放到 <code>source\_posts</code> 目录</li>
+<li>将相应的图片放到 <code>source\images</code>目录</li>
+<li>启动 Hexo 服务（如果之前没有关闭，请忽略此步骤）</li>
+<li>通过浏览器访问博客主页，可以发现更改已生效</li>
+</ul>
+<h4 id="5：对-Next-主题进行小修改"><a href="#5：对-Next-主题进行小修改" class="headerlink" title="5：对 Next 主题进行小修改"></a>5：对 Next 主题进行小修改</h4><p><strong>优化：<strong>Next 主题默认首页文章不折叠，但是个人认为这种不美观，所以</strong>配置首页文章折叠</strong></p>
+<ul>
+<li><p>在<code>主题配置文件</code>中找到<code>auto_excerpt</code>，这个属性可以设置为自动折叠，比如设置成只显示<code>300</code>个字，这样的后面的内容就会折叠起来，配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">auto_excerpt:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">length:</span> <span class="number">300</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="6：将生成的静态页面部署到-github-上"><a href="#6：将生成的静态页面部署到-github-上" class="headerlink" title="6：将生成的静态页面部署到 github 上"></a>6：将生成的静态页面部署到 github 上</h4><p><strong>具体操作</strong>：修改站点配置文件<code>_config.yml</code>的最后部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>要先安装deploy-git，才能用命令部署到GitHub</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>然后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean #清除之前生成的东西</span><br><span class="line">hexo generate  #生成静态文章，缩写hexo g</span><br><span class="line">hexo deploy  #部署文章，缩写hexo d</span><br></pre></td></tr></table></figure>
+
+<p>过一会儿就可以在<code>http://yourname.github.io</code>这个网站看到你的博客了！</p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><h4 id="Hexo-deploy-报错"><a href="#Hexo-deploy-报错" class="headerlink" title="Hexo deploy 报错"></a>Hexo deploy 报错</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">error: RPC failed; HTTP 400 curl 22 The requested URL returned error: 400</span><br><span class="line">send-pack: unexpected disconnect while reading sideband packet</span><br><span class="line">Writing objects: 100% (179/179), 4.27 MiB | 4.22 MiB/s, done.</span><br><span class="line">Total 179 (delta 15), reused 0 (delta 0), pack-reused 0</span><br><span class="line">fatal: the remote end hung up unexpectedly</span><br><span class="line">Everything up-to-date</span><br><span class="line">FATAL Something&#x27;s wrong. Maybe you can find the solution here: https://hexo.io/docs/troubleshooting.html</span><br><span class="line">Error: Spawn failed</span><br><span class="line">    at ChildProcess.&lt;anonymous&gt; (/Users/ella/Documents/Code/ella0110.github.io/blog/node_modules/hexo-deployer-git/node_modules/hexo-util/lib/spawn.js:51:21)</span><br><span class="line">    at ChildProcess.emit (node:events:520:28)</span><br><span class="line">    at ChildProcess._handle.onexit (node:internal/child_process:294:12)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>解决方式</strong>：Step6中，repo从https改为ssh方式: <code>git@github.com:username/username.github.io.git</code></li>
+</ul>
+<h4 id="图片不加载"><a href="#图片不加载" class="headerlink" title="图片不加载"></a>图片不加载</h4><ul>
+<li><strong>解决方式</strong>：图片放在<code>source\images</code>文件夹中，按照这种方式引用：<code>/images/pic1</code>。</li>
+</ul>
+<h4 id="自定义文章顺序"><a href="#自定义文章顺序" class="headerlink" title="自定义文章顺序"></a>自定义文章顺序</h4><ul>
+<li><p>在hexo博客中，文章默认是按照发布日期进行排序。如果想把文章按照自定义顺序进行排序，按照以下方式解决：</p>
+</li>
+<li><p><strong>解决方式</strong>：先卸载 hexo-generator-index，然后安装hexo-generator-index-pin-top</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-generator-index --save</span><br><span class="line">npm install hexo-generator-index-pin-top --save</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/01/19/AWS%20EC2-Domain-SSL/" rel="next" title="跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践">
+                <i class="fa fa-chevron-left"></i> 跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-page"><span class="nav-number">1.</span> <span class="nav-text">Github page</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA-github-io-%E4%BB%93%E5%BA%93"><span class="nav-number">1.0.1.</span> <span class="nav-text">1: 创建&lt;username&gt;.github.io 仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9C%A8%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2-Hexo-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.0.2.</span> <span class="nav-text">2: 在本地部署 Hexo 环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%9A%E9%85%8D%E7%BD%AE-Next-%E4%B8%BB%E9%A2%98"><span class="nav-number">1.0.3.</span> <span class="nav-text">3：配置 Next 主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%9A%E6%B7%BB%E5%8A%A0%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9"><span class="nav-number">1.0.4.</span> <span class="nav-text">4：添加博客内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%9A%E5%AF%B9-Next-%E4%B8%BB%E9%A2%98%E8%BF%9B%E8%A1%8C%E5%B0%8F%E4%BF%AE%E6%94%B9"><span class="nav-number">1.0.5.</span> <span class="nav-text">5：对 Next 主题进行小修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%EF%BC%9A%E5%B0%86%E7%94%9F%E6%88%90%E7%9A%84%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E9%83%A8%E7%BD%B2%E5%88%B0-github-%E4%B8%8A"><span class="nav-number">1.0.6.</span> <span class="nav-text">6：将生成的静态页面部署到 github 上</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hexo-deploy-%E6%8A%A5%E9%94%99"><span class="nav-number">2.0.1.</span> <span class="nav-text">Hexo deploy 报错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E4%B8%8D%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.0.2.</span> <span class="nav-text">图片不加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%87%E7%AB%A0%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.0.3.</span> <span class="nav-text">自定义文章顺序</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ella</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

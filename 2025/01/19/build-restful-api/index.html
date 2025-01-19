@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="A step-by-step guide to building a RESTful API from scratch using C#, EF Core, SQL Server, Docker, and AWS ECS.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploying a RESTful API with C#, Docker &amp; AWS ECS">
+<meta property="og:url" content="https://ella0110.github.io/2025/01/19/build-restful-api/index.html">
+<meta property="og:site_name" content="Ella&#39;s Blog">
+<meta property="og:description" content="A step-by-step guide to building a RESTful API from scratch using C#, EF Core, SQL Server, Docker, and AWS ECS.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/user-attachments/assets/aad3619a-1893-4833-800c-73d6ea304c52">
+<meta property="og:image" content="https://github.com/user-attachments/assets/67ed3e78-fb9c-4c3d-aec1-53c26f87850f">
+<meta property="og:image" content="https://github.com/user-attachments/assets/d6beeb52-dc18-4be8-8f66-ed16765fa52b">
+<meta property="og:image" content="https://github.com/user-attachments/assets/17ff08e9-b304-4c05-a243-63993669dd20">
+<meta property="og:image" content="https://github.com/user-attachments/assets/5ffb35fc-47e6-4417-9310-02b2c39e90da">
+<meta property="og:image" content="https://github.com/user-attachments/assets/2789e2f2-7958-42d1-ad30-101b3d41852f">
+<meta property="og:image" content="https://github.com/user-attachments/assets/9e7f2dc1-0fa1-4605-93eb-68ad574cd9a4">
+<meta property="og:image" content="https://github.com/user-attachments/assets/18c007ab-d433-47d3-84bd-1fe34560e180">
+<meta property="og:image" content="https://github.com/user-attachments/assets/13e3b0f9-836a-4ed2-9b9f-11af145b18bb">
+<meta property="og:image" content="https://github.com/user-attachments/assets/794a5e54-8b00-429a-beca-152ca7eab94d">
+<meta property="og:image" content="https://github.com/user-attachments/assets/abff602e-be0f-4d5c-8818-c1850e95c15c">
+<meta property="og:image" content="https://github.com/user-attachments/assets/c6631060-c934-4afd-b1af-4743fef93bbf">
+<meta property="og:image" content="https://github.com/user-attachments/assets/72cf29ca-e989-4ed0-8a78-9d70323b36a0">
+<meta property="og:image" content="https://github.com/user-attachments/assets/908fdc86-4179-4ea2-aa7f-0974a7925616">
+<meta property="og:image" content="https://github.com/user-attachments/assets/2deba519-07d4-4e6c-8f3c-ba0fc59c9a8e">
+<meta property="og:image" content="https://github.com/user-attachments/assets/3a5bc4dc-7a01-4413-9de9-351de303ea7b">
+<meta property="og:image" content="https://github.com/user-attachments/assets/7e5daeb9-5784-4673-8a6e-51fab3cbc76f">
+<meta property="og:image" content="https://github.com/user-attachments/assets/8e09e388-cff1-4865-9ad0-59222dc60931">
+<meta property="og:image" content="https://github.com/user-attachments/assets/21c148b6-4457-431b-8f2f-001d2cba62da">
+<meta property="og:image" content="https://github.com/user-attachments/assets/6c8a998e-80c6-4ce0-b692-7bf7b7492b11">
+<meta property="og:image" content="https://github.com/user-attachments/assets/12963722-5d0a-4bef-8513-57d7fe7d7226">
+<meta property="og:image" content="https://github.com/user-attachments/assets/0b3bf1d1-c2d4-4405-a346-c31416bea002">
+<meta property="article:published_time" content="2025-01-19T06:20:29.706Z">
+<meta property="article:modified_time" content="2025-01-19T12:33:10.172Z">
+<meta property="article:author" content="Ella">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/user-attachments/assets/aad3619a-1893-4833-800c-73d6ea304c52">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ella0110.github.io/2025/01/19/build-restful-api/"/>
+
+
+
+
+
+  <title>Deploying a RESTful API with C#, Docker & AWS ECS | Ella's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ella's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ella0110.github.io/2025/01/19/build-restful-api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ella's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Deploying a RESTful API with C#, Docker & AWS ECS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-01-19T14:20:29+08:00">
+                2025-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>A step-by-step guide to building a RESTful API from scratch using C#, EF Core, SQL Server, Docker, and AWS ECS.</p>
+<span id="more"></span>
+
+<ul>
+<li><a href="#c-and-dotnet">C# and DotNet</a><ul>
+<li><a href="#basic-install">Basic install</a></li>
+<li><a href="#create-aspnet-web-api-project">Create ASP.Net Web API Project</a></li>
+<li><a href="#add-ef-core">Add Ef Core</a></li>
+<li><a href="#add-controller">Add Controller</a></li>
+<li><a href="#automatically-initialise-database">Automatically Initialise Database</a></li>
+<li><a href="#add-gitignore-for-c">Add .gitignore for C#</a></li>
+<li><a href="#troubleshooting--tips">Troubleshooting &amp; Tips</a></li>
+</ul>
+</li>
+<li><a href="#docker-and-sql-server">Docker and SQL Server</a><ul>
+<li><a href="#basic-install-1">Basic Install</a></li>
+<li><a href="#run-sql-server">Run SQL Server</a></li>
+<li><a href="#beekeeper-connect-database">Beekeeper connect database</a></li>
+</ul>
+</li>
+<li><a href="#build-project-image-and-docker-compose">Build Project Image and Docker Compose</a><ul>
+<li><a href="#add-dockerfile-and-dockerignore-to-project">Add Dockerfile and .dockerignore to Project</a></li>
+<li><a href="#build-project-image">Build project image</a></li>
+<li><a href="#docker-compose">Docker Compose</a></li>
+<li><a href="#upload-image-to-docker-hub">Upload Image to Docker Hub</a></li>
+<li><a href="#troubleshooting--tips-1">Troubleshooting &amp; Tips</a></li>
+</ul>
+</li>
+<li><a href="#deploy-project-image-and-database-to-ecs">Deploy Project Image and Database to ECS</a><ul>
+<li><a href="#create-task-definitions">Create Task definitions</a></li>
+<li><a href="#create-clusters">Create Clusters</a></li>
+<li><a href="#deploy-your-task-to-cluster">Deploy your task to cluster</a></li>
+<li><a href="#troubleshooting--tips-2">Troubleshooting &amp; Tips</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="C-and-DotNet"><a href="#C-and-DotNet" class="headerlink" title="C# and DotNet"></a>C# and DotNet</h2><h3 id="Basic-install"><a href="#Basic-install" class="headerlink" title="Basic install"></a>Basic install</h3><ol>
+<li><p>Set up development environment</p>
+<ul>
+<li>Start Visual Studio Code.</li>
+<li>Install C# Dev Kit (The <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp">C# extension</a> and the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.vscode-dotnet-runtime">.NET Install Tool</a> will automatically be installed)</li>
+</ul>
+</li>
+<li><p>Install dotnet sdk 8.0</p>
+<p>  <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.402-macos-x64-installer">Download .NET 8.0 SDK(v8.0.402)-macOs x64 Installer</a></p>
+</li>
+</ol>
+<h3 id="Create-ASP-Net-Web-API-Project"><a href="#Create-ASP-Net-Web-API-Project" class="headerlink" title="Create ASP.Net Web API Project"></a>Create ASP.Net Web API Project</h3><p>There are two ways to create a Web API project:</p>
+<ol>
+<li><p>Create in Visual Studio Code.</p>
+<ol>
+<li>Start Visual Studio Code.</li>
+<li>Command+Shift+P</li>
+<li>Select <strong>Create .NET Project</strong></li>
+<li>Select <strong>ASP.Net Core Web API</strong></li>
+<li>Select the location where you would like the new project to be created.</li>
+<li>Give your new project a name, like “TrilloBackend”.</li>
+<li>Select <strong>Create Project,</strong> the project template creates a <code>WeatherForecast</code> API with support for <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/web-api-help-pages-using-swagger?view=aspnetcore-8.0">Swagger</a>.</li>
+</ol>
+</li>
+<li><p>Create with terminal</p>
+<p> <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-8.0&tabs=visual-studio-code">Tutorial: Create a web API with ASP.NET Core</a></p>
+<ol>
+<li><p>Open terminal, change directories (<code>cd</code>) to the folder that will contain the project folder. The project template creates a <code>WeatherForecast</code> API with support for <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/web-api-help-pages-using-swagger?view=aspnetcore-8.0">Swagger</a>.</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dotnet new webapi --use-controllers -o TrilloBackend</span><br><span class="line"><span class="built_in">cd</span> TrilloBackend</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.InMemory</span><br><span class="line">code -r ../TrilloBackend</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Trust the HTTPS development certificate</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet dev-certs https --trust</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>Run the project, check the result with: <a target="_blank" rel="noopener" href="https://localhost/">https://localhost</a>:PORT&#x2F;swagger&#x2F;index.html</p>
+<ul>
+<li>Control + F5</li>
+<li>write in terminal: <code>dotnet run</code></li>
+<li>Run → Run without Debugging</li>
+</ul>
+</li>
+</ol>
+<h3 id="Add-Ef-Core"><a href="#Add-Ef-Core" class="headerlink" title="Add Ef Core"></a>Add Ef Core</h3><p>There are two common ORM options: EF Core and Dapper, here is the main differences:</p>
+<ol>
+<li><p>Open terminal, run the following commands to install EF Core and Sql Server driver.</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dotnet add package Microsoft.EntityFrameworkCore --version 8.0.8</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.SqlServer</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Create the model. In the project directory, create <strong>Models folder</strong>, and create <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-nz/ef/core/get-started/overview/first-app?tabs=netcore-cli"><strong>Model.cs</strong></a> and other model files with the following code. (In this Project, I use Booking.cs, Hotel.cs, Order.cs, Review.cs, TrilloContext.cs instead of Model.cs)</p>
+<ul>
+<li><p><strong>Models Code</strong></p>
+<p>  <strong>Models&#x2F;Booking.cs</strong></p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Booking</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span> BookingId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// FK</span></span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span>? HotelId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span>? OrderId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Properties</span></span><br><span class="line">  <span class="keyword">public</span> DateTime Date &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">double</span>? Price &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">bool</span>? isAvailable &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Internal</span></span><br><span class="line">  <span class="keyword">public</span> DateTime CreatedAt &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> DateTime UpdatedAt &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Relation</span></span><br><span class="line">  <span class="keyword">public</span> Order Order &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">  <span class="keyword">public</span> Hotel Hotel &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <strong>Models&#x2F;Hotel.cs</strong></p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Hotel</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span> HotelId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Properties</span></span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span>? Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> List&lt;<span class="built_in">string</span>&gt; Gallery &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = [];</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span>? Description &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span>? Address &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span>? TotalVote &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Internal</span></span><br><span class="line">  <span class="keyword">public</span> DateTime CreatedAt &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> DateTime UpdatedAt &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Relation</span></span><br><span class="line">  <span class="keyword">public</span> List&lt;Review&gt; Reviews &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">  <span class="keyword">public</span> List&lt;Booking&gt; Bookings &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <strong>Models&#x2F;Order.cs</strong></p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Order</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span> OrderId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// FK</span></span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span>? UserId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Properties</span></span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">double</span>? Amount &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span>? GuestName &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Internal</span></span><br><span class="line">  <span class="keyword">public</span> DateTime CreatedAt &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> DateTime UpdatedAt &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Relation</span></span><br><span class="line">  <span class="keyword">public</span> List&lt;Booking&gt; Bookings &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <strong>Models&#x2F;Review.cs</strong></p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Review</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span> ReviewId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// FK</span></span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span>? UserId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">int</span>? HotelId &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Properties</span></span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span>? Body &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">double</span>? Rating &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Internal</span></span><br><span class="line">  <span class="keyword">public</span> DateTime CreatedAt &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> DateTime UpdatedAt &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="comment">// Relation</span></span><br><span class="line">  <span class="keyword">public</span> Hotel Hotel &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>  <strong>Models&#x2F;TrilloContext.cs</strong></p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.EntityFrameworkCore;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TrilloContext</span> : <span class="title">DbContext</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> DbSet&lt;Hotel&gt; Hotels &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> DbSet&lt;Review&gt; Reviews &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> DbSet&lt;Order&gt; Orders &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> DbSet&lt;Booking&gt; Bookings &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnConfiguring</span>(<span class="params">DbContextOptionsBuilder options</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">var</span> builder = WebApplication.CreateBuilder();</span><br><span class="line">    <span class="keyword">var</span> configuration = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">      .AddJsonFile(<span class="string">&quot;appsettings.json&quot;</span>)</span><br><span class="line">      <span class="comment">// Load configuration for current environment.</span></span><br><span class="line">      .AddJsonFile(<span class="string">$&quot;appsettings.<span class="subst">&#123;builder.Environment.EnvironmentName&#125;</span>.json&quot;</span>, <span class="literal">true</span>)</span><br><span class="line">      .AddEnvironmentVariables()</span><br><span class="line">      .Build();</span><br><span class="line">    <span class="comment">// Connect to the database.</span></span><br><span class="line">    options.UseSqlServer(configuration.GetConnectionString(<span class="string">&quot;TrilloDatabase&quot;</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Generate Date/time.</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnModelCreating</span>(<span class="params">ModelBuilder modelBuilder</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    modelBuilder.Entity&lt;Booking&gt;(e =&gt; &#123;</span><br><span class="line">      e.Property(b =&gt; b.CreatedAt).HasDefaultValueSql(<span class="string">&quot;getdate()&quot;</span>);</span><br><span class="line">      e.Property(b =&gt; b.UpdatedAt).HasDefaultValueSql(<span class="string">&quot;getdate()&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    modelBuilder.Entity&lt;Hotel&gt;(e =&gt; &#123;</span><br><span class="line">      e.Property(b =&gt; b.CreatedAt).HasDefaultValueSql(<span class="string">&quot;getdate()&quot;</span>);</span><br><span class="line">      e.Property(b =&gt; b.UpdatedAt).HasDefaultValueSql(<span class="string">&quot;getdate()&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    modelBuilder.Entity&lt;Order&gt;(e =&gt; &#123;</span><br><span class="line">      e.Property(b =&gt; b.CreatedAt).HasDefaultValueSql(<span class="string">&quot;getdate()&quot;</span>);</span><br><span class="line">      e.Property(b =&gt; b.UpdatedAt).HasDefaultValueSql(<span class="string">&quot;getdate()&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    modelBuilder.Entity&lt;Review&gt;(e =&gt; &#123;</span><br><span class="line">      e.Property(b =&gt; b.CreatedAt).HasDefaultValueSql(<span class="string">&quot;getdate()&quot;</span>);</span><br><span class="line">      e.Property(b =&gt; b.UpdatedAt).HasDefaultValueSql(<span class="string">&quot;getdate()&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Add Database ConnectionStrings to <strong>appsettings.json</strong></p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;ConnectionStrings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;TrilloDatabase&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Data Source=localhost,1433\\Catalog=trillo;Database=trillo;Trusted_Connection=false;User Id=SA;password=YOUR_PASSWORD;TrustServerCertificate=True;&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Data Source: replace ‘1433’ with your database port;</li>
+<li>Database: replace ‘trillo’ with your database name;</li>
+<li>Attention <strong>User Id</strong> need a space;</li>
+</ul>
+</li>
+<li><p>Add <strong>appsettings.Production.json</strong> for production environement.</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;Logging&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;LogLevel&quot;</span>: &#123;</span><br><span class="line">      <span class="string">&quot;Default&quot;</span>: <span class="string">&quot;Information&quot;</span>,</span><br><span class="line">      <span class="string">&quot;Microsoft.AspNetCore&quot;</span>: <span class="string">&quot;Warning&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;AllowedHosts&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">  <span class="string">&quot;ConnectionStrings&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;TrilloDatabase&quot;</span>: <span class="string">&quot;Data Source=localhost,1433\\Catalog=trillo;Database=trillo;Trusted_Connection=false;User Id=SA;password=YOUR_PASSWORD;TrustServerCertificate=True;&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>If your database is up and running, you can run the following commands to create migrations and apply to database. </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># install tool and package</span></span><br><span class="line">dotnet tool install --global dotnet-ef</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.Design</span><br><span class="line"></span><br><span class="line"><span class="comment"># The first time, you need to execute this command to create the Migrations folder</span></span><br><span class="line">dotnet ef migrations add InitialCreate</span><br><span class="line"><span class="comment"># this command will be replaced as migration() in the section:</span></span><br><span class="line">dotnet ef database update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Links: </p>
+<p> <a target="_blank" rel="noopener" href="https://softchris.github.io/pages/dotnet-orm.html#resources">How YOU can use an ORM in .NET Core and C# to type less SQL</a></p>
+<p> <a target="_blank" rel="noopener" href="https://learningdaily.dev/getting-started-with-ef-core-a-beginners-guide-9b398488d222">Getting started with EF core: A beginner’s guide</a></p>
+</li>
+</ol>
+<h3 id="Add-Controller"><a href="#Add-Controller" class="headerlink" title="Add Controller"></a>Add Controller</h3><p>  <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-8.0&tabs=visual-studio-code">Tutorial: Create a web API with ASP.NET Core</a></p>
+<ol>
+<li><p>Create Controller, run the following code to create Controllers folder with file HotelsController.cs.</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.Design</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.SqlServer</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.Tools</span><br><span class="line">dotnet tool uninstall -g dotnet-aspnet-codegenerator</span><br><span class="line">dotnet tool install -g dotnet-aspnet-codegenerator</span><br><span class="line">dotnet tool update -g dotnet-aspnet-codegenerator</span><br><span class="line"></span><br><span class="line">dotnet aspnet-codegenerator controller -name HotelsController -async -api -m Hotel -dc TrilloContext -outDir Controllers</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Update HotelsController.cs to add nameof in POST return, to avoid hardcode the action name in CreatedAtAction function.</p>
+ <img width="740" alt="imagehotelcontroller" src="https://github.com/user-attachments/assets/aad3619a-1893-4833-800c-73d6ea304c52">
+ </li>
+<li><p>Add Controller service to program.cs</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.EntityFrameworkCore;</span><br><span class="line"></span><br><span class="line">builder.Services.AddControllers();</span><br><span class="line">builder.Services.AddDbContext&lt;TrilloContext&gt;();</span><br><span class="line"></span><br><span class="line">app.MapControllers();</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><p><strong>Code</strong></p>
+<p>  <strong>HotelsController.cs</strong></p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"><span class="keyword">using</span> Microsoft.EntityFrameworkCore;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">TrilloBackend.Controllers</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    [<span class="meta">Route(<span class="string">&quot;api/hotels&quot;</span>)</span>]</span><br><span class="line">    [<span class="meta">ApiController</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">HotelsController</span> : <span class="title">ControllerBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> TrilloContext _context;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">HotelsController</span>(<span class="params">TrilloContext context</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            _context = context;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// GET: api/hotels</span></span><br><span class="line">        [<span class="meta">HttpGet</span>]</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">async</span> Task&lt;ActionResult&lt;IEnumerable&lt;Hotel&gt;&gt;&gt; GetHotels()</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">await</span> _context.Hotels</span><br><span class="line">                .Include(e =&gt; e.Reviews)</span><br><span class="line">                .Include(e =&gt; e.Bookings)</span><br><span class="line">                .ToListAsync();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// GET: api/hotels/5</span></span><br><span class="line">        [<span class="meta">HttpGet(<span class="string">&quot;&#123;id&#125;&quot;</span>)</span>]</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">async</span> Task&lt;ActionResult&lt;Hotel&gt;&gt; GetHotel(<span class="built_in">long</span> id)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> hotel = <span class="keyword">await</span> _context.Hotels</span><br><span class="line">                .Include(e =&gt; e.Reviews)</span><br><span class="line">                .Include(e =&gt; e.Bookings)</span><br><span class="line">                .FirstOrDefaultAsync(e =&gt; e.HotelId == id)</span><br><span class="line">               ;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (hotel == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> NotFound();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> hotel;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// PUT: api/hotels/5</span></span><br><span class="line">        <span class="comment">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span></span><br><span class="line">        [<span class="meta">HttpPut(<span class="string">&quot;&#123;id&#125;&quot;</span>)</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;IActionResult&gt; <span class="title">PutHotel</span>(<span class="params"><span class="built_in">int</span> id, Hotel hotel</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (id != hotel.HotelId)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> BadRequest();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            _context.Entry(hotel).State = EntityState.Modified;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">await</span> _context.SaveChangesAsync();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (DbUpdateConcurrencyException)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (!HotelExists(id))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">return</span> NotFound();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">throw</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> NoContent();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// POST: api/hotels</span></span><br><span class="line">        <span class="comment">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span></span><br><span class="line">        [<span class="meta">HttpPost</span>]</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">async</span> Task&lt;ActionResult&lt;Hotel&gt;&gt; PostHotel(Hotel hotel)</span><br><span class="line">        &#123;</span><br><span class="line">            _context.Hotels.Add(hotel);</span><br><span class="line">            <span class="keyword">await</span> _context.SaveChangesAsync();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> CreatedAtAction(<span class="keyword">nameof</span>(GetHotel), <span class="keyword">new</span> &#123; id = hotel.HotelId &#125;, hotel);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// PostGET: api/hotels/search</span></span><br><span class="line">        [<span class="meta">HttpPost(<span class="string">&quot;search&quot;</span>)</span>]</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">async</span> Task&lt;ActionResult&lt;IEnumerable&lt;Hotel&gt;&gt;&gt; PostGetHotel(<span class="built_in">string</span>? name, <span class="built_in">string</span>? address)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// check Name and Address record</span></span><br><span class="line">            <span class="keyword">var</span> hotelQuery = _context.Hotels</span><br><span class="line">                .Include(e =&gt; e.Reviews)</span><br><span class="line">                .Include(e =&gt; e.Bookings)</span><br><span class="line">                .AsQueryable();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// name &amp;&amp; address</span></span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(name) &amp;&amp; !<span class="built_in">string</span>.IsNullOrEmpty(address))</span><br><span class="line">            &#123;   </span><br><span class="line">                <span class="keyword">var</span> result = <span class="keyword">await</span> hotelQuery</span><br><span class="line">                    .Where(e =&gt; EF.Functions.Like(e.Name, <span class="string">$&quot;%<span class="subst">&#123;name&#125;</span>%&quot;</span>) &amp;&amp; EF.Functions.Like(e.Address, <span class="string">$&quot;%<span class="subst">&#123;address&#125;</span>%&quot;</span>))</span><br><span class="line">                    .ToListAsync();</span><br><span class="line">                <span class="keyword">return</span> result;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// check name without address</span></span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(name))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">var</span> result = <span class="keyword">await</span> hotelQuery</span><br><span class="line">                    .Where(e =&gt; EF.Functions.Like(e.Name, <span class="string">$&quot;%<span class="subst">&#123;name&#125;</span>%&quot;</span>))</span><br><span class="line">                    .ToListAsync();</span><br><span class="line">                <span class="keyword">if</span> (result.Any())</span><br><span class="line">                    <span class="keyword">return</span> result;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// chenck address without name</span></span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(address))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">var</span> result = <span class="keyword">await</span> hotelQuery</span><br><span class="line">                    .Where(e =&gt; EF.Functions.Like(e.Address, <span class="string">$&quot;%<span class="subst">&#123;address&#125;</span>%&quot;</span>))</span><br><span class="line">                    .ToListAsync();</span><br><span class="line">                <span class="keyword">if</span> (result.Any())</span><br><span class="line">                    <span class="keyword">return</span> result;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// return []</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> List&lt;Hotel&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// DELETE: api/hotels/5</span></span><br><span class="line">        [<span class="meta">HttpDelete(<span class="string">&quot;&#123;id&#125;&quot;</span>)</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;IActionResult&gt; <span class="title">DeleteHotel</span>(<span class="params"><span class="built_in">int</span> id</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> hotel = <span class="keyword">await</span> _context.Hotels.FindAsync(id);</span><br><span class="line">            <span class="keyword">if</span> (hotel == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> NotFound();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            _context.Hotels.Remove(hotel);</span><br><span class="line">            <span class="keyword">await</span> _context.SaveChangesAsync();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> NoContent();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="built_in">bool</span> <span class="title">HotelExists</span>(<span class="params"><span class="built_in">int</span> id</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> _context.Hotels.Any(e =&gt; e.HotelId == id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <strong>Program.cs</strong></p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Text.Json.Serialization;</span><br><span class="line"><span class="keyword">using</span> Microsoft.EntityFrameworkCore;</span><br><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(<span class="keyword">args</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add services to the container.</span></span><br><span class="line">builder.Services.AddControllers();</span><br><span class="line"><span class="comment">// Fixing the error “A possible object cycle was detected”.</span></span><br><span class="line">builder.Services.AddControllers().AddJsonOptions(x =&gt;</span><br><span class="line">    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);</span><br><span class="line">builder.Services.AddDbContext&lt;TrilloContext&gt;();</span><br><span class="line">builder.Services.AddEndpointsApiExplorer();</span><br><span class="line">builder.Services.AddSwaggerGen();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Prepare database.</span></span><br><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = app.Services.CreateScope())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> services = scope.ServiceProvider;</span><br><span class="line">    <span class="keyword">var</span> context = services.GetRequiredService&lt;TrilloContext&gt;();</span><br><span class="line">    <span class="keyword">if</span> (app.Environment.IsDevelopment())</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;DbConnectionString: <span class="subst">&#123;context.Database.GetConnectionString()&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Create Database and apply migrations.</span></span><br><span class="line">    context.Database.Migrate();</span><br><span class="line">    <span class="comment">// Seed data to tables.</span></span><br><span class="line">    DbInitializer.Initialize(context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Configure the HTTP request pipeline.</span></span><br><span class="line"><span class="keyword">if</span> (app.Environment.IsDevelopment())</span><br><span class="line">&#123;</span><br><span class="line">    app.UseSwagger();</span><br><span class="line">    app.UseSwaggerUI();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test api.</span></span><br><span class="line">app.MapGet(<span class="string">&quot;/Ping&quot;</span>, () =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Pong&quot;</span>;</span><br><span class="line">&#125;)</span><br><span class="line">.WithName(<span class="string">&quot;Ping&quot;</span>)</span><br><span class="line">.WithOpenApi();</span><br><span class="line"></span><br><span class="line">app.UseHttpsRedirection();</span><br><span class="line">app.MapControllers();</span><br><span class="line">app.Run();</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Automatically-Initialise-Database"><a href="#Automatically-Initialise-Database" class="headerlink" title="Automatically Initialise Database"></a>Automatically Initialise Database</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38238043/how-and-where-to-call-database-ensurecreated-and-database-migrate">How and where to call Database.EnsureCreated and Database.Migrate?</a></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-nz/aspnet/core/data/ef-rp/intro?view=aspnetcore-8.0&tabs=visual-studio-code#create-the-database">Create the database</a></p>
+<ol>
+<li><p>Change program.cs, add <code>Migrate()</code> to create database, apply migration and seed data.</p>
+ <img width="667" alt="migrate" src="https://github.com/user-attachments/assets/67ed3e78-fb9c-4c3d-aec1-53c26f87850f">
+ </li>
+<li><p>Add code that populates the database with data. Create <code>Data/DbInitializer.cs</code> with the following code:</p>
+<ul>
+<li><p>Data&#x2F;DbInitializer.cs</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">DbInitializer</span> &#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Initialize</span>(<span class="params">TrilloContext context</span>)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check if any data exist.</span></span><br><span class="line">    <span class="keyword">if</span> (context.Hotels.Any()) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> hotels = <span class="keyword">new</span> Hotel[] &#123;</span><br><span class="line">      <span class="keyword">new</span> Hotel&#123;Name=<span class="string">&quot;The Venetian Macao&quot;</span>,Gallery=[<span class="string">&quot;https://image-tc.galaxy.tf/wijpeg-9vualzt3dbue0hi00ba4q49ub/chatwalhotelnyc-c-004-build-crop.jpg?width=1920&quot;</span>],Description=<span class="string">&quot;This is a Hotel located in Macao&quot;</span>,Address=<span class="string">&quot;Marco China&quot;</span>,TotalVote=<span class="number">99</span>, Bookings=[]&#125;,</span><br><span class="line">      <span class="keyword">new</span> Hotel&#123;Name=<span class="string">&quot;The Parisian Macao&quot;</span>,Gallery=[<span class="string">&quot;https://dynamic-media-cdn.tripadvisor.com/media/photo-s/01/ea/d8/2d/grand-canal-shoppes.jpg?w=600&amp;h=-1&amp;s=1&quot;</span>],Description=<span class="string">&quot;This is a Hotel located in China&quot;</span>,Address=<span class="string">&quot;China&quot;</span>,TotalVote=<span class="number">96</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Hotel&#123;Name=<span class="string">&quot;Nina Hotel Tsuen Wan West&quot;</span>,Gallery=[<span class="string">&quot;https://dynamic-media-cdn.tripadvisor.com/media/daodao/photo-s/0c/7b/d9/f2/exterior-night.jpg?w=600&amp;h=-1&amp;s=1&quot;</span>],Description=<span class="string">&quot;This is a Hotel located in Auckland&quot;</span>,Address=<span class="string">&quot;Auckland&quot;</span>,TotalVote=<span class="number">79</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Hotel&#123;Name=<span class="string">&quot;Nina Hotel Causeway Bay&quot;</span>,Gallery=[<span class="string">&quot;https://cf.bstatic.com/xdata/images/hotel/max1024x768/118479281.jpg?k=d5090d90ae7919b4637f2d7d08d0ae0df7517e4185eaebed5a5907e53cd3801d&amp;o=&amp;hp=1&quot;</span>],Description=<span class="string">&quot;This is a Hotel located in NZ&quot;</span>,Address=<span class="string">&quot;NZ&quot;</span>,TotalVote=<span class="number">39</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Hotel&#123;Name=<span class="string">&quot;Conrad Macao&quot;</span>,Gallery=[<span class="string">&quot;test1&quot;</span>],Description=<span class="string">&quot;This is a Hotel located in Beijing&quot;</span>,Address=<span class="string">&quot;Beijing&quot;</span>,TotalVote=<span class="number">27</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Hotel&#123;Name=<span class="string">&quot;Legend Palace Hotel&quot;</span>,Gallery=[<span class="string">&quot;test2&quot;</span>],Description=<span class="string">&quot;This is a Hotel located in Shanghai&quot;</span>,Address=<span class="string">&quot;Shanghai&quot;</span>,TotalVote=<span class="number">30</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Hotel&#123;Name=<span class="string">&quot;Royal Plaza Hotel&quot;</span>,Gallery=[<span class="string">&quot;test3&quot;</span>],Description=<span class="string">&quot;This is a Hotel located in Shenzhen&quot;</span>,Address=<span class="string">&quot;Shenzhen&quot;</span>,TotalVote=<span class="number">15</span>&#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    context.Hotels.AddRange(hotels);</span><br><span class="line">    context.SaveChanges();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> reviews = <span class="keyword">new</span> Review[] &#123;</span><br><span class="line">      <span class="keyword">new</span> Review&#123;UserId=<span class="number">101</span>,HotelId=hotels[<span class="number">0</span>].HotelId,Body=<span class="string">&quot;The environment is very nice.&quot;</span>,Rating=<span class="number">8.8</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Review&#123;UserId=<span class="number">102</span>,HotelId=hotels[<span class="number">1</span>].HotelId,Body=<span class="string">&quot;The food is very nice.&quot;</span>,Rating=<span class="number">7.8</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Review&#123;UserId=<span class="number">103</span>,HotelId=hotels[<span class="number">2</span>].HotelId,Body=<span class="string">&quot;The price is very nice.&quot;</span>,Rating=<span class="number">6.8</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Review&#123;UserId=<span class="number">104</span>,HotelId=hotels[<span class="number">3</span>].HotelId,Body=<span class="string">&quot;The bed is very nice.&quot;</span>,Rating=<span class="number">3.8</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Review&#123;UserId=<span class="number">105</span>,HotelId=hotels[<span class="number">4</span>].HotelId,Body=<span class="string">&quot;The location is very nice.&quot;</span>,Rating=<span class="number">8.5</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Review&#123;UserId=<span class="number">106</span>,HotelId=hotels[<span class="number">5</span>].HotelId,Body=<span class="string">&quot;The transport is very nice.&quot;</span>,Rating=<span class="number">1.8</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Review&#123;UserId=<span class="number">107</span>,HotelId=hotels[<span class="number">6</span>].HotelId,Body=<span class="string">&quot;The people is very nice.&quot;</span>,Rating=<span class="number">8.2</span>&#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    context.Reviews.AddRange(reviews);</span><br><span class="line">    context.SaveChanges();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> orders = <span class="keyword">new</span> Order[] &#123;</span><br><span class="line">      <span class="keyword">new</span> Order&#123;UserId=<span class="number">101</span>,Amount=<span class="number">200.3</span>,GuestName=<span class="string">&quot;Ella&quot;</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Order&#123;UserId=<span class="number">102</span>,Amount=<span class="number">229</span>,GuestName=<span class="string">&quot;Hank&quot;</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Order&#123;UserId=<span class="number">103</span>,Amount=<span class="number">93.4</span>,GuestName=<span class="string">&quot;Mark&quot;</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Order&#123;UserId=<span class="number">104</span>,Amount=<span class="number">3784.4</span>,GuestName=<span class="string">&quot;Tala&quot;</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Order&#123;UserId=<span class="number">105</span>,Amount=<span class="number">278743.4</span>,GuestName=<span class="string">&quot;Ada&quot;</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Order&#123;UserId=<span class="number">106</span>,Amount=<span class="number">3985</span>,GuestName=<span class="string">&quot;Hui&quot;</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Order&#123;UserId=<span class="number">107</span>,Amount=<span class="number">3875.6</span>,GuestName=<span class="string">&quot;Kswi&quot;</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Order&#123;UserId=<span class="number">108</span>,Amount=<span class="number">438273.5</span>,GuestName=<span class="string">&quot;Edsa&quot;</span>&#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    context.Orders.AddRange(orders);</span><br><span class="line">    context.SaveChanges();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> bookings = <span class="keyword">new</span> Booking[] &#123;</span><br><span class="line">      <span class="keyword">new</span> Booking&#123;HotelId=hotels[<span class="number">0</span>].HotelId,OrderId=orders[<span class="number">0</span>].OrderId,Price=<span class="number">83.3</span>,isAvailable=<span class="literal">true</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Booking&#123;HotelId=hotels[<span class="number">1</span>].HotelId,OrderId=orders[<span class="number">1</span>].OrderId,Price=<span class="number">384.5</span>,isAvailable=<span class="literal">false</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Booking&#123;HotelId=hotels[<span class="number">2</span>].HotelId,OrderId=orders[<span class="number">2</span>].OrderId,Price=<span class="number">22.3</span>,isAvailable=<span class="literal">true</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Booking&#123;HotelId=hotels[<span class="number">3</span>].HotelId,OrderId=orders[<span class="number">3</span>].OrderId,Price=<span class="number">55.6</span>,isAvailable=<span class="literal">true</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Booking&#123;HotelId=hotels[<span class="number">4</span>].HotelId,OrderId=orders[<span class="number">4</span>].OrderId,Price=<span class="number">394.5</span>,isAvailable=<span class="literal">false</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Booking&#123;HotelId=hotels[<span class="number">5</span>].HotelId,OrderId=orders[<span class="number">0</span>].OrderId,Price=<span class="number">78</span>,isAvailable=<span class="literal">false</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Booking&#123;HotelId=hotels[<span class="number">6</span>].HotelId,OrderId=orders[<span class="number">6</span>].OrderId,Price=<span class="number">92.4</span>,isAvailable=<span class="literal">true</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Booking&#123;HotelId=hotels[<span class="number">2</span>].HotelId,OrderId=orders[<span class="number">2</span>].OrderId,Price=<span class="number">100</span>,isAvailable=<span class="literal">false</span>&#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    context.Bookings.AddRange(bookings);</span><br><span class="line">    context.SaveChanges();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h3 id="Add-gitignore-for-C"><a href="#Add-gitignore-for-C" class="headerlink" title="Add .gitignore for C#"></a>Add .gitignore for C#</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">## Ignore Visual Studio temporary files, build results, and</span></span><br><span class="line"><span class="meta">## files generated by popular Visual Studio add-ons.</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># User-specific files</span></span><br><span class="line">*.suo</span><br><span class="line">*.user</span><br><span class="line">*.sln.docstates</span><br><span class="line"></span><br><span class="line"><span class="meta"># Build results</span></span><br><span class="line"></span><br><span class="line">[<span class="meta">Dd</span>]ebug/</span><br><span class="line">[<span class="meta">Rr</span>]elease/</span><br><span class="line">x64/</span><br><span class="line">[<span class="meta">Bb</span>]<span class="keyword">in</span>/</span><br><span class="line">[<span class="meta">Oo</span>]bj/</span><br><span class="line"></span><br><span class="line"><span class="meta"># MSTest test Results</span></span><br><span class="line">[<span class="meta">Tt</span>]est[Rr]esult*/</span><br><span class="line">[<span class="meta">Bb</span>]uild[Ll]og.*</span><br><span class="line"></span><br><span class="line">*_i.c</span><br><span class="line">*_p.c</span><br><span class="line">*_i.h</span><br><span class="line">*.ilk</span><br><span class="line">*.meta</span><br><span class="line">*.obj</span><br><span class="line">*.pch</span><br><span class="line">*.pdb</span><br><span class="line">*.pgc</span><br><span class="line">*.pgd</span><br><span class="line">*.rsp</span><br><span class="line">*.sbr</span><br><span class="line">*.tlb</span><br><span class="line">*.tli</span><br><span class="line">*.tlh</span><br><span class="line">*.tmp</span><br><span class="line">*.tmp_proj</span><br><span class="line">*.log</span><br><span class="line">*.vspscc</span><br><span class="line">*.vssscc</span><br><span class="line">.builds</span><br><span class="line">*.pidb</span><br><span class="line">*.log</span><br><span class="line">*.svclog</span><br><span class="line">*.scc</span><br><span class="line"></span><br><span class="line"><span class="meta"># Visual C++ cache files</span></span><br><span class="line">ipch/</span><br><span class="line">*.aps</span><br><span class="line">*.ncb</span><br><span class="line">*.opensdf</span><br><span class="line">*.sdf</span><br><span class="line">*.cachefile</span><br><span class="line"></span><br><span class="line"><span class="meta"># Visual Studio profiler</span></span><br><span class="line">*.psess</span><br><span class="line">*.vsp</span><br><span class="line">*.vspx</span><br><span class="line"></span><br><span class="line"><span class="meta"># Guidance Automation Toolkit</span></span><br><span class="line">*.gpState</span><br><span class="line"></span><br><span class="line"><span class="meta"># ReSharper is a .NET coding add-in</span></span><br><span class="line">_ReSharper*/</span><br><span class="line">*.[Rr]e[Ss]harper</span><br><span class="line">*.DotSettings.user</span><br><span class="line"></span><br><span class="line"><span class="meta"># Click-Once directory</span></span><br><span class="line">publish/</span><br><span class="line"></span><br><span class="line"><span class="meta"># Publish Web Output</span></span><br><span class="line">*.Publish.xml</span><br><span class="line">*.pubxml</span><br><span class="line">*.azurePubxml</span><br><span class="line"></span><br><span class="line"><span class="meta"># NuGet Packages Directory</span></span><br><span class="line"><span class="meta">## TODO: If you have NuGet Package Restore enabled, uncomment the next <span class="keyword">line</span></span></span><br><span class="line">packages/</span><br><span class="line"><span class="meta">## TODO: If the tool you use requires repositories.config, also uncomment the next <span class="keyword">line</span></span></span><br><span class="line">!packages/repositories.config</span><br><span class="line"></span><br><span class="line"><span class="meta"># Windows Azure Build Output</span></span><br><span class="line">csx/</span><br><span class="line">*.build.csdef</span><br><span class="line"></span><br><span class="line"><span class="meta"># Windows Store app package directory</span></span><br><span class="line">AppPackages/</span><br><span class="line"></span><br><span class="line"><span class="meta"># Others</span></span><br><span class="line">sql/</span><br><span class="line">*.Cache</span><br><span class="line">ClientBin/</span><br><span class="line">[<span class="meta">Ss</span>]tyle[Cc]op.*</span><br><span class="line">![Ss]tyle[Cc]op.targets</span><br><span class="line">~$*</span><br><span class="line">*~</span><br><span class="line">*.dbmdl</span><br><span class="line">*.[Pp]ublish.xml</span><br><span class="line"></span><br><span class="line">*.publishsettings</span><br><span class="line"></span><br><span class="line"><span class="meta"># RIA/Silverlight projects</span></span><br><span class="line">Generated_Code/</span><br><span class="line"></span><br><span class="line"><span class="meta"># Backup &amp; report files from converting an old project file to a newer</span></span><br><span class="line"><span class="meta"># Visual Studio version. Backup files are not needed, because we have git ;-)</span></span><br><span class="line">_UpgradeReport_Files/</span><br><span class="line">Backup*/</span><br><span class="line">UpgradeLog*.XML</span><br><span class="line">UpgradeLog*.htm</span><br><span class="line"></span><br><span class="line"><span class="meta"># SQL Server files</span></span><br><span class="line">App_Data<span class="comment">/*.mdf</span></span><br><span class="line"><span class="comment">App_Data/*.ldf</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># =========================</span></span><br><span class="line"><span class="comment"># Windows detritus</span></span><br><span class="line"><span class="comment"># =========================</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Windows image file caches</span></span><br><span class="line"><span class="comment">Thumbs.db</span></span><br><span class="line"><span class="comment">ehthumbs.db</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Folder config file</span></span><br><span class="line"><span class="comment">Desktop.ini</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Recycle Bin used on file shares</span></span><br><span class="line"><span class="comment">$RECYCLE.BIN/</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Mac desktop service store files</span></span><br><span class="line"><span class="comment">.DS_Store</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">_NCrunch*</span></span><br><span class="line"><span class="comment"></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Troubleshooting-Tips"><a href="#Troubleshooting-Tips" class="headerlink" title="Troubleshooting &amp; Tips"></a>Troubleshooting &amp; Tips</h3><ul>
+<li><p>Tips</p>
+<ol>
+<li><p>Each time the database or tables are changed, <strong>migrations</strong> and <strong>updates</strong> must be executed</p>
+</li>
+<li><p>Generated Datetime in table: <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/ef/core/modeling/generated-properties?tabs=data-annotations">Generate Values - EF Core</a></p>
+  <img width="591" alt="datetime" src="https://github.com/user-attachments/assets/d6beeb52-dc18-4be8-8f66-ed16765fa52b">
+ </li>
+<li><p>Add different table join</p>
+<p> <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/ef/core/querying/related-data/eager">Eager Loading of Related Data</a></p>
+ <img width="332" alt="join" src="https://github.com/user-attachments/assets/17ff08e9-b304-4c05-a243-63993669dd20">
+ </li>
+<li><p>Add SQL <code>LIKE</code> operation: <strong>EF.Functions.Like</strong></p>
+<p> <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/45708715/entity-framework-ef-functions-like-vs-string-contains">Entity framework EF.Functions.Like vs string.Contains</a></p>
+  <img width="533" alt="like" src="https://github.com/user-attachments/assets/5ffb35fc-47e6-4417-9310-02b2c39e90da"></li>
+</ol>
+</li>
+<li><p>Troubleshooting</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/53024227/how-to-connect-asp-net-core-to-a-sql-server-docker-container-on-mac">How to connect ASP.Net Core to a SQL Server Docker container on Mac</a></p>
+ <img width="738" alt="appseting" src="https://github.com/user-attachments/assets/2789e2f2-7958-42d1-ad30-101b3d41852f">
+ </li>
+<li><p>Error: A connection was successfully established with the server, but then an error occurred during the pre-login handshake. ‣</p>
+<p> <strong>Fix:</strong> Add <code>TrustServerCertificate=True</code> to ConnectionStrings</p>
+</li>
+<li><p><strong>Error: “A possible object cycle was detected” in different versions of ASP.NET Core</strong></p>
+<p> <a target="_blank" rel="noopener" href="https://gavilan.blog/2021/05/19/fixing-the-error-a-possible-object-cycle-was-detected-in-different-versions-of-asp-net-core/">Fixing the error “A possible object cycle was detected” in different versions of ASP.NET Core</a></p>
+ <img width="748" alt="cycleerror" src="https://github.com/user-attachments/assets/9e7f2dc1-0fa1-4605-93eb-68ad574cd9a4">
+ </li>
+<li><p>Foreign-Key</p>
+<ul>
+<li>Link: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/5212751/how-can-i-retrieve-id-of-inserted-entity-using-entity-framework">How can I retrieve Id of inserted entity using Entity framework?</a></li>
+<li><code>context.Reviews.AddRange(reviews)</code> will automatically generate the primary key, which can be called directly later. The error occurs due to a conflict; a foreign key needs to reference the primary key for it to work.</li>
+</ul>
+ <img width="982" alt="seed" src="https://github.com/user-attachments/assets/18c007ab-d433-47d3-84bd-1fe34560e180"></li>
+</ol>
+</li>
+</ul>
+<p><strong>We have already completed all the code, now we can start deploying our project!</strong></p>
+<h2 id="Docker-and-SQL-Server"><a href="#Docker-and-SQL-Server" class="headerlink" title="Docker and SQL Server"></a>Docker and SQL Server</h2><h3 id="Basic-Install"><a href="#Basic-Install" class="headerlink" title="Basic Install"></a>Basic Install</h3><ul>
+<li><p>install Docker:  <a target="_blank" rel="noopener" href="https://www.docker.com/">https://www.docker.com/</a></p>
+</li>
+<li><p>install image of sqlserver, open terminal, execute this command any path:</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull [mcr.microsoft.com/mssql/server](http://mcr.microsoft.com/mssql/server)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>install Beekeeper: <a target="_blank" rel="noopener" href="https://www.beekeeperstudio.io/get">https://www.beekeeperstudio.io/get</a></p>
+</li>
+</ul>
+<h3 id="Run-SQL-Server"><a href="#Run-SQL-Server" class="headerlink" title="Run SQL Server"></a>Run SQL Server</h3><p>run sqlserver in docker. open terminal, run following command: <a target="_blank" rel="noopener" href="https://hub.docker.com/r/microsoft/mssql-server">https://hub.docker.com/r/microsoft/mssql-server</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -e <span class="string">&quot;ACCEPT_EULA=Y&quot;</span> -e <span class="string">&quot;MSSQL_SA_PASSWORD=YOUR_PASSWORD&quot;</span> -e <span class="string">&quot;MSSQL_PID=Evaluation&quot;</span> -p 1433:1433  --name sqlpreview --hostname sqlpreview -d mcr.microsoft.com/mssql/server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Default User Name is ‘<strong>SA</strong>’</li>
+<li>Set database password in <strong>MSSQL_SA_PASSWORD</strong></li>
+<li>set database port: 1433</li>
+</ul>
+<h3 id="Beekeeper-connect-database"><a href="#Beekeeper-connect-database" class="headerlink" title="Beekeeper connect database"></a>Beekeeper connect database</h3><ol>
+<li><p>make sure database is running!</p>
+</li>
+<li><p>create new connection, choose SQL Server</p>
+ <img width="512" alt="beekeeper1" src="https://github.com/user-attachments/assets/13e3b0f9-836a-4ed2-9b9f-11af145b18bb">
+ </li>
+<li><p>input <strong>User</strong> and <strong>Password</strong>, check ‘<strong>Trust Server Certificate</strong>’, click Connect.</p>
+ <img width="529" alt="beekeeper2" src="https://github.com/user-attachments/assets/794a5e54-8b00-429a-beca-152ca7eab94d">
+ </li>
+<li><p>Correct connection:</p>
+ <img width="1312" alt="beekeeper3" src="https://github.com/user-attachments/assets/abff602e-be0f-4d5c-8818-c1850e95c15c">
+ </li>
+<li><p>Create database</p>
+ <img width="923" alt="beekeeper4" src="https://github.com/user-attachments/assets/c6631060-c934-4afd-b1af-4743fef93bbf"></li>
+</ol>
+<h2 id="Build-Project-Image-and-Docker-Compose"><a href="#Build-Project-Image-and-Docker-Compose" class="headerlink" title="Build Project Image and Docker Compose"></a>Build Project Image and Docker Compose</h2><h3 id="Add-Dockerfile-and-dockerignore-to-Project"><a href="#Add-Dockerfile-and-dockerignore-to-Project" class="headerlink" title="Add Dockerfile and .dockerignore to Project"></a>Add Dockerfile and .dockerignore to Project</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-8.0">Run an ASP.NET Core app in Docker containers</a></p>
+<p>Dockerfile: It uses <code>dotnet publish</code> the same way you will do in this section to build and deploy.</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:<span class="number">8.0</span> AS build</span><br><span class="line"><span class="keyword">ARG</span> TARGETARCH</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /source</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy project file and restore as distinct layers</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --<span class="built_in">link</span> ./*.csproj .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> dotnet restore -a <span class="variable">$TARGETARCH</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy source code and publish app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --<span class="built_in">link</span> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> dotnet publish -c Release -a <span class="variable">$TARGETARCH</span> --no-restore -o /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Runtime stage</span></span><br><span class="line"><span class="keyword">FROM</span> mcr.microsoft.com/dotnet/aspnet:<span class="number">8.0</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --<span class="built_in">link</span> --from=build /app .</span></span><br><span class="line"><span class="keyword">USER</span> $APP_UID</span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;./TrilloBackend&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>.dockerignore</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># directories</span></span><br><span class="line">**/bin/</span><br><span class="line">**/obj/</span><br><span class="line">**/out/</span><br><span class="line"></span><br><span class="line"><span class="comment"># files</span></span><br><span class="line">Dockerfile*</span><br><span class="line">**/*.md</span><br></pre></td></tr></table></figure>
+
+<h3 id="Build-project-image"><a href="#Build-project-image" class="headerlink" title="Build project image"></a>Build project image</h3><ol>
+<li><p>navigate to the project folder, run the <strong>dotnet publish</strong> command: (I have written this command in Dockerfile, we can <strong>ignore</strong> this step)</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet publish -c Release -o published </span><br></pre></td></tr></table></figure>
+
+ <img width="717" alt="dockerfile" src="https://github.com/user-attachments/assets/72cf29ca-e989-4ed0-8a78-9d70323b36a0">
+ </li>
+<li><p>Build Project image</p>
+<p> Attention there is a <strong>point</strong> in the end! I advice to name image as <strong>dockercount&#x2F;imagename:date.version</strong> so that you can easy to manage different versions.</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t ella0110/trillobackend:20241005.1 . </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run image. If your image doesn’t need database, then you can run it directly. If you need database, you should use docker compose which is in the next section.</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --<span class="built_in">rm</span> -p 8080:8080 ella0110/trillobackend:20241005.1</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h3><ol>
+<li><p><strong>Install docker compose</strong>, open terminal, run these command: </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew search docker compose</span><br><span class="line">brew install docker-compose</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Define services in a Compose file</strong></p>
+<p> Docker Compose simplifies the control of your entire application stack, making it easy to manage services, networks, and volumes in a single, comprehensible YAML configuration file. </p>
+<p> Create a file called <code>compose.yaml</code> in your project directory and paste the following:</p>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&quot;ella0110/trillobackend:20241005.3&quot;</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ASPNETCORE_ENVIRONMENT=Production</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">sqlserver:</span> </span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">  <span class="attr">sqlserver:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&quot;mcr.microsoft.com/mssql/server:latest&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ACCEPT_EULA=Y</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MSSQL_SA_PASSWORD=@Aa12345678</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;1433:1433&quot;</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&quot;CMD&quot;</span>, <span class="string">&quot;/opt/mssql-tools18/bin/sqlcmd&quot;</span>, <span class="string">&quot;-C&quot;</span>, <span class="string">&quot;-S&quot;</span>, <span class="string">&quot;localhost&quot;</span>, <span class="string">&quot;-U&quot;</span>, <span class="string">&quot;sa&quot;</span>, <span class="string">&quot;-P&quot;</span>, <span class="string">&quot;@Aa12345678&quot;</span>, <span class="string">&quot;-Q&quot;</span>, <span class="string">&quot;SELECT 1&quot;</span>, <span class="string">&quot;-b&quot;</span>, <span class="string">&quot;-o&quot;</span>, <span class="string">&quot;/dev/null&quot;</span>]</span><br><span class="line">      <span class="comment"># test: /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P $&#123;MSSQL_SA_PASSWORD&#125; -Q &#x27;SELECT 1&#x27; -b -o /dev/null</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">10s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">3s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">10</span></span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">10s</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run docker compose</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Upload-Image-to-Docker-Hub"><a href="#Upload-Image-to-Docker-Hub" class="headerlink" title="Upload Image to Docker Hub"></a>Upload Image to Docker Hub</h3><ul>
+<li>open terminal, login to docker and run this command to push image to your docker hub account.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push ella0110/trillobackend</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>if you want to change your image name, use this command:</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/49834454/how-do-you-fix-a-docker-push-error-tag-does-not-exist">Stack Overflow</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag trillo-backend ella0110/trillobackend</span><br></pre></td></tr></table></figure>
+
+<h3 id="Troubleshooting-Tips-1"><a href="#Troubleshooting-Tips-1" class="headerlink" title="Troubleshooting &amp; Tips"></a>Troubleshooting &amp; Tips</h3><ul>
+<li><p>Tips</p>
+<ol>
+<li><p>Check the health_check log</p>
+<p> <code>trillobackend-sqlserver-1</code> is container name</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect --format <span class="string">&quot;&#123;&#123;json .State.Health&#125;&#125;&quot;</span> trillobackend-sqlserver-1</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>Troubleshooting</p>
+<ol>
+<li><p>Dependency issue: On first run, the database may not be ready when back end tries to initialise the database, and cause back end service failing to start.</p>
+<ul>
+<li>Link: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/60539114/how-to-wait-for-mssql-in-docker-compose">Stack Overflow</a></li>
+<li>Fix: Add <strong>health check</strong> and <strong>depend on</strong> command</li>
+</ul>
+ <img width="1131" alt="healthcheck" src="https://github.com/user-attachments/assets/908fdc86-4179-4ea2-aa7f-0974a7925616">
+ </li>
+<li><p>When check health, it’s always failed</p>
+<ul>
+<li>should be <code>/opt/mssql-tools18/bin/sqlcmd</code> rather than <code>/opt/mssql-tools/bin/sqlcmd</code>, can test it in Docker&#x2F;Containers&#x2F;sqlserver&#x2F;Exec</li>
+</ul>
+</li>
+<li><p>Error: <code>[Microsoft][ODBC Driver 18 for SQL Server]SSL Provider: [error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed:self signed certificate]</code></p>
+<ul>
+<li>Link: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/71688125/odbc-driver-18-for-sql-serverssl-provider-error1416f086">Stack Overflow</a></li>
+<li>Fix: Add <code>-C</code> to health check</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="Deploy-Project-Image-and-Database-to-ECS"><a href="#Deploy-Project-Image-and-Database-to-ECS" class="headerlink" title="Deploy Project Image and Database to ECS"></a>Deploy Project Image and Database to ECS</h2><h3 id="Create-Task-definitions"><a href="#Create-Task-definitions" class="headerlink" title="Create Task definitions"></a>Create Task definitions</h3><ol>
+<li><p>login your AWS account</p>
+</li>
+<li><p>search <strong>ECS</strong>, choose <strong>Elastic Container Service</strong></p>
+</li>
+<li><p>choose <strong>Task definitions</strong>, click <strong>Create new task definition&#x2F; Create new task definition</strong></p>
+</li>
+<li><p>input <strong>Task definition family name</strong></p>
+</li>
+<li><p>you can change <strong>Task size</strong> if you want</p>
+</li>
+<li><p><strong>Container-1</strong>, you can input infomation about your database</p>
+<ul>
+<li><p><strong>Name</strong>: sqlserver;</p>
+</li>
+<li><p><strong>Image URI</strong>: mcr.microsoft.com&#x2F;mssql&#x2F;server:latest</p>
+</li>
+<li><p><strong>Environment varaiables</strong>: follow with the section: Run SQL  Server</p>
+  <img width="380" alt="envvariable" src="https://github.com/user-attachments/assets/2deba519-07d4-4e6c-8f3c-ba0fc59c9a8e">
+  </li>
+<li><p><strong>HealthCheck</strong>: CMD-SHELL,&#x2F;opt&#x2F;mssql-tools18&#x2F;bin&#x2F;sqlcmd -C -S localhost -U sa -P ‘your password’ -Q ‘SELECT 1’ -b -o &#x2F;dev&#x2F;null</p>
+</li>
+<li><p>Interval: 10</p>
+</li>
+<li><p>Timeout: 3</p>
+</li>
+<li><p>Start period: 10</p>
+</li>
+<li><p>Retries: 10</p>
+</li>
+</ul>
+</li>
+<li><p>Container-2, you can input information about your project image</p>
+<ul>
+<li><p><strong>Name</strong>: your project</p>
+</li>
+<li><p><strong>Image URI</strong>: eg. ella0110&#x2F;trillobackend:20241005.4</p>
+</li>
+<li><p><strong>Port mappings</strong></p>
+  <img width="765" alt="port" src="https://github.com/user-attachments/assets/3a5bc4dc-7a01-4413-9de9-351de303ea7b">
+  </li>
+<li><p><strong>Startup dependency ordering</strong></p>
+  <img width="755" alt="depend" src="https://github.com/user-attachments/assets/7e5daeb9-5784-4673-8a6e-51fab3cbc76f"></li>
+</ul>
+</li>
+<li><p>click <strong>Create</strong></p>
+</li>
+</ol>
+<h3 id="Create-Clusters"><a href="#Create-Clusters" class="headerlink" title="Create Clusters"></a>Create Clusters</h3><p>Clusters → Create cluster: input <strong>Cluster name</strong>, click <strong>Create</strong></p>
+<img width="1344" alt="cluster" src="https://github.com/user-attachments/assets/8e09e388-cff1-4865-9ad0-59222dc60931">
+
+<h3 id="Deploy-your-task-to-cluster"><a href="#Deploy-your-task-to-cluster" class="headerlink" title="Deploy your task to cluster"></a>Deploy your task to cluster</h3><ol>
+<li><p>Choose your task, click <strong>Deploy</strong>→ <strong>Create Service</strong></p>
+ <img width="1350" alt="deploytask" src="https://github.com/user-attachments/assets/21c148b6-4457-431b-8f2f-001d2cba62da">
+ </li>
+<li><p><strong>Choose your Cluster</strong>, then click <strong>Create</strong></p>
+</li>
+</ol>
+<h3 id="Troubleshooting-Tips-2"><a href="#Troubleshooting-Tips-2" class="headerlink" title="Troubleshooting &amp; Tips"></a>Troubleshooting &amp; Tips</h3><ul>
+<li><p>Tips</p>
+<ol>
+<li><p>The public IP generated by ECS is inaccessible because a specific IP was used, not open IP range.</p>
+<p> <strong>Fix:</strong> VPC → Security Groups → click Security group ID → Inbound rules → Edit inbound rules → add a new rule</p>
+ <img width="1296" alt="ip" src="https://github.com/user-attachments/assets/6c8a998e-80c6-4ce0-b692-7bf7b7492b11"></li>
+</ol>
+</li>
+<li><p>Troubleshooting</p>
+<ol>
+<li><p>Error: <code>Unhandled **exception**. Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific **error** occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: TCP Provider, **error**: 35 - An internal **exception** was caught)</code></p>
+<ul>
+<li>Link: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/58196930/communication-between-containers-in-ecs-task-definition">Stack Overflow</a></li>
+<li>Fix:</li>
+</ul>
+ <img width="702" alt="host" src="https://github.com/user-attachments/assets/12963722-5d0a-4bef-8513-57d7fe7d7226">
+ </li>
+<li><p>Healthcheck can not work</p>
+<ul>
+<li>Link: <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_HealthCheck.html">AWS - HealthCheck</a></li>
+</ul>
+ <figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CMD</span><span class="language-bash">-SHELL,/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P <span class="string">&#x27;@Aa12345678&#x27;</span> -Q <span class="string">&#x27;SELECT 1&#x27;</span> -b -o /dev/null</span></span><br></pre></td></tr></table></figure>
+
+<p> <img src="https://github.com/user-attachments/assets/0b3bf1d1-c2d4-4405-a346-c31416bea002" alt="healthcheckecs"></p>
+</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/01/19/AWS%20EC2-Domain-SSL/" rel="prev" title="跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践">
+                跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-and-DotNet"><span class="nav-number">1.</span> <span class="nav-text">C# and DotNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-install"><span class="nav-number">1.1.</span> <span class="nav-text">Basic install</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-ASP-Net-Web-API-Project"><span class="nav-number">1.2.</span> <span class="nav-text">Create ASP.Net Web API Project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-Ef-Core"><span class="nav-number">1.3.</span> <span class="nav-text">Add Ef Core</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-Controller"><span class="nav-number">1.4.</span> <span class="nav-text">Add Controller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Automatically-Initialise-Database"><span class="nav-number">1.5.</span> <span class="nav-text">Automatically Initialise Database</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-gitignore-for-C"><span class="nav-number">1.6.</span> <span class="nav-text">Add .gitignore for C#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Troubleshooting-Tips"><span class="nav-number">1.7.</span> <span class="nav-text">Troubleshooting &amp; Tips</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-and-SQL-Server"><span class="nav-number">2.</span> <span class="nav-text">Docker and SQL Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Install"><span class="nav-number">2.1.</span> <span class="nav-text">Basic Install</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-SQL-Server"><span class="nav-number">2.2.</span> <span class="nav-text">Run SQL Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beekeeper-connect-database"><span class="nav-number">2.3.</span> <span class="nav-text">Beekeeper connect database</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-Project-Image-and-Docker-Compose"><span class="nav-number">3.</span> <span class="nav-text">Build Project Image and Docker Compose</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-Dockerfile-and-dockerignore-to-Project"><span class="nav-number">3.1.</span> <span class="nav-text">Add Dockerfile and .dockerignore to Project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Build-project-image"><span class="nav-number">3.2.</span> <span class="nav-text">Build project image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Compose"><span class="nav-number">3.3.</span> <span class="nav-text">Docker Compose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Upload-Image-to-Docker-Hub"><span class="nav-number">3.4.</span> <span class="nav-text">Upload Image to Docker Hub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Troubleshooting-Tips-1"><span class="nav-number">3.5.</span> <span class="nav-text">Troubleshooting &amp; Tips</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deploy-Project-Image-and-Database-to-ECS"><span class="nav-number">4.</span> <span class="nav-text">Deploy Project Image and Database to ECS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-Task-definitions"><span class="nav-number">4.1.</span> <span class="nav-text">Create Task definitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-Clusters"><span class="nav-number">4.2.</span> <span class="nav-text">Create Clusters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-your-task-to-cluster"><span class="nav-number">4.3.</span> <span class="nav-text">Deploy your task to cluster</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Troubleshooting-Tips-2"><span class="nav-number">4.4.</span> <span class="nav-text">Troubleshooting &amp; Tips</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ella</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
