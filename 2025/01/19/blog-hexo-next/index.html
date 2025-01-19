@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="Github pageRef: https:&#x2F;&#x2F;mini-pi.github.io&#x2F;2024&#x2F;02&#x2F;28&#x2F;how-to-make-blog-wedsite&#x2F; Ref: https:&#x2F;&#x2F;zhengyujie.github.io&#x2F;categories&#x2F;Hexo%E6%A1%86%E6%9E%B6&#x2F; 1: 创建&lt;username&gt;.github.io 仓库 New repository -&amp;">
+<meta name="description" content="终于开始搭建自己的个人博客，迈出记录的第一步！该博客基于Github page + Hexo + Next，目前还不完美，逐步优化中。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Github pages + Hexo + Next 博客搭建">
 <meta property="og:url" content="https://ella0110.github.io/2025/01/19/blog-hexo-next/index.html">
 <meta property="og:site_name" content="Ella&#39;s Blog">
-<meta property="og:description" content="Github pageRef: https:&#x2F;&#x2F;mini-pi.github.io&#x2F;2024&#x2F;02&#x2F;28&#x2F;how-to-make-blog-wedsite&#x2F; Ref: https:&#x2F;&#x2F;zhengyujie.github.io&#x2F;categories&#x2F;Hexo%E6%A1%86%E6%9E%B6&#x2F; 1: 创建&lt;username&gt;.github.io 仓库 New repository -&amp;">
+<meta property="og:description" content="终于开始搭建自己的个人博客，迈出记录的第一步！该博客基于Github page + Hexo + Next，目前还不完美，逐步优化中。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-19T08:33:14.690Z">
-<meta property="article:modified_time" content="2025-01-19T09:07:32.566Z">
+<meta property="article:modified_time" content="2025-01-19T12:25:34.066Z">
 <meta property="article:author" content="Ella">
 <meta name="twitter:card" content="summary">
 
@@ -97,7 +97,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -299,7 +299,9 @@
       
 
       
-        <h2 id="Github-page"><a href="#Github-page" class="headerlink" title="Github page"></a>Github page</h2><p>Ref: <a target="_blank" rel="noopener" href="https://mini-pi.github.io/2024/02/28/how-to-make-blog-wedsite/">https://mini-pi.github.io/2024/02/28/how-to-make-blog-wedsite/</a></p>
+        <p>终于开始搭建自己的个人博客，迈出记录的第一步！该博客基于Github page + Hexo + Next，目前还不完美，逐步优化中。</p>
+<span id="more"></span>
+<h2 id="Github-page"><a href="#Github-page" class="headerlink" title="Github page"></a>Github page</h2><p>Ref: <a target="_blank" rel="noopener" href="https://mini-pi.github.io/2024/02/28/how-to-make-blog-wedsite/">https://mini-pi.github.io/2024/02/28/how-to-make-blog-wedsite/</a></p>
 <p>Ref: <a target="_blank" rel="noopener" href="https://zhengyujie.github.io/categories/Hexo%E6%A1%86%E6%9E%B6/">https://zhengyujie.github.io/categories/Hexo%E6%A1%86%E6%9E%B6/</a></p>
 <h4 id="1-创建-github-io-仓库"><a href="#1-创建-github-io-仓库" class="headerlink" title="1: 创建&lt;username&gt;.github.io 仓库"></a>1: 创建<code>&lt;username&gt;.github.io</code> 仓库</h4><ul>
 <li>New repository -&gt; add Repository name (eg. <code>Username.github.io</code>) -&gt; Create repository</li>
@@ -335,7 +337,7 @@
 <li><p>在<code>主题配置文件</code>中找到<code>auto_excerpt</code>，这个属性可以设置为自动折叠，比如设置成只显示<code>300</code>个字，这样的后面的内容就会折叠起来，配置如下：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">auto_excerpt:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">length:</span> <span class="number">300</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h4 id="Step6：将生成的静态页面部署到-github-上"><a href="#Step6：将生成的静态页面部署到-github-上" class="headerlink" title="Step6：将生成的静态页面部署到 github 上"></a>Step6：将生成的静态页面部署到 github 上</h4><p>**具体操作：**修改站点配置文件<code>_config.yml</code>的最后部分</p>
+<h4 id="6：将生成的静态页面部署到-github-上"><a href="#6：将生成的静态页面部署到-github-上" class="headerlink" title="6：将生成的静态页面部署到 github 上"></a>6：将生成的静态页面部署到 github 上</h4><p><strong>具体操作</strong>：修改站点配置文件<code>_config.yml</code>的最后部分</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 
 <p>要先安装deploy-git，才能用命令部署到GitHub</p>
@@ -373,22 +375,6 @@
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2025/01/19/AWS%20EC2-Domain-SSL/" rel="next" title="跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践">
-                <i class="fa fa-chevron-left"></i> 跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
       
 
       
@@ -462,7 +448,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -499,7 +485,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-page"><span class="nav-number">1.</span> <span class="nav-text">Github page</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA-github-io-%E4%BB%93%E5%BA%93"><span class="nav-number">1.0.1.</span> <span class="nav-text">1: 创建&lt;username&gt;.github.io 仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9C%A8%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2-Hexo-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.0.2.</span> <span class="nav-text">2: 在本地部署 Hexo 环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%9A%E9%85%8D%E7%BD%AE-Next-%E4%B8%BB%E9%A2%98"><span class="nav-number">1.0.3.</span> <span class="nav-text">3：配置 Next 主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%9A%E6%B7%BB%E5%8A%A0%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9"><span class="nav-number">1.0.4.</span> <span class="nav-text">4：添加博客内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%9A%E5%AF%B9-Next-%E4%B8%BB%E9%A2%98%E8%BF%9B%E8%A1%8C%E5%B0%8F%E4%BF%AE%E6%94%B9"><span class="nav-number">1.0.5.</span> <span class="nav-text">5：对 Next 主题进行小修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step6%EF%BC%9A%E5%B0%86%E7%94%9F%E6%88%90%E7%9A%84%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E9%83%A8%E7%BD%B2%E5%88%B0-github-%E4%B8%8A"><span class="nav-number">1.0.6.</span> <span class="nav-text">Step6：将生成的静态页面部署到 github 上</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84Bug"><span class="nav-number">2.</span> <span class="nav-text">遇到的Bug</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hexo-deploy-%E6%8A%A5%E9%94%99"><span class="nav-number">2.0.1.</span> <span class="nav-text">Hexo deploy 报错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E4%B8%8D%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.0.2.</span> <span class="nav-text">图片不加载</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-page"><span class="nav-number">1.</span> <span class="nav-text">Github page</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA-github-io-%E4%BB%93%E5%BA%93"><span class="nav-number">1.0.1.</span> <span class="nav-text">1: 创建&lt;username&gt;.github.io 仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9C%A8%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2-Hexo-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.0.2.</span> <span class="nav-text">2: 在本地部署 Hexo 环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%9A%E9%85%8D%E7%BD%AE-Next-%E4%B8%BB%E9%A2%98"><span class="nav-number">1.0.3.</span> <span class="nav-text">3：配置 Next 主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%9A%E6%B7%BB%E5%8A%A0%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9"><span class="nav-number">1.0.4.</span> <span class="nav-text">4：添加博客内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%9A%E5%AF%B9-Next-%E4%B8%BB%E9%A2%98%E8%BF%9B%E8%A1%8C%E5%B0%8F%E4%BF%AE%E6%94%B9"><span class="nav-number">1.0.5.</span> <span class="nav-text">5：对 Next 主题进行小修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%EF%BC%9A%E5%B0%86%E7%94%9F%E6%88%90%E7%9A%84%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E9%83%A8%E7%BD%B2%E5%88%B0-github-%E4%B8%8A"><span class="nav-number">1.0.6.</span> <span class="nav-text">6：将生成的静态页面部署到 github 上</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84Bug"><span class="nav-number">2.</span> <span class="nav-text">遇到的Bug</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hexo-deploy-%E6%8A%A5%E9%94%99"><span class="nav-number">2.0.1.</span> <span class="nav-text">Hexo deploy 报错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E4%B8%8D%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.0.2.</span> <span class="nav-text">图片不加载</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -537,7 +523,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
