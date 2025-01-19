@@ -300,18 +300,8 @@
       
         
           
-          
-创建域名
-a. 配置ECS
-
-创建Load balancer
-因为原来的cluster&#x2F;service没有load balancer，重新创建了一个service
-创建ACM生成证书
-因为太贵，删掉所有，换方式
-
-b. 配置EC2
-
-新建ke y-pair(一次就够了，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹)
+          配置EC2
+新建key-pair(一次就够了，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹)
 
 新建instance
 Name, ubuntu, t2.micro, key-pair,SSH_HTTPS_HTTP -&gt; Launch instance
@@ -319,7 +309,11 @@ Name, ubuntu, t2.micro, key-pair,SSH_HTTPS_HTTP -&gt; Launch instance
 本地登陆服务器
 
 EC2找到IP地址
-打开本地terminal，输入ss
+打开本地terminal，输入ssh -i ~/.ssh/kp-mac.pem ubuntu@54.152.15.202 其中kp-mac.pem是下载的key-pair
+
+
+安装docker
+https://docs.docker.com/engine/install
           ...
           <!--noindex-->
           <div class="post-button text-center">

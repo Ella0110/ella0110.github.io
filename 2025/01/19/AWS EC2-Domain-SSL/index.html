@@ -79,17 +79,22 @@
 
 
 
-<meta name="description" content="创建域名 a. 配置ECS  创建Load balancer 因为原来的cluster&#x2F;service没有load balancer，重新创建了一个service 创建ACM生成证书 因为太贵，删掉所有，换方式  b. 配置EC2  新建ke y-pair(一次就够了，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹)  新建instance Name, u">
+<meta name="description" content="配置EC2 新建key-pair(一次就够了，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹)  新建instance Name, ubuntu, t2.micro, key-pair,SSH_HTTPS_HTTP -&gt; Launch instance  本地登陆服务器  EC2找到IP地址 打开本地terminal，输入ssh -i ~&#x2F;.ssh&#x2F;kp-mac">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践">
 <meta property="og:url" content="https://ella0110.github.io/2025/01/19/AWS%20EC2-Domain-SSL/index.html">
 <meta property="og:site_name" content="Ella&#39;s Blog">
-<meta property="og:description" content="创建域名 a. 配置ECS  创建Load balancer 因为原来的cluster&#x2F;service没有load balancer，重新创建了一个service 创建ACM生成证书 因为太贵，删掉所有，换方式  b. 配置EC2  新建ke y-pair(一次就够了，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹)  新建instance Name, u">
+<meta property="og:description" content="配置EC2 新建key-pair(一次就够了，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹)  新建instance Name, ubuntu, t2.micro, key-pair,SSH_HTTPS_HTTP -&gt; Launch instance  本地登陆服务器  EC2找到IP地址 打开本地terminal，输入ssh -i ~&#x2F;.ssh&#x2F;kp-mac">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250115-ipaddress-instance">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250115165803021.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250115184728164.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250115190605919.png">
 <meta property="article:published_time" content="2025-01-19T08:05:48.228Z">
-<meta property="article:modified_time" content="2025-01-19T08:10:28.555Z">
+<meta property="article:modified_time" content="2025-01-19T08:27:37.360Z">
 <meta property="article:author" content="Ella">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ella0110.github.io/image/image-20250115-ipaddress-instance">
 
 
 
@@ -299,18 +304,8 @@
       
 
       
-        <ol>
-<li><p>创建域名</p>
-<p>a. 配置ECS</p>
-<ul>
-<li>创建Load balancer</li>
-<li>因为原来的cluster&#x2F;service没有load balancer，重新创建了一个service</li>
-<li>创建ACM生成证书</li>
-<li>因为太贵，删掉所有，换方式</li>
-</ul>
-<p>b. 配置EC2</p>
-<ul>
-<li><p>新建ke y-pair(一次就够了，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹)</p>
+        <h4 id="配置EC2"><a href="#配置EC2" class="headerlink" title="配置EC2"></a>配置EC2</h4><ul>
+<li><p>新建key-pair(一次就够了，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹)</p>
 </li>
 <li><p>新建instance</p>
 <p>Name, ubuntu, t2.micro, key-pair,SSH_HTTPS_HTTP -&gt; Launch instance</p>
@@ -318,7 +313,7 @@
 <li><p>本地登陆服务器</p>
 <ul>
 <li>EC2找到IP地址</li>
-<li>打开本地terminal，输入<code>ssh -i ~/.ssh/kp-mac.pem ubuntu@54.152.15.202 </code>其中kp-mac.pem是下载的ke y-pair</li>
+<li>打开本地terminal，输入<code>ssh -i ~/.ssh/kp-mac.pem ubuntu@54.152.15.202 </code>其中kp-mac.pem是下载的key-pair</li>
 </ul>
 </li>
 <li><p>安装docker</p>
@@ -329,11 +324,7 @@
 <li><p>运行sudo docker compose up</p>
 </li>
 </ul>
-</li>
-<li><p>配置EC2过程中遇到的问题</p>
-</li>
-</ol>
-<ul>
+<h4 id="配置EC2过程中遇到的问题"><a href="#配置EC2过程中遇到的问题" class="headerlink" title="配置EC2过程中遇到的问题"></a>配置EC2过程中遇到的问题</h4><ul>
 <li><p>sqlserver太大，申请的ubuntu跑不动</p>
 <p>解决：换用postgress，删除ubuntu中运行docker compose up下载的image和容器</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker images       # 列出镜像</span><br><span class="line">docker stop image.  # 停止正在运行的镜像</span><br><span class="line">docker rmi &lt;image&gt;  # 删除不需要的镜像</span><br><span class="line"></span><br><span class="line">docker ps -a        # 列出所有容器</span><br><span class="line">docker rm &lt;container&gt;  # 删除不需要的容器</span><br></pre></td></tr></table></figure>
@@ -371,40 +362,26 @@
 </ul>
 </li>
 </ul>
-<ol start="5">
-<li><p>ubuntu正常跑起来docker compose后，配置instance的端口</p>
-<p>instance -&gt; networking -&gt; network interface -&gt;左滑到Security group -&gt; edit inbound rules -&gt; add port 8080</p>
-<p>![image-20250115165510745](&#x2F;Users&#x2F;ella&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250115165510745.png)</p>
-</li>
-<li><p>配置域名链接到EC2的ip</p>
-</li>
-</ol>
-<ul>
+<h4 id="ubuntu正常跑起来docker-compose后，配置instance的端口"><a href="#ubuntu正常跑起来docker-compose后，配置instance的端口" class="headerlink" title="ubuntu正常跑起来docker compose后，配置instance的端口"></a>ubuntu正常跑起来docker compose后，配置instance的端口</h4><p>instance -&gt; networking -&gt; network interface -&gt;左滑到Security group -&gt; edit inbound rules -&gt; add port 8080</p>
+<p><img src="/image/image-20250115-ipaddress-instance" alt="image-20250115165510745"></p>
+<h4 id="配置域名链接到EC2的ip"><a href="#配置域名链接到EC2的ip" class="headerlink" title="配置域名链接到EC2的ip"></a>配置域名链接到EC2的ip</h4><ul>
 <li><p>打开<a target="_blank" rel="noopener" href="https://www.spaceship.com/">https://www.spaceship.com/</a> 登陆</p>
 </li>
 <li><p>点击library -&gt;Dns Tools -&gt; Domain Portfolio -&gt; 点击domain -&gt; Nameserves&amp;DNS -&gt; add DNS records</p>
-<p>![image-20250115165803021](&#x2F;Users&#x2F;ella&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250115165803021.png)</p>
+<p><img src="/image/image-20250115165803021.png" alt="image-20250115165803021"></p>
 </li>
 <li><p>打开<a target="_blank" rel="noopener" href="http://api.trillobe.com:8080/ping">http://api.trillobe.com:8080/ping</a> 正常运行</p>
 </li>
 </ul>
-<ol start="7">
-<li><p>安装nginx</p>
-<p><a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04">https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04</a></p>
+<h4 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h4><p><a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04">https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure>
 
 <p>安装完成后打开<a target="_blank" rel="noopener" href="http://api.trillobe.com/%E5%BE%97%E5%88%B0">http://api.trillobe.com/得到</a></p>
-<p>![image-20250115184728164](&#x2F;Users&#x2F;ella&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250115184728164.png)</p>
-</li>
-<li><p>配置证书 let’s encrypt -&gt; with shell access</p>
-<p><a target="_blank" rel="noopener" href="https://certbot.eff.org/instructions?ws=nginx&os=pip">https://certbot.eff.org/instructions?ws=nginx&amp;os=pip</a></p>
-<p>完全按照这个链接步骤在服务器中安装，最后生效后http会变为https，unsecure的标识也会消失</p>
-<p>![image-20250115190605919](&#x2F;Users&#x2F;ella&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250115190605919.png)</p>
-</li>
-<li><p>配置端口连接nginx</p>
-</li>
-</ol>
-<ul>
+<p><img src="/image/image-20250115184728164.png" alt="image-20250115184728164"></p>
+<h4 id="配置证书-let’s-encrypt-with-shell-access"><a href="#配置证书-let’s-encrypt-with-shell-access" class="headerlink" title="配置证书 let’s encrypt -&gt; with shell access"></a>配置证书 let’s encrypt -&gt; with shell access</h4><p><a target="_blank" rel="noopener" href="https://certbot.eff.org/instructions?ws=nginx&os=pip">https://certbot.eff.org/instructions?ws=nginx&amp;os=pip</a></p>
+<p>完全按照这个链接步骤在服务器中安装，最后生效后http会变为https，Not Secure的标识也会消失</p>
+<p><img src="/image/image-20250115190605919.png" alt="image-20250115190605919"></p>
+<h4 id="配置端口连接nginx"><a href="#配置端口连接nginx" class="headerlink" title="配置端口连接nginx"></a>配置端口连接nginx</h4><ul>
 <li><p>cd <code>/etc/nginx/sites-enabled</code></p>
 </li>
 <li><p>修改default文件，添加以下代码到443端口</p>
@@ -416,10 +393,7 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  server_name api.trillobe.com;</span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass http://localhost:8080/;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<ol start="10">
-<li>配置前端部署后端api</li>
-</ol>
-<ul>
+<h4 id="配置前端部署后端api"><a href="#配置前端部署后端api" class="headerlink" title="配置前端部署后端api"></a>配置前端部署后端api</h4><ul>
 <li><p>无法获取api，但后端api正常，显示cros错误</p>
 <ul>
 <li>在后端cros配置中应该配置<a target="_blank" rel="noopener" href="https://ella0110.github.io,删除`trillo/%60,%E9%87%8D%E6%96%B0build%EF%BC%8Cpush%EF%BC%8C%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BF%AE%E6%94%B9yaml%EF%BC%8C%E9%87%8D%E8%B7%91">https://ella0110.github.io，删除`trillo/`,重新build，push，在服务器修改yaml，重跑</a></li>
@@ -530,8 +504,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -573,6 +556,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEEC2"><span class="nav-number">1.</span> <span class="nav-text">配置EC2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEEC2%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">配置EC2过程中遇到的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ubuntu%E6%AD%A3%E5%B8%B8%E8%B7%91%E8%B5%B7%E6%9D%A5docker-compose%E5%90%8E%EF%BC%8C%E9%85%8D%E7%BD%AEinstance%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">ubuntu正常跑起来docker compose后，配置instance的端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%9F%9F%E5%90%8D%E9%93%BE%E6%8E%A5%E5%88%B0EC2%E7%9A%84ip"><span class="nav-number">4.</span> <span class="nav-text">配置域名链接到EC2的ip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85nginx"><span class="nav-number">5.</span> <span class="nav-text">安装nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%AF%81%E4%B9%A6-let%E2%80%99s-encrypt-with-shell-access"><span class="nav-number">6.</span> <span class="nav-text">配置证书 let’s encrypt -&gt; with shell access</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%AB%AF%E5%8F%A3%E8%BF%9E%E6%8E%A5nginx"><span class="nav-number">7.</span> <span class="nav-text">配置端口连接nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%AFapi"><span class="nav-number">8.</span> <span class="nav-text">配置前端部署后端api</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
