@@ -86,14 +86,14 @@
 <meta property="og:site_name" content="Ella&#39;s Blog">
 <meta property="og:description" content="继上一次后端框架部署完成，这次将我的后端部署到 GitHub Actions，并搭建一个完整的 CI&#x2F;CD 流程。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://ella0110.github.io/Image/image-20250127174528568.png">
-<meta property="og:image" content="https://ella0110.github.io/Image/image-20250127174557571.png">
-<meta property="og:image" content="https://ella0110.github.io/Image/image-20250127175151195.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250127174528568.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250127174557571.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250127175151195.png">
 <meta property="article:published_time" content="2025-01-30T09:59:04.978Z">
-<meta property="article:modified_time" content="2025-01-30T10:06:34.626Z">
+<meta property="article:modified_time" content="2025-01-30T10:10:18.203Z">
 <meta property="article:author" content="Ella">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ella0110.github.io/Image/image-20250127174528568.png">
+<meta name="twitter:image" content="https://ella0110.github.io/image/image-20250127174528568.png">
 
 
 
@@ -310,8 +310,8 @@
 <p>这篇文章详细讲解了如何使用 GitHub Actions 自动化 Docker 部署，并将镜像推送到 EC2 实例，与我的需求很相似，借鉴了很多。</p>
 <h2 id="2-配置-Secret-变量"><a href="#2-配置-Secret-变量" class="headerlink" title="2. 配置 Secret 变量"></a>2. 配置 Secret 变量</h2><p>在 GitHub 仓库中配置一些 Secret 变量，这些变量主要用于身份验证和安全连接。</p>
 <h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>Github -&gt;  <code>Settings </code> -&gt; <code>Secrets and variables</code> -&gt;  <code>Actions</code> -&gt;  <code>New repository secret</code></p>
-<p><img src="/Image/image-20250127174528568.png" alt="image-20250127174528568"></p>
-<h3 id="需要添加的-Secret-变量"><a href="#需要添加的-Secret-变量" class="headerlink" title="需要添加的 Secret 变量"></a>需要添加的 Secret 变量</h3><p><img src="/Image/image-20250127174557571.png" alt="image-20250127174557571"></p>
+<p><img src="/image/image-20250127174528568.png" alt="image-20250127174528568"></p>
+<h3 id="需要添加的-Secret-变量"><a href="#需要添加的-Secret-变量" class="headerlink" title="需要添加的 Secret 变量"></a>需要添加的 Secret 变量</h3><p><img src="/image/image-20250127174557571.png" alt="image-20250127174557571"></p>
 <ul>
 <li><p><strong>DOCKERHUB_TOKEN</strong>：</p>
 <ul>
@@ -351,7 +351,7 @@
 <li><p>在你的仓库根目录下，新建一个文件夹 <code>.github/workflows/</code>，然后在里面创建 <code>deploy.yml</code> 文件。</p>
 </li>
 <li><p>也可以从这个入口进去创建：</p>
-<p><img src="/Image/image-20250127175151195.png" alt="image-20250127175151195"></p>
+<p><img src="/image/image-20250127175151195.png" alt="image-20250127175151195"></p>
 </li>
 </ul>
 </li>
