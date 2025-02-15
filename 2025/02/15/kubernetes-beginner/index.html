@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="从0开始Kubernetes学习之旅，长期更新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes 学习笔记">
+<meta property="og:url" content="https://ella0110.github.io/2025/02/15/kubernetes-beginner/index.html">
+<meta property="og:site_name" content="Ella&#39;s Blog">
+<meta property="og:description" content="从0开始Kubernetes学习之旅，长期更新">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://spacelift.io/_next/image?url=https://spaceliftio.wpcomstaging.com/wp-content/uploads/2024/07/kubernetes-diagram.png&w=3840&q=75">
+<meta property="og:image" content="https://ella0110.github.io/Users/ella/Documents/MarkDown/Image/image-20250215141501458.png">
+<meta property="og:image" content="https://ella0110.github.io/Users/ella/Documents/MarkDown/Image/image-20250215150340569.png">
+<meta property="og:image" content="https://ella0110.github.io/Users/ella/Documents/MarkDown/Image/image-20250215165607535.png">
+<meta property="article:published_time" content="2025-02-15T09:55:42.414Z">
+<meta property="article:modified_time" content="2025-02-15T09:57:31.632Z">
+<meta property="article:author" content="Ella">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://spacelift.io/_next/image?url=https://spaceliftio.wpcomstaging.com/wp-content/uploads/2024/07/kubernetes-diagram.png&w=3840&q=75">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ella0110.github.io/2025/02/15/kubernetes-beginner/"/>
+
+
+
+
+
+  <title>Kubernetes 学习笔记 | Ella's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ella's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ella0110.github.io/2025/02/15/kubernetes-beginner/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ella's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes 学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-02-15T17:55:42+08:00">
+                2025-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从0开始Kubernetes学习之旅，长期更新</p>
+<span id="more"></span>
+
+<p>[toc]</p>
+<h2 id="初识K8s"><a href="#初识K8s" class="headerlink" title="初识K8s"></a>初识K8s</h2><h3 id="Kubernetes简介"><a href="#Kubernetes简介" class="headerlink" title="Kubernetes简介"></a>Kubernetes简介</h3><ol>
+<li>开源容器编排</li>
+<li>google开发的</li>
+<li>提供任意环境，包括物理环境、云、虚拟环境等</li>
+</ol>
+<h3 id="解决什么问题"><a href="#解决什么问题" class="headerlink" title="解决什么问题"></a>解决什么问题</h3><ol>
+<li>从单服务到微服务转变的过程中，对多容器运行管理的需求变高</li>
+<li>管理成千上万的容器</li>
+</ol>
+<h3 id="提供什么能力"><a href="#提供什么能力" class="headerlink" title="提供什么能力"></a>提供什么能力</h3><ul>
+<li>高可用（不会downtime）， always accessible by users</li>
+<li>可扩展（scalability）高性能</li>
+<li>容灾恢复（disaster recovery）- backup and store, will not lose data</li>
+</ul>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>Node: </p>
+<ul>
+<li>master node (control panel): much more important, always have backup</li>
+<li>Work node: much bigger and more resource</li>
+</ul>
+<p><img src="https://spacelift.io/_next/image?url=https://spaceliftio.wpcomstaging.com/wp-content/uploads/2024/07/kubernetes-diagram.png&w=3840&q=75" alt="kubernetes diagram"></p>
+<h3 id="组件-Components"><a href="#组件-Components" class="headerlink" title="组件 Components"></a>组件 Components</h3><p><img src="/Users/ella/Documents/MarkDown/Image/image-20250215141501458.png" alt="image-20250215141501458"></p>
+<p><strong>Pod</strong>: </p>
+<ul>
+<li>k8s中的最小单元</li>
+<li>代表容器</li>
+<li>通常一个pod代表一个应用，比如1个docker</li>
+<li>每个pod都有自己的ip地址</li>
+<li>pod可以很容易被替换，新的pod会被分配新的ip</li>
+</ul>
+<p><strong>Service</strong>：</p>
+<ul>
+<li><p>用于通信</p>
+</li>
+<li><p>永久性的静态ip地址，</p>
+</li>
+<li><p>即使pod die，service ip address不变</p>
+</li>
+<li><p>分为 external service (比如应用) 和 internal service (default type)（比如数据库）</p>
+</li>
+</ul>
+<p><strong>Ingress</strong>:</p>
+<ul>
+<li>route traffic to cluster，路由分配</li>
+</ul>
+<p><strong>ConfigMap</strong>:</p>
+<ul>
+<li>可以从外部配置pod数据，比如修改数据库名称或者url</li>
+<li>只放一些不用于机密的数据</li>
+</ul>
+<p><strong>sercet</strong></p>
+<ul>
+<li>存储一些加密数据</li>
+<li>环境变量</li>
+</ul>
+<p><strong>volumn</strong>：</p>
+<ul>
+<li>保证数据持久化，即使db挂掉重新加载也不会丢失</li>
+<li>本地存储或者远程比如云存储</li>
+</ul>
+<p><strong>Deployment</strong>:</p>
+<ul>
+<li>复制app，防止挂掉</li>
+</ul>
+<p><strong>statefulset</strong>：</p>
+<ul>
+<li>复制DB</li>
+</ul>
+<p><img src="/Users/ella/Documents/MarkDown/Image/image-20250215150340569.png" alt="image-20250215150340569"></p>
+<h3 id="创建configuration-file"><a href="#创建configuration-file" class="headerlink" title="创建configuration file"></a>创建configuration file</h3><ul>
+<li>metadata</li>
+<li>spec</li>
+<li>Status: 由k8s自动生成，来源于etcd （etcd holds the current status of any k8s component）</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment/Servie</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">	<span class="string">name:ngix-deployment</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Minikube-and-Kubectl"><a href="#Minikube-and-Kubectl" class="headerlink" title="Minikube and Kubectl"></a>Minikube and Kubectl</h2><p>Minikube：一个node包含master node process 和work node process，这个node预装了docker，因此可以在这个node跑容器</p>
+<p>Kubectl：commend line tool for k8s cluster,可以用来创建、删除pod，执行node等</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">brew install minikube <span class="comment">#同时也装上了kubectl</span></span><br><span class="line"><span class="comment"># 安装docker，假设已经装好了</span></span><br><span class="line">minikube start --driver docker</span><br><span class="line">minikube status</span><br><span class="line"></span><br><span class="line">kubectl get node</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><p><img src="/Users/ella/Documents/MarkDown/Image/image-20250215165607535.png" alt="image-20250215165607535"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/02/02/Golang-Microservices-Docker/" rel="next" title="Golang微服务通信练习">
+                <i class="fa fa-chevron-left"></i> Golang微服务通信练习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Ella0110" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/ella-chunmeiwu/" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ellawu010@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E8%AF%86K8s"><span class="nav-number">1.</span> <span class="nav-text">初识K8s</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">Kubernetes简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">解决什么问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E4%BE%9B%E4%BB%80%E4%B9%88%E8%83%BD%E5%8A%9B"><span class="nav-number">1.3.</span> <span class="nav-text">提供什么能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">1.4.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6-Components"><span class="nav-number">1.5.</span> <span class="nav-text">组件 Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAconfiguration-file"><span class="nav-number">1.6.</span> <span class="nav-text">创建configuration file</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Minikube-and-Kubectl"><span class="nav-number">2.</span> <span class="nav-text">Minikube and Kubectl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">创建文件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ella</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
