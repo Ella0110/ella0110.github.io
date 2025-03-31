@@ -81,7 +81,7 @@
 
 <meta name="description" content="继上一次后端框架部署完成，这次将我的后端部署到 GitHub Actions，并搭建一个完整的 CI&#x2F;CD 流程。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="自动化 Docker 部署：使用 GitHub Actions 推送Image到 EC2">
+<meta property="og:title" content="自动化 Docker 部署：使用 GitHub Actions 推送 Image 到 EC2">
 <meta property="og:url" content="https://ella0110.github.io/2025/01/30/Docker-EC2-CICD/index.html">
 <meta property="og:site_name" content="Ella&#39;s Blog">
 <meta property="og:description" content="继上一次后端框架部署完成，这次将我的后端部署到 GitHub Actions，并搭建一个完整的 CI&#x2F;CD 流程。">
@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://ella0110.github.io/image/image-20250127174557571.png">
 <meta property="og:image" content="https://ella0110.github.io/image/image-20250127175151195.png">
 <meta property="article:published_time" content="2025-01-30T09:59:04.978Z">
-<meta property="article:modified_time" content="2025-02-05T12:07:13.748Z">
+<meta property="article:modified_time" content="2025-03-31T15:04:20.135Z">
 <meta property="article:author" content="Ella">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ella0110.github.io/image/image-20250127174528568.png">
@@ -129,7 +129,7 @@
 
 
 
-  <title>自动化 Docker 部署：使用 GitHub Actions 推送Image到 EC2 | Ella's Blog</title>
+  <title>自动化 Docker 部署：使用 GitHub Actions 推送 Image 到 EC2 | Ella's Blog</title>
   
 
 
@@ -253,7 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">自动化 Docker 部署：使用 GitHub Actions 推送Image到 EC2</h1>
+          <h1 class="post-title" itemprop="name headline">自动化 Docker 部署：使用 GitHub Actions 推送 Image 到 EC2</h1>
         
 
         <div class="post-meta">
@@ -327,7 +327,7 @@
 </li>
 <li><p><strong>EC2_USER</strong>：根据不同需求选择，我的是<code>ubuntu</code></p>
 <ul>
-<li>根据你的 EC2 实例的 AMI不同，默认用户名可能不同：<ul>
+<li>根据你的 EC2 实例的 AMI 不同，默认用户名可能不同：<ul>
 <li>对于 Amazon Linux，默认用户名是 <code>ec2-user</code>。</li>
 <li>对于 Ubuntu，默认用户名是 <code>ubuntu</code>。</li>
 </ul>
@@ -355,7 +355,7 @@
 </li>
 </ul>
 </li>
-<li><p><strong>yml配置</strong>：</p>
+<li><p><strong>yml 配置</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">name: Deploy Docker Image to EC2</span><br><span class="line"></span><br><span class="line">on:</span><br><span class="line">  push:</span><br><span class="line">    branches:</span><br><span class="line">      - main</span><br><span class="line"></span><br><span class="line">jobs:</span><br><span class="line">  deploy:</span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line"></span><br><span class="line">    steps:</span><br><span class="line">    - name: Checkout repository</span><br><span class="line">      uses: actions/checkout@v2</span><br><span class="line"></span><br><span class="line">    - name: Set up Docker Buildx</span><br><span class="line">      uses: docker/setup-buildx-action@v1</span><br><span class="line"></span><br><span class="line">    - name: Login to Docker Hub</span><br><span class="line">      uses: docker/login-action@v2</span><br><span class="line">      with:</span><br><span class="line">        username: $&#123;&#123; secrets.DOCKERHUB_USERNAME &#125;&#125;</span><br><span class="line">        password: $&#123;&#123; secrets.DOCKERHUB_TOKEN &#125;&#125;</span><br><span class="line"></span><br><span class="line">    - name: Build and push Docker image</span><br><span class="line">      run: |</span><br><span class="line">        docker build -t your-docker-image-name .</span><br><span class="line">        docker push your-dockerhub-username/your-docker-image-name:latest</span><br><span class="line"></span><br><span class="line">    - name: Install SSH Key</span><br><span class="line">      uses: webfactory/ssh-agent@v0.5.3</span><br><span class="line">      with:</span><br><span class="line">        ssh-private-key: $&#123;&#123; secrets.SSH_PRIVATE_KEY &#125;&#125;</span><br><span class="line"></span><br><span class="line">    - name: Deploy Docker image to EC2</span><br><span class="line">      run: |</span><br><span class="line">        ssh -o StrictHostKeyChecking=no $&#123;&#123; secrets.EC2_USER &#125;&#125;@$&#123;&#123; secrets.EC2_INSTANCE_IP &#125;&#125; &lt;&lt; &#x27;EOF&#x27;</span><br><span class="line">        sudo docker pull your-dockerhub-username/your-docker-image-name:latest</span><br><span class="line">        RUNNING_CONTAINERS=$(sudo docker ps -q)</span><br><span class="line">        sudo docker stop $RUNNING_CONTAINERS</span><br><span class="line">        sudo docker rm $RUNNING_CONTAINERS</span><br><span class="line">        sudo docker compose up -d</span><br><span class="line">        EOF</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ul>
@@ -385,7 +385,7 @@
 <li><p><strong>Ubuntu 中 Docker 运行失败</strong></p>
 <ul>
 <li><strong>问题</strong>：在 EC2 实例上运行 Docker 命令时失败，提示权限不足。</li>
-<li><strong>解决</strong>：使用 <code>sudo</code>，比如docker run<code>修改为</code>sudo docker run&#96;。</li>
+<li><strong>解决</strong>：使用 <code>sudo</code>，比如 docker run<code>修改为</code>sudo docker run&#96;。</li>
 </ul>
 </li>
 </ul>
@@ -502,7 +502,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
