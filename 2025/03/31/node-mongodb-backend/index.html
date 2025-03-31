@@ -145,7 +145,7 @@
 <meta property="og:image" content="https://ella0110.github.io/image/image-20250329173529095.png">
 <meta property="og:image" content="https://ella0110.github.io/image/image-20250330113104941.png">
 <meta property="article:published_time" content="2025-03-31T14:58:47.331Z">
-<meta property="article:modified_time" content="2025-03-31T15:04:03.748Z">
+<meta property="article:modified_time" content="2025-03-31T15:13:22.086Z">
 <meta property="article:author" content="Ella">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ella0110.github.io/image/image-20250331202841254.png">
@@ -363,6 +363,163 @@
 <span id="more"></span>
 
 <p>[TOC]</p>
+<ul>
+<li><a href="#code-tree">Code Tree</a></li>
+<li><a href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-fundamentals">基础概念 Fundamentals</a><ul>
+<li><a href="#core-concepts">Core Concepts</a><ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-synchronousasynchronous">什么是 Synchronous&#x2F;Asynchronous？</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-callback">什么是 callback？</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-promise-%E4%B8%8E-asyncawait">什么是 Promise 与 async&#x2F;await？</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-middleware">什么是 middleware?</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96">其他</a></li>
+</ul>
+</li>
+<li><a href="#fs-%E6%A8%A1%E5%9D%97">fs 模块</a></li>
+</ul>
+</li>
+<li><a href="#javascript">JavaScript</a></li>
+<li><a href="#%E4%B8%AD%E9%97%B4%E4%BB%B6-middleware">中间件 Middleware</a><ul>
+<li><a href="#%E5%8E%9F%E7%90%86">原理</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E4%B8%AD%E9%97%B4%E4%BB%B6">常用中间件</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%BA%93">其他中间件库</a></li>
+</ul>
+</li>
+<li><a href="#mongoose-%E4%B8%8E-mongodb-%E6%95%B0-%E6%8D%AE%E5%BB%BA%E6%A8%A1">Mongoose 与 MongoDB 数 据建模</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1">数据模型设计</a><ul>
+<li><a href="#data-modeling-%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1">Data Modeling 数据建模</a><ul>
+<li><a href="#%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%85%B3%E7%B3%BB">不同类型数据关系</a></li>
+<li><a href="#referencingnormalization-vs-embeddingdenormalization">Referencing&#x2F;normalization vs embedding&#x2F;denormalization</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BD%BF%E7%94%A8-embeddingreferencing-documents">什么情况下使用 embedding&#x2F;referencing documents</a></li>
+<li><a href="#%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BC%95%E7%94%A8">不同类型的引用</a></li>
+</ul>
+</li>
+<li><a href="#natours-data-model">Natours Data model</a></li>
+</ul>
+</li>
+<li><a href="#%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7">高级特性</a><ul>
+<li><a href="#modeling-tour-guides">Modeling Tour guides</a><ul>
+<li><a href="#embeding">embeding</a></li>
+<li><a href="#child-reference--populate">Child Reference + Populate</a></li>
+<li><a href="#populating">Populating</a></li>
+<li><a href="#parent-reference">Parent Reference</a></li>
+<li><a href="#virtual-populate">virtual populate</a></li>
+</ul>
+</li>
+<li><a href="#nest-route">Nest Route</a><ul>
+<li><a href="#%E5%90%88%E5%B9%B6%E5%8F%82%E6%95%B0">合并参数</a></li>
+</ul>
+</li>
+<li><a href="#aggregation-pipline">Aggregation Pipline</a><ul>
+<li><a href="#match-and-group">Match and Group</a></li>
+<li><a href="#unwind-and-project">Unwind and Project</a></li>
+</ul>
+</li>
+<li><a href="#virtual-properties">Virtual Properties</a></li>
+</ul>
+</li>
+<li><a href="#mongodb">MongoDB</a></li>
+<li><a href="#middleware">Middleware</a><ul>
+<li><a href="#document-middleware">Document Middleware</a></li>
+<li><a href="#query-middleware">Query Middleware</a></li>
+<li><a href="#aggregate-middleware">Aggregate Middleware</a></li>
+</ul>
+</li>
+<li><a href="#data-validation">Data Validation</a><ul>
+<li><a href="#%E5%86%85%E7%BD%AE-validators">内置 validators</a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89-validators">自定义 validators</a></li>
+<li><a href="#validator-%E5%A4%96%E7%BD%AE%E5%BA%93">validator (外置库)</a></li>
+</ul>
+</li>
+<li><a href="#best-practice-%E8%AE%A1%E7%AE%97%E8%AF%84%E5%88%86%E7%9A%84%E5%B9%B3%E5%9D%87%E6%95%B0">Best Practice: 计算评分的平均数</a><ul>
+<li><a href="#create">create</a></li>
+<li><a href="#update-delete-168">Update, delete #168</a></li>
+<li><a href="#%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E7%9A%84-review">防止重复的 review</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E4%BF%AE%E6%94%B9-mongoose-schema-%E4%B8%AD%E7%9A%84%E6%95%B0%E5%80%BC%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5%E4%BF%9D%E7%95%99%E4%B8%80%E4%BD%8D%E5%B0%8F%E6%95%B0">如何修改 mongoose Schema 中的数值四舍五入保留一位小数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#crud-%E6%93%8D%E4%BD%9C%E4%B8%8E-api-%E8%AE%BE%E8%AE%A1">CRUD 操作与 API 设计</a><ul>
+<li><a href="#mongoose-crud">Mongoose CRUD</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-factory-function-%E7%BB%9F%E4%B8%80%E7%AE%A1%E7%90%86-crud">创建一个 factory function 统一管理 CRUD</a><ul>
+<li><a href="#create-update-delete">Create, update, delete</a></li>
+<li><a href="#reading-getall-getone">Reading (getAll, getOne)</a></li>
+</ul>
+</li>
+<li><a href="#api-%E6%9D%83%E9%99%90%E8%AE%BE%E8%AE%A1">API 权限设计</a></li>
+<li><a href="#read-performance-optimization">Read Performance Optimization</a><ul>
+<li><a href="#%E5%8D%95%E7%B4%A2%E5%BC%95">单索引</a></li>
+<li><a href="#%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95">复合索引</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95%E8%BF%87%E6%BB%A4%E6%8E%92%E5%BA%8F%E5%AD%97%E6%AE%B5%E9%80%89%E6%8B%A9%E5%92%8C%E5%88%86%E9%A1%B5">查询功能扩展（过滤、排序、字段选择和分页）</a><ul>
+<li><a href="#%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%86%99-dataquerry">两种方式写 data.querry</a></li>
+<li><a href="#%E7%AD%9B%E9%80%89%E6%95%B0%E6%8D%AE-reqquerry">筛选数据 <code>req.querry</code></a></li>
+<li><a href="#%E6%8E%92%E5%BA%8F">排序</a></li>
+<li><a href="#%E4%BB%85%E8%BF%94%E5%9B%9E%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5-limiting">仅返回特定字段 Limiting</a></li>
+<li><a href="#%E5%88%86%E9%A1%B5-page">分页 Page</a></li>
+<li><a href="#alias-%E8%87%AA%E5%AE%9A%E4%B9%89-api">alias 自定义 api</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B">代码示例</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E7%A0%81">常见报错码</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%89%E5%85%A8%E4%B8%8E%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81-security-and-authentication">安全与用户认证 Security and Authentication</a><ul>
+<li><a href="#bcrypt-%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86">Bcrypt 数据加密</a></li>
+<li><a href="#jwt">JWT</a></li>
+<li><a href="#auth-event">Auth Event</a><ul>
+<li><a href="#sign-up">Sign up</a></li>
+<li><a href="#login">Login</a></li>
+<li><a href="#project-user-access-route">Project User access route</a></li>
+<li><a href="#%E6%8E%88%E6%9D%83%E7%89%B9%E5%AE%9A-user-%E6%AF%94%E5%A6%82-admin-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%9D%83%E5%88%A9%E5%85%B6%E4%BB%96%E4%BA%BA%E4%B8%8D%E8%83%BD%E5%88%A0%E9%99%A4">授权特定 user 比如 admin 删除数据库的权利，其他人不能删除</a></li>
+<li><a href="#%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE">密码重置</a></li>
+<li><a href="#%E9%81%87%E5%88%B0%E7%9A%84-bug">遇到的 bug</a></li>
+<li><a href="#%E6%9B%B4%E6%96%B0%E9%99%A4%E5%AF%86%E7%A0%81%E5%A4%96%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE">更新除密码外其他数据</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E8%B4%A6%E6%88%B7">删除账户</a></li>
+</ul>
+</li>
+<li><a href="#%E9%98%B2%E5%BE%A1%E6%9C%BA%E5%88%B6-best-practice">防御机制 Best Practice</a><ul>
+<li><a href="#%E5%B8%B8%E8%A7%81%E5%AE%89%E5%85%A8%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F">常见安全攻击方式</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E5%8F%91%E9%80%81-cookie-%E5%88%B0-client">配置发送 cookie 到 client</a></li>
+<li><a href="#api-%E8%AF%B7%E6%B1%82%E9%A2%91%E7%8E%87%E9%99%90%E5%88%B6">API 请求频率限制</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE-security-http-headers">配置 Security HTTP Headers</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E6%B8%85%E7%90%86---%E9%A2%84%E9%98%B2-nosql-%E5%92%8C-xss-%E6%94%BB%E5%87%BB">数据清理 - 预防 NOSQL 和 XSS 攻击</a><ul>
+<li><a href="#%E6%A8%A1%E6%8B%9F-nosql-query-injection">模拟 NOSQL query injection</a></li>
+<li><a href="#%E6%A8%A1%E6%8B%9F-xss-%E6%94%BB%E5%87%BB">模拟 XSS 攻击</a></li>
+</ul>
+</li>
+<li><a href="#%E9%98%B2%E6%AD%A2%E5%8F%82%E6%95%B0%E6%B1%A1%E6%9F%93-hpp-prevent-http-parameter-pollution">防止参数污染 HPP (Prevent HTTP parameter pollution)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-mvc">项目管理 MVC</a></li>
+<li><a href="#%E8%B0%83%E8%AF%95%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96">调试、错误处理与性能优化</a><ul>
+<li><a href="#debug-%E5%B7%A5%E5%85%B7ndb">Debug 工具：NDB</a></li>
+<li><a href="#error-handler">Error Handler</a><ul>
+<li><a href="#undefined-route-handler">Undefined route handler</a></li>
+<li><a href="#globalerrorhandler">globalErrorHandler</a></li>
+<li><a href="#catch-errors-in-async-function">Catch errors in Async function</a></li>
+<li><a href="#%E8%BF%94%E5%9B%9E-404error">返回 404error</a></li>
+<li><a href="#%E5%BC%80%E5%8F%91%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83-error-%E8%AE%BE%E5%AE%9A">开发&#x2F;生产环境 Error 设定</a></li>
+<li><a href="#mongodb-%E5%AF%BC%E8%87%B4%E7%9A%84%E4%B8%8D%E8%83%BD-catch-%E7%9A%84%E9%94%99%E8%AF%AF%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83">MongoDB 导致的不能 catch 的错误（生产环境）</a><ul>
+<li><a href="#casterror">CastError</a></li>
+<li><a href="#unique-shcema-%E9%87%8D%E5%A4%8D%E6%8A%A5%E9%94%99">unique shcema 重复报错</a></li>
+<li><a href="#validationerror">ValidationError</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#process-event-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86">Process Event 事件处理</a><ul>
+<li><a href="#unhandled-rejections--uncaught-exception">Unhandled rejections &amp; Uncaught exception</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E5%8F%8A%E8%A7%A3%E5%86%B3">常见报错及解决</a></li>
+</ul>
+<p><a id="code-tree"></a></p>
 <h1 id="Code-Tree"><a href="#Code-Tree" class="headerlink" title="Code Tree"></a>Code Tree</h1><p>源码在这里 <a target="_blank" rel="noopener" href="https://github.com/Ella0110/Natours-BackEnd">Github: Natours-BackEnd</a>，可以结合代码注释，搜索查看文章，结合 <a target="_blank" rel="noopener" href="https://documenter.getpostman.com/view/43517150/2sB2cPk5eA#intro">API 文档</a> 使用 Postman 进行调试，会理解更加深刻</p>
 <p>官方课程：<a target="_blank" rel="noopener" href="https://www.udemy.com/course/nodejs-express-mongodb-bootcamp/?utm_source=adwords&utm_medium=udemyads&utm_campaign=Search_DSA_Beta_Prof_la.EN_cc.ROW-English&campaigntype=Search&portfolio=ROW-English&language=EN&product=Course&test=&audience=DSA&topic=&priority=Beta&utm_content=deal4584&utm_term=_._ag_162511579404_._ad_696197165421_._kw__._de_c_._dm__._pl__._ti_dsa-1677053911088_._li_2158_._pd__._&matchtype=&gad_source=1&gclid=CjwKCAjw-qi_BhBxEiwAkxvbkGMRGzhPvJJKB5W9cQT9K1O6CQ0dWEYw85aJUsZlu7_l1HedwR8MzxoCU0cQAvD_BwE&couponCode=PMNVD20A">Node.js, Express, MongoDB &amp; More: The Complete Bootcamp</a></p>
 <p>B 站链接：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1FY4y1H7ka?spm_id_from=333.788.videopod.episodes&vd_source=b33399a6c360986b04e3f49cbefe6371&p=166">【Udemy 付费课程】Node.js, Express, MongoDB &amp; More: The Complete Bootcamp 2022（中英文字幕）</a></p>
@@ -1276,6 +1433,7 @@
 <p>catchAsync 和 express-error-handler 区别？</p>
 <p>p115 没看懂</p>
 <p>关于代码错误该怎么 catch error？比如有一个 async 忘了写 await</p>
+<p><a id="常见报错及解决"></a></p>
 <h1 id="常见报错及解决"><a href="#常见报错及解决" class="headerlink" title="常见报错及解决"></a>常见报错及解决</h1><ol>
 <li><p>Cannot GET &#x2F;</p>
 <p>因为看错了 api 路径，需要看 <a target="_blank" rel="noopener" href="http://localhost:5001/api/contacts">http://localhost:5001/api/contacts</a> 而不是 <a target="_blank" rel="noopener" href="http://localhost:5001/">http://localhost:5001/</a></p>
