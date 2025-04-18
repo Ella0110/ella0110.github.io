@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="使用 GitHub Pages 部署网站后，想要将页面绑定到自定义域名，摸索了一下，下面是步骤及踩坑的点。 DNS 配置顶级域名在云服务厂商的 DNS 配置下，创建 IPV4 即 A 的解析记录，指向 GitHub Pages 的 IP 地址，这个地址是不会变化的。 我这里只用了 IPV4，所以只配置了A，如果你需要 IPV6，最好同时配置 A 和 AAAA，因为 IPv6 的全局采用速度缓慢">
+<meta name="description" content="使用 GitHub Pages 部署网站后，想要将页面绑定到自定义域名，摸索了一下，下面是步骤及踩坑的点。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Github Pages 绑定自定义域名">
 <meta property="og:url" content="https://ella0110.github.io/2025/04/19/github-page-custom-domain/index.html">
 <meta property="og:site_name" content="Ella&#39;s Blog">
-<meta property="og:description" content="使用 GitHub Pages 部署网站后，想要将页面绑定到自定义域名，摸索了一下，下面是步骤及踩坑的点。 DNS 配置顶级域名在云服务厂商的 DNS 配置下，创建 IPV4 即 A 的解析记录，指向 GitHub Pages 的 IP 地址，这个地址是不会变化的。 我这里只用了 IPV4，所以只配置了A，如果你需要 IPV6，最好同时配置 A 和 AAAA，因为 IPv6 的全局采用速度缓慢">
+<meta property="og:description" content="使用 GitHub Pages 部署网站后，想要将页面绑定到自定义域名，摸索了一下，下面是步骤及踩坑的点。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ella0110.github.io/image/image-20250419002842505.png">
 <meta property="og:image" content="https://ella0110.github.io/image/image-20250419003410541.png">
@@ -96,7 +96,7 @@
 <meta property="og:image" content="https://ella0110.github.io/image/image-20250419015302248.png">
 <meta property="og:image" content="https://ella0110.github.io/image/image-20250419014223386.png">
 <meta property="article:published_time" content="2025-04-18T17:55:30.843Z">
-<meta property="article:modified_time" content="2025-04-18T18:02:49.340Z">
+<meta property="article:modified_time" content="2025-04-18T18:07:54.159Z">
 <meta property="article:author" content="Ella">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ella0110.github.io/image/image-20250419002842505.png">
@@ -309,9 +309,9 @@
       
 
       
-        <span id="more"></span>
+        <p>使用 GitHub Pages 部署网站后，想要将页面绑定到自定义域名，摸索了一下，下面是步骤及踩坑的点。</p>
+<span id="more"></span>
 
-<p>使用 GitHub Pages 部署网站后，想要将页面绑定到自定义域名，摸索了一下，下面是步骤及踩坑的点。</p>
 <h3 id="DNS-配置"><a href="#DNS-配置" class="headerlink" title="DNS 配置"></a>DNS 配置</h3><h4 id="顶级域名"><a href="#顶级域名" class="headerlink" title="顶级域名"></a>顶级域名</h4><p>在云服务厂商的 DNS 配置下，创建 IPV4 即 <code>A</code> 的解析记录，指向 GitHub Pages 的 IP 地址，这个地址是不会变化的。</p>
 <p>我这里只用了 IPV4，所以只配置了<code>A</code>，如果你需要 IPV6，最好同时配置 <code>A</code> 和 <code>AAAA</code>，因为 IPv6 的全局采用速度缓慢。</p>
 <h5 id="IPV4"><a href="#IPV4" class="headerlink" title="IPV4"></a>IPV4</h5><p>要创建 <code>A</code> 记录，请将顶点域指向 GitHub Pages 的 IP 地址。</p>

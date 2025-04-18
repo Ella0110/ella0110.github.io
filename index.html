@@ -299,82 +299,14 @@
 
       
         
-          
-            <span id="more"></span>
-
-<p>使用 GitHub Pages 部署网站后，想要将页面绑定到自定义域名，摸索了一下，下面是步骤及踩坑的点。</p>
-<h3 id="DNS-配置"><a href="#DNS-配置" class="headerlink" title="DNS 配置"></a>DNS 配置</h3><h4 id="顶级域名"><a href="#顶级域名" class="headerlink" title="顶级域名"></a>顶级域名</h4><p>在云服务厂商的 DNS 配置下，创建 IPV4 即 <code>A</code> 的解析记录，指向 GitHub Pages 的 IP 地址，这个地址是不会变化的。</p>
-<p>我这里只用了 IPV4，所以只配置了<code>A</code>，如果你需要 IPV6，最好同时配置 <code>A</code> 和 <code>AAAA</code>，因为 IPv6 的全局采用速度缓慢。</p>
-<h5 id="IPV4"><a href="#IPV4" class="headerlink" title="IPV4"></a>IPV4</h5><p>要创建 <code>A</code> 记录，请将顶点域指向 GitHub Pages 的 IP 地址。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">185.199.108.153</span><br><span class="line">185.199.109.153</span><br><span class="line">185.199.110.153</span><br><span class="line">185.199.111.153</span><br></pre></td></tr></table></figure>
-
-<h5 id="IPV6"><a href="#IPV6" class="headerlink" title="IPV6"></a>IPV6</h5><p>要创建 <code>AAAA</code> 记录，请将顶点域指向 GitHub Pages 的 IP 地址。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2606:50c0:8000::153</span><br><span class="line">2606:50c0:8001::153</span><br><span class="line">2606:50c0:8002::153</span><br><span class="line">2606:50c0:8003::153</span><br></pre></td></tr></table></figure>
-
-<h5 id="创建结果"><a href="#创建结果" class="headerlink" title="创建结果"></a>创建结果</h5><p>下图中四个@代表裸域名，即 <a target="_blank" rel="noopener" href="https://trillobe.com/">https://trillobe.com</a></p>
-<img src="/image/image-20250419002842505.png" alt="image-20250419002842505" style="zoom:50%;" />
-
-<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p><strong>Q</strong>：为什么在 trillobe.com 上，把官方四个 IP 都配置上呢？</p>
-<p><strong>A</strong>：如果只写一条 A 记录，那么一旦对应那台服务器出现故障，用户就无法访问网站；写全四条，就可以充分利用 GitHub 全球 Anycast 网络，既提速又抗掉线。</p>
-<h4 id="子域名"><a href="#子域名" class="headerlink" title="子域名"></a>子域名</h4><p>如果有多个网站，希望给子域名，如<code>www.example.com</code>、<code>blog.example.com</code>，需要创建将子域名指向 <code>&lt;user&gt;.github.io</code> 的 <code>CNAME</code>记录。</p>
-<img src="/image/image-20250419003410541.png" alt="image-20250419003410541" style="zoom:50%;" />
-
-<h5 id="对应关系"><a href="#对应关系" class="headerlink" title="对应关系"></a>对应关系</h5><p><code>CNAME</code>类型的三个域名分别是我的博客，两个网站，github page 网址与自定义域名对应关系如下：</p>
-<p><code>https://&lt;user&gt;.github.io</code>  &#x3D;&gt; <code>https://blog.trillobe.com</code></p>
-<p><code>https://&lt;user&gt;.github.io/natours</code>  &#x3D;&gt; <code>https://natours.trillobe.com</code></p>
-<p><code>https://&lt;user&gt;.github.io/trillo</code>  &#x3D;&gt; <code>https://trillo.trillobe.com</code></p>
-<h3 id="Github-Page-配置"><a href="#Github-Page-配置" class="headerlink" title="Github Page 配置"></a>Github Page 配置</h3><p>在仓库的<code>Setting</code>-&gt;<code>Pages</code>里，在 <code>Custom domain</code> 里输入 DNS 配置好的域名，点击 <code>Save</code>，GitHub 会自动进行 DNS 校验，这个过程需要一点时间。</p>
-<p>当校验通过以后，就可以勾选下面的强制开启 HTTPS，没错，是不需要申请 SSL 证书的，GitHub 会自动帮申请（虽然是免费的 Let’s Encrtpy）。</p>
-<img src="/image/image-20250419004107143.png" alt="image-20250419004107143" style="zoom:50%;" />
-
-<p>再过一会儿，刷新一下，就可以看到个人站点部署完成了，可以进行访问。</p>
-<blockquote>
-<p>注：如果你有多个子域名需要对应到不同的仓库，需要配置多次，重复上述步骤即可</p>
-</blockquote>
-<h3 id="取消-Github-Pages-绑定自定义域名"><a href="#取消-Github-Pages-绑定自定义域名" class="headerlink" title="取消 Github Pages 绑定自定义域名"></a>取消 Github Pages 绑定自定义域名</h3><blockquote>
-<p>这里是踩坑的地方，花了很多时间 debug，呜呜记录一下</p>
-</blockquote>
-<h4 id="Github-Page-类型"><a href="#Github-Page-类型" class="headerlink" title="Github Page 类型"></a>Github Page 类型</h4><p>查看<code>Setting</code> -&gt; <code>Pages</code> -&gt; <code>Source</code>，会出现两种类型：Github Action 和 Deploy from a branch</p>
-<img src="/image/image-20250419012928314.png" alt="image-20250419012928314" style="zoom: 33%;" />
-
-<p>如果是 <code>Deploy from a branch</code>，在删除<code>Custom domain</code> 中的域名后，还需要删除<code>Code</code>根目录下的<code>CNAME</code>文件，具体详见 google。</p>
-<p>我的是<code>Github Action</code>，没有<code>CNAME</code>。</p>
-<img src="/image/image-20250419013642144.png" alt="image-20250419013642144"  />
-
-<h4 id="取消绑定"><a href="#取消绑定" class="headerlink" title="取消绑定"></a>取消绑定</h4><p>在仓库的<code>Setting</code>-&gt;<code>Pages</code>里，点击移除 <code>Custom domain</code> 中的域名，同时取消勾选 <code>Enforce HTTPS</code>，刷新后，可能会出现以下几种情况（我遇到过的）：</p>
-<h5 id="例一"><a href="#例一" class="headerlink" title="例一"></a>例一</h5><p>Github Page 现在指向 <code>https://&lt;user&gt;.github.io/natours</code>，但是点击跳转还是在自定义域名<code>https://natours.trillobe.com</code>，且<code>Enforce HTTPS</code> 为灰色，无法取消勾选</p>
-<p>我尝试的办法：</p>
-<ol>
-<li><p>等待一段时间，DNS 配置生效需要一些时间</p>
-</li>
-<li><p>清空浏览器缓存</p>
-</li>
-<li><p>Re-run Github Action 中的 workflow</p>
-</li>
-<li><p>重新输入一个不存在的 custom domain，然后在解析时 remove 掉，清空浏览器缓存并刷新</p>
-</li>
-</ol>
-<h5 id="例二"><a href="#例二" class="headerlink" title="例二"></a>例二</h5><p>Github Page 正常指向<code>https://&lt;user&gt;.github.io/natours</code>，点击打开静态文件加载失败</p>
-<p>解决：Re-run Github Action 中的 workflow，清空浏览器缓存再打开就正常了</p>
-<p><img src="/image/image-20250419010844981.png" alt="image-20250419010844981"></p>
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><ol>
-<li><p>trillo 改域名后，页面无法 fetch API 数据</p>
-<p><img src="/image/image-20250419015200667.png" alt="image-20250419015200667"></p>
-<p><strong>解决</strong>：在后端代码 CORS 处加入新增的自定义域名，重跑后端代码，并 CICD 生成新 docker 在 EC2 上运行</p>
-<img src="/image/image-20250419015302248.png" alt="image-20250419015302248" style="zoom:50%;" />
-</li>
-<li><p>重跑后端代码后还是无法 fetch</p>
-<img src="/image/image-20250419014223386.png" alt="image-20250419014223386" style="zoom:50%;" />
-
-<p><strong>解决</strong>：ssh 到服务器查看运行的 docker container 是哪一个版本，确认无法 fetch 的原因是没有生效最新版本，修改 compose.yaml 让最新版本生效后，网页正常显示</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker ps -a</span><br><span class="line"><span class="built_in">sudo</span> docker image</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>natours 改域名后，页面静态文件无法加载</p>
-<p>解决：修改 next.config.js 文件时，nextConfig 导入代码有误，修改后重新编译静态文件加载正常</p>
-</li>
-</ol>
-
-          
+          <p>使用 GitHub Pages 部署网站后，想要将页面绑定到自定义域名，摸索了一下，下面是步骤及踩坑的点。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2025/04/19/github-page-custom-domain/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
