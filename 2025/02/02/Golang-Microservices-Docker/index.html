@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习微服务通信，本文详细介绍了如何构建两个 Golang 微服务（用户服务与订单服务），并通过 Docker 与 Docker Compose 进行容器化部署。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang微服务通信练习">
+<meta property="og:url" content="https://ella0110.github.io/2025/02/02/Golang-Microservices-Docker/index.html">
+<meta property="og:site_name" content="Ella&#39;s Blog">
+<meta property="og:description" content="学习微服务通信，本文详细介绍了如何构建两个 Golang 微服务（用户服务与订单服务），并通过 Docker 与 Docker Compose 进行容器化部署。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-02-02T03:22:34.769Z">
+<meta property="article:modified_time" content="2025-02-02T03:24:26.304Z">
+<meta property="article:author" content="Ella">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ella0110.github.io/2025/02/02/Golang-Microservices-Docker/"/>
+
+
+
+
+
+  <title>Golang微服务通信练习 | Ella's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ella's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ella0110.github.io/2025/02/02/Golang-Microservices-Docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ella's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Golang微服务通信练习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-02-02T11:22:34+08:00">
+                2025-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习微服务通信，本文详细介绍了如何构建两个 Golang 微服务（用户服务与订单服务），并通过 Docker 与 Docker Compose 进行容器化部署。</p>
+<span id="more"></span>
+
+<h2 id="创建两个微服务"><a href="#创建两个微服务" class="headerlink" title="创建两个微服务"></a>创建两个微服务</h2><h3 id="user-service"><a href="#user-service" class="headerlink" title="user-service"></a>user-service</h3><ol>
+<li><p>新建项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建文件夹</span></span><br><span class="line"><span class="built_in">mkdir</span> user-service</span><br><span class="line"><span class="built_in">cd</span> user-service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 go.mod 文件，管理依赖版本。</span></span><br><span class="line">go mod init user-service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖 gin, gorm, mysql</span></span><br><span class="line">go get -u github.com/gin-gonic/gin gorm.io/gorm gorm.io/driver/mysql  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置mysql及账号密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取 MySQL 镜像 </span></span><br><span class="line">docker pull mysql:latest </span><br><span class="line"><span class="comment"># 启动容器（设置 root 密码为 your_password）  </span></span><br><span class="line">docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=your_password -d mysql:latest </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写main.go代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;gorm.io/driver/mysql&quot;</span></span><br><span class="line">	<span class="string">&quot;gorm.io/gorm&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用户模型</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID   <span class="type">uint</span>   <span class="string">`gorm:&quot;primaryKey&quot; json:&quot;id&quot;`</span></span><br><span class="line">	Name <span class="type">string</span> <span class="string">`json:&quot;name&quot;`</span></span><br><span class="line">	Age  <span class="type">int</span>    <span class="string">`json:&quot;age&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 连接数据库</span></span><br><span class="line">	dsn := <span class="string">&quot;root:yourpassword@tcp(mysql:3306)/user_db?charset=utf8mb4&amp;parseTime=True&amp;loc=Local&quot;</span></span><br><span class="line">	db, err := gorm.Open(mysql.Open(dsn), &amp;gorm.Config&#123;&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;数据库连接失败&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 自动创建表</span></span><br><span class="line">	db.AutoMigrate(&amp;User&#123;&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 初始化Gin</span></span><br><span class="line">	r := gin.Default()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 路由</span></span><br><span class="line">	r.POST(<span class="string">&quot;/users&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="keyword">var</span> user User</span><br><span class="line">		<span class="keyword">if</span> err := c.ShouldBindJSON(&amp;user); err != <span class="literal">nil</span> &#123;</span><br><span class="line">			c.JSON(<span class="number">400</span>, gin.H&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;参数错误&quot;</span>&#125;)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		result := db.Create(&amp;user)</span><br><span class="line">		<span class="keyword">if</span> result.Error != <span class="literal">nil</span> &#123;</span><br><span class="line">			c.JSON(<span class="number">500</span>, gin.H&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;创建用户失败&quot;</span>&#125;)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">		c.JSON(<span class="number">200</span>, user)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 获取所有用户</span></span><br><span class="line">	r.GET(<span class="string">&quot;/users&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="keyword">var</span> users []User</span><br><span class="line">		db.Find(&amp;users)</span><br><span class="line">		c.JSON(<span class="number">200</span>, users)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 查询单个用户</span></span><br><span class="line">	r.GET(<span class="string">&quot;/users/:id&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		id := c.Param(<span class="string">&quot;id&quot;</span>)</span><br><span class="line">		<span class="keyword">var</span> user User</span><br><span class="line">		result := db.First(&amp;user, id)</span><br><span class="line">		<span class="keyword">if</span> result.Error != <span class="literal">nil</span> &#123;</span><br><span class="line">			c.JSON(<span class="number">404</span>, gin.H&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;用户不存在&quot;</span>&#125;)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">		c.JSON(<span class="number">200</span>, user)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 启动服务</span></span><br><span class="line">	r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行<code>go run main.go</code>进行验证</p>
+</li>
+</ol>
+<h3 id="order-service"><a href="#order-service" class="headerlink" title="order-service"></a>order-service</h3><ol>
+<li><p>新建项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建文件夹</span></span><br><span class="line"><span class="built_in">mkdir</span> order-service</span><br><span class="line"><span class="built_in">cd</span> order-service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 go.mod 文件，管理依赖版本。</span></span><br><span class="line">go mod init order-service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖 gin, gorm, mysql</span></span><br><span class="line">go get -u github.com/gin-gonic/gin gorm.io/gorm gorm.io/driver/mysql  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写main.go文件</p>
+<p>注意⚠️：getUser函数中，本地测试使用”<a target="_blank" rel="noopener" href="http://localhost:8080/users/%d%22%EF%BC%8Cdocker%E5%AE%B9%E5%99%A8%E4%B8%AD%E9%80%9A%E4%BF%A1%E4%BD%BF%E7%94%A8%22http://user-service:8080/users/%d">http://localhost:8080/users/%d&quot;，docker容器中通信使用&quot;http://user-service:8080/users/%d</a>“</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;encoding/json&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;io&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 订单模型</span></span><br><span class="line"><span class="keyword">type</span> Order <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID      <span class="type">uint</span>   <span class="string">`json:&quot;id&quot;`</span></span><br><span class="line">	UserID  <span class="type">uint</span>   <span class="string">`json:&quot;user_id&quot;`</span></span><br><span class="line">	Product <span class="type">string</span> <span class="string">`json:&quot;product&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用用户服务的 API</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getUser</span><span class="params">(userID <span class="type">uint</span>)</span></span> (<span class="keyword">map</span>[<span class="type">string</span>]<span class="keyword">interface</span>&#123;&#125;, <span class="type">error</span>) &#123;</span><br><span class="line">	resp, err := http.Get(fmt.Sprintf(<span class="string">&quot;http://user-service:8080/users/%d&quot;</span>, userID))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">	body, _ := io.ReadAll(resp.Body)</span><br><span class="line">	<span class="keyword">var</span> user <span class="keyword">map</span>[<span class="type">string</span>]<span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">	json.Unmarshal(body, &amp;user)</span><br><span class="line">	<span class="keyword">return</span> user, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 创建订单（需关联用户）</span></span><br><span class="line">	r.POST(<span class="string">&quot;/orders&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="keyword">var</span> order Order</span><br><span class="line">		<span class="keyword">if</span> err := c.ShouldBindJSON(&amp;order); err != <span class="literal">nil</span> &#123;</span><br><span class="line">			c.JSON(<span class="number">400</span>, gin.H&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;参数错误&quot;</span>&#125;)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 调用用户服务验证用户是否存在</span></span><br><span class="line">		user, err := getUser(order.UserID)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> || user[<span class="string">&quot;id&quot;</span>] == <span class="literal">nil</span> &#123;</span><br><span class="line">			c.JSON(<span class="number">400</span>, gin.H&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;用户不存在&quot;</span>&#125;)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 此处应保存订单到数据库（简化示例，直接返回）</span></span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;</span><br><span class="line">			<span class="string">&quot;order_id&quot;</span>: order.ID,</span><br><span class="line">			<span class="string">&quot;user&quot;</span>:     user,</span><br><span class="line">			<span class="string">&quot;product&quot;</span>:  order.Product,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	r.Run(<span class="string">&quot;:8081&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="测试通信"><a href="#测试通信" class="headerlink" title="测试通信"></a>测试通信</h3><p>使用Postman</p>
+<ul>
+<li><p><strong>POST</strong> <code>http://localhost:8080/users</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 请求</span></span><br><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Alice&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">25</span> <span class="punctuation">&#125;</span> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>GET</strong> <code>http://localhost:8080/users</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 预期返回</span></span><br><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Alice&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">25</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>POST</strong> <code>http://localhost:8081/orders</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 请求</span></span><br><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;user_id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span> <span class="attr">&quot;product&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Laptop&quot;</span> <span class="punctuation">&#125;</span>  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 预期返回</span></span><br><span class="line"><span class="punctuation">&#123;</span>  </span><br><span class="line">  <span class="attr">&quot;order_id&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span>  </span><br><span class="line">  <span class="attr">&quot;product&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Laptop&quot;</span><span class="punctuation">,</span>  </span><br><span class="line">  <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>  </span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span>  </span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Alice&quot;</span><span class="punctuation">,</span>  </span><br><span class="line">    <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">25</span>  </span><br><span class="line">  <span class="punctuation">&#125;</span>  </span><br><span class="line"><span class="punctuation">&#125;</span>  </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Docker部署"><a href="#Docker部署" class="headerlink" title="Docker部署"></a>Docker部署</h3><ol>
+<li>新建Dockerfile文件</li>
+</ol>
+<ul>
+<li><p>user-service</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一阶段：构建可执行文件  </span></span><br><span class="line"><span class="keyword">FROM</span> golang:<span class="number">1.23</span>-alpine AS builder  </span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app  </span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> go.mod .  </span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> go.sum .  </span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> go mod download  </span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .  </span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> go build -o user-service .  </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二阶段：运行  </span></span><br><span class="line"><span class="keyword">FROM</span> alpine:latest  </span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app  </span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=builder /app/user-service .  </span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span>  </span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;./user-service&quot;</span>]  </span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Order-service</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一阶段：构建可执行文件  </span></span><br><span class="line"><span class="keyword">FROM</span> golang:<span class="number">1.23</span>-alpine AS builder  </span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app  </span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> go.mod .  </span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> go.sum .  </span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> go mod download  </span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .  </span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> go build -o order-service .  </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二阶段：运行  </span></span><br><span class="line"><span class="keyword">FROM</span> alpine:latest  </span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app  </span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=builder /app/order-service .  </span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8081</span>  </span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;./order-service&quot;</span>]  </span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="2">
+<li><p>build容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> user-service  </span><br><span class="line">docker build -t user-service .  </span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> order-service  </span><br><span class="line">docker build -t order-service .  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建 Docker 网络</p>
+<p>使容器间能通过服务名（如 <code>user-service</code>）通信，而非 IP 地址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create my-network  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建<code>docker-compose.yml</code>文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span>  </span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span>  </span><br><span class="line">  <span class="attr">mysql:</span>  </span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql:latest</span>  </span><br><span class="line">    <span class="attr">environment:</span>  </span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">your_password</span> </span><br><span class="line">      <span class="attr">MYSQL_DATABASE:</span> <span class="string">user_db</span>  </span><br><span class="line">    <span class="attr">ports:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3306:3306&quot;</span>  </span><br><span class="line">    <span class="attr">networks:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">my-network</span>  </span><br><span class="line"></span><br><span class="line">  <span class="attr">user-service:</span>  </span><br><span class="line">    <span class="attr">build:</span> <span class="string">./user-service</span>  </span><br><span class="line">    <span class="attr">ports:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:8080&quot;</span>  </span><br><span class="line">    <span class="attr">networks:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">my-network</span>  </span><br><span class="line">    <span class="attr">depends_on:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql</span>  </span><br><span class="line"></span><br><span class="line">  <span class="attr">order-service:</span>  </span><br><span class="line">    <span class="attr">build:</span> <span class="string">./order-service</span>  </span><br><span class="line">    <span class="attr">ports:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8081:8081&quot;</span>  </span><br><span class="line">    <span class="attr">networks:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">my-network</span>  </span><br><span class="line">    <span class="attr">depends_on:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">user-service</span>  </span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span>  </span><br><span class="line">  <span class="attr">my-network:</span>  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动docker compose</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --build  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试通信</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个用户</span></span><br><span class="line">curl -X POST http://localhost:8080/users \</span><br><span class="line">-H <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">-d <span class="string">&#x27;&#123;&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 25&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询用户</span></span><br><span class="line">curl http://localhost:8080/users</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试通信</span></span><br><span class="line">curl -X POST http://localhost:8081/orders \</span><br><span class="line">-H <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">-d <span class="string">&#x27;&#123;&quot;id&quot;: 1, &quot;user_id&quot;: 1, &quot;product&quot;: &quot;ProductA&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="常见报错及问题"><a href="#常见报错及问题" class="headerlink" title="常见报错及问题"></a>常见报错及问题</h3><ol>
+<li><p><strong>问题</strong>：build docker时报错：<code>invalid go version &#39;1.23.5&#39;: must match format 1.23</code></p>
+<p><strong>解决</strong>：修改<code>go.mod</code>文件，将 <code>go 1.23.5</code> 改为 <code>go 1.23</code></p>
+</li>
+<li><p><strong>问题</strong>：build docker时报错：<code>package slices is not in GOROOT (/usr/local/go/src/slices)</code></p>
+<p><strong>原因</strong>：在编译过程中，Go 版本过低，不包含标准库中的 <code>slices</code> 包。<code>slices</code> 包是在 Go 1.21 中引入的，如果使用的 Go 版本低于 1.21，就会出现找不到该包的错误。</p>
+<p><strong>解决</strong>：修改 Dockerfile 中的 <code>FROM</code> 指令：<code>FROM golang:1.23-alpine AS builder </code></p>
+</li>
+<li><p><strong>问题</strong>：启动<code>user-service</code>容器报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2025-02-01 01:43:55 [error] failed to initialize database, got error dial tcp 127.0.0.1:3306: connect: connection refused</span><br><span class="line">2025-02-01 01:40:02 panic: 数据库连接失败</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>​	<strong>解决</strong>：<code>user-service</code> 尝试连接到 <code>127.0.0.1:3306</code>，即本地地址的 MySQL 数据库。但在 Docker 容器中，<code>127.0.0.1</code> 指向的是容器自身，而不是宿主机或其他容器。因此，我们需要修改<code>127.0.0.1:3306</code>为 <code>mysql:3306</code></p>
+<ol start="4">
+<li>两个微服务在docker不能通信原因：</li>
+</ol>
+<ul>
+<li><p>ip地址</p>
+<p>在 <code>user-service</code> 的代码中，DSN 使用了 <code>127.0.0.1:3306</code>。在 Docker Compose 中，每个服务在各自容器内运行，<code>127.0.0.1</code> 指的是容器自身，而非 MySQL 服务。正确做法是使用 Compose 中定义的服务名（这里是 <code>mysql</code>），修改 DSN 为：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">dsn</span> := <span class="string">&quot;root:yourpassword<span class="variable">@tcp</span>(mysql:3306)/user_db?charset=utf8mb4&amp;parseTime=True&amp;loc=Local&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样，<code>user-service</code> 就能通过 Docker 网络正确访问 MySQL 容器。</p>
+</li>
+<li><p>order-service 请求 user-service应该使用 <code>user-service:8080</code>而不是<code>localhost:8080</code></p>
+</li>
+<li><p>Docker compose up运行时，user-service需要等待mysql准备好才能连接，现在是手动连接，接下来需要增加health check自动连接</p>
+</li>
+<li><p>全部准备就绪后，需要向user-service POST添加数据，才可以用order-service进行测试</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/01/30/Docker-EC2-CICD/" rel="next" title="自动化 Docker 部署：使用 GitHub Actions 推送 Image 到 EC2">
+                <i class="fa fa-chevron-left"></i> 自动化 Docker 部署：使用 GitHub Actions 推送 Image 到 EC2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/02/15/kubernetes-beginner/" rel="prev" title="Kubernetes 学习笔记">
+                Kubernetes 学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Ella0110" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/ella-chunmeiwu/" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ellawu010@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%A4%E4%B8%AA%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">创建两个微服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#user-service"><span class="nav-number">1.1.</span> <span class="nav-text">user-service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#order-service"><span class="nav-number">1.2.</span> <span class="nav-text">order-service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E9%80%9A%E4%BF%A1"><span class="nav-number">1.3.</span> <span class="nav-text">测试通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E9%83%A8%E7%BD%B2"><span class="nav-number">1.4.</span> <span class="nav-text">Docker部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E5%8F%8A%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.</span> <span class="nav-text">常见报错及问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ella</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

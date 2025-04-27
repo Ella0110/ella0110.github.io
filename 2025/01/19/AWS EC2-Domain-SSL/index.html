@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="继上一次后端部署，从 ECS 迁移到 EC2，配置 PostgreSQL 数据库、域名绑定、SSL 证书和 Nginx 反向代理的全过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践">
+<meta property="og:url" content="https://ella0110.github.io/2025/01/19/AWS%20EC2-Domain-SSL/index.html">
+<meta property="og:site_name" content="Ella&#39;s Blog">
+<meta property="og:description" content="继上一次后端部署，从 ECS 迁移到 EC2，配置 PostgreSQL 数据库、域名绑定、SSL 证书和 Nginx 反向代理的全过程。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250115165510745.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250115165803021.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250115184728164.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250115190605919.png">
+<meta property="article:published_time" content="2025-01-19T08:05:48.228Z">
+<meta property="article:modified_time" content="2025-03-31T15:03:38.445Z">
+<meta property="article:author" content="Ella">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ella0110.github.io/image/image-20250115165510745.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ella0110.github.io/2025/01/19/AWS EC2-Domain-SSL/"/>
+
+
+
+
+
+  <title>跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践 | Ella's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ella's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ella0110.github.io/2025/01/19/AWS%20EC2-Domain-SSL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ella's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">跨平台部署与调试：AWS EC2、Docker 和 Nginx 配置实践</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-01-19T16:05:48+08:00">
+                2025-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>继上一次后端部署，从 ECS 迁移到 EC2，配置 PostgreSQL 数据库、域名绑定、SSL 证书和 Nginx 反向代理的全过程。</p>
+<span id="more"></span>
+
+<h4 id="配置-EC2"><a href="#配置-EC2" class="headerlink" title="配置 EC2"></a>配置 EC2</h4><ul>
+<li><p>新建 key-pair(一次就够了，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹)</p>
+</li>
+<li><p>新建 instance</p>
+<p>Name, ubuntu, t2.micro, key-pair, SSH_HTTPS_HTTP -&gt; Launch instance</p>
+</li>
+<li><p>本地登陆服务器</p>
+<ul>
+<li>EC2 找到 IP 地址</li>
+<li>打开本地 terminal，输入<code>ssh -i ~/.ssh/kp-mac.pem ubuntu@your ipaddress </code>其中 kp-mac.pem 是下载的 key-pair</li>
+</ul>
+</li>
+<li><p>安装 docker</p>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></p>
+</li>
+<li><p>新建 compose.yaml 文件，copy 内容过来</p>
+</li>
+<li><p>运行 sudo docker compose up</p>
+</li>
+</ul>
+<h4 id="配置-EC2-过程中遇到的问题"><a href="#配置-EC2-过程中遇到的问题" class="headerlink" title="配置 EC2 过程中遇到的问题"></a>配置 EC2 过程中遇到的问题</h4><ul>
+<li><p>sqlserver 太大，申请的 ubuntu 跑不动</p>
+<p>解决：换用 postgress，删除 ubuntu 中运行 docker compose up 下载的 image 和容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker images       <span class="comment"># 列出镜像</span></span><br><span class="line">docker stop image.  <span class="comment"># 停止正在运行的镜像</span></span><br><span class="line">docker rmi &lt;image&gt;  <span class="comment"># 删除不需要的镜像</span></span><br><span class="line"></span><br><span class="line">docker ps -a        <span class="comment"># 列出所有容器</span></span><br><span class="line">docker <span class="built_in">rm</span> &lt;container&gt;  <span class="comment"># 删除不需要的容器</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>换用 postgress，本地测试报错</p>
+<ul>
+<li><p>FATAL: role “postgres” does not exist</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/65115627/safe-ways-to-specify-postgres-parameters-for-healthchecks-in-docker-compose">https://stackoverflow.com/questions/65115627/safe-ways-to-specify-postgres-parameters-for-healthchecks-in-docker-compose</a></p>
+<p>environment 添加<code>- PGUSER=postgres</code></p>
+</li>
+<li><p>Npgsql.PostgresException (0x80004005): 42883: function getdate() does not exist</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2880683/no-getdate-function-in-enterprisedb-postgresql">https://stackoverflow.com/questions/2880683/no-getdate-function-in-enterprisedb-postgresql</a></p>
+<p>把 get date() 改为 now()</p>
+</li>
+<li><p>System.ArgumentException: Cannot write DateTime with Kind&#x3D;Unspecified to PostgreSQL type ‘timestamp with time zone’, only UTC is supported. Note that it’s not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter ‘value’)</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/69961449/net6-and-datetime-problem-cannot-write-datetime-with-kind-utc-to-postgresql-ty">https://stackoverflow.com/questions/69961449/net6-and-datetime-problem-cannot-write-datetime-with-kind-utc-to-postgresql-ty</a></p>
+<p>添加<code>AppContext.SetSwitch(&quot;Npgsql.EnableLegacyTimestampBehavior&quot;, true);</code></p>
+</li>
+<li><p>Error NU1605 Detected package downgrade</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/50286990/error-nu1605-detected-package-downgrade">https://stackoverflow.com/questions/50286990/error-nu1605-detected-package-downgrade</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/8.0.8">https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/8.0.8</a></p>
+<p>安装的 postgress 版本太高，删除重新安装与 efcore 一个版本，8.0.8</p>
+</li>
+</ul>
+</li>
+<li><p>换用 postgress，服务器测试报错</p>
+<ul>
+<li><p>the “POSTGRES_USER” variable is not set. Defaulting to a blank string.</p>
+<p>这是因为 <code>healthcheck</code> 使用的 <code>$&#123;POSTGRES_USER&#125;</code> 没有解析到具体值。Docker Compose 不会自动解析 <code>.env</code> 文件，除非你明确指定或确保环境变量在运行时被传递。</p>
+<p>修改${POSTGRES_USER}为具体的变量名</p>
+</li>
+<li><p>manifest for ella0110&#x2F;trillobackend:20250115.8 not found</p>
+<p>说明远程仓库没找到对应的版本，本地 build 之后需要 push 到 docker hub</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t ella0110/trillobackend:20250115.8 .</span><br><span class="line">docker push ella0110/trillobackend:20250115.8</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="ubuntu-正常跑起来-docker-compose-后，配置-instance-的端口"><a href="#ubuntu-正常跑起来-docker-compose-后，配置-instance-的端口" class="headerlink" title="ubuntu 正常跑起来 docker compose 后，配置 instance 的端口"></a>ubuntu 正常跑起来 docker compose 后，配置 instance 的端口</h4><p>instance -&gt; networking -&gt; network interface -&gt;左滑到 Security group -&gt; edit inbound rules -&gt; add port 8080</p>
+<p><img src="/image/image-20250115165510745.png" alt="image-20250115165510745"></p>
+<h4 id="配置域名链接到-EC2-的-ip"><a href="#配置域名链接到-EC2-的-ip" class="headerlink" title="配置域名链接到 EC2 的 ip"></a>配置域名链接到 EC2 的 ip</h4><ul>
+<li><p>打开 <a target="_blank" rel="noopener" href="https://www.spaceship.com/">https://www.spaceship.com/</a> 登陆</p>
+</li>
+<li><p>点击 library -&gt;Dns Tools -&gt; Domain Portfolio -&gt; 点击 domain -&gt; Nameserves&amp;DNS -&gt; add DNS records</p>
+<p><img src="/image/image-20250115165803021.png" alt="image-20250115165803021"></p>
+</li>
+<li><p>打开 <a target="_blank" rel="noopener" href="http://api.trillobe.com:8080/ping">http://api.trillobe.com:8080/ping</a> 正常运行</p>
+</li>
+</ul>
+<h4 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h4><p><a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04">https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install nginx</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后打开 <a target="_blank" rel="noopener" href="http://api.trillobe.com/%E5%BE%97%E5%88%B0">http://api.trillobe.com/得到</a></p>
+<p><img src="/image/image-20250115184728164.png" alt="image-20250115184728164"></p>
+<h4 id="配置证书-let’s-encrypt-with-shell-access"><a href="#配置证书-let’s-encrypt-with-shell-access" class="headerlink" title="配置证书 let’s encrypt -&gt; with shell access"></a>配置证书 let’s encrypt -&gt; with shell access</h4><p><a target="_blank" rel="noopener" href="https://certbot.eff.org/instructions?ws=nginx&os=pip">https://certbot.eff.org/instructions?ws=nginx&amp;os=pip</a></p>
+<p>完全按照这个链接步骤在服务器中安装，最后生效后 http 会变为 https，Not Secure 的标识也会消失</p>
+<p><img src="/image/image-20250115190605919.png" alt="image-20250115190605919"></p>
+<h4 id="配置端口连接-nginx"><a href="#配置端口连接-nginx" class="headerlink" title="配置端口连接 nginx"></a>配置端口连接 nginx</h4><ul>
+<li><p>cd <code>/etc/nginx/sites-enabled</code></p>
+</li>
+<li><p>修改 default 文件，添加以下代码到 443 端口</p>
+<p><a target="_blank" rel="noopener" href="https://serverfault.com/questions/1077260/nginx-how-to-forward-8080-to-80">https://serverfault.com/questions/1077260/nginx-how-to-forward-8080-to-80</a></p>
+</li>
+<li><p>执行<code>sudo nginx -t</code> <code>sudo nginx -s reload</code>, <a target="_blank" rel="noopener" href="https://www.api.trillobe.com/ping%E5%8D%B3%E5%8F%AF%E7%94%9F%E6%95%88">https://www.api.trillobe.com/ping即可生效</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  server_name api.trillobe.com;</span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass http://localhost:8080/;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="配置前端部署后端api"><a href="#配置前端部署后端api" class="headerlink" title="配置前端部署后端api"></a>配置前端部署后端api</h4><ul>
+<li><p>无法获取api，但后端api正常，显示cors错误</p>
+<ul>
+<li>在后端cors配置中应该配置<a target="_blank" rel="noopener" href="https://ella0110.github.io,删除`trillo/%60,%E9%87%8D%E6%96%B0build%EF%BC%8Cpush%EF%BC%8C%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BF%AE%E6%94%B9yaml%EF%BC%8C%E9%87%8D%E8%B7%91">https://ella0110.github.io，删除`trillo/`,重新build，push，在服务器修改yaml，重跑</a></li>
+</ul>
+</li>
+<li><p>env文件不应暴露在github</p>
+<ul>
+<li><p>新建github action environment vairable</p>
+<p><a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#creating-configuration-variables-for-a-repository">https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#creating-configuration-variables-for-a-repository</a></p>
+</li>
+<li><p>修改.github&#x2F;workflow&#x2F;nextjs.yaml文件</p>
+<p><a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#creating-configuration-variables-for-a-repository">https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#creating-configuration-variables-for-a-repository</a></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">env:</span></span><br><span class="line">          <span class="attr">NEXT_PUBLIC_API_URL:</span> <span class="string">$&#123;&#123;</span> <span class="string">vars.NEXT_PUBLIC_API_URL</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Nextconfig basePath 失效，导致所有本地图片和 icon 失效</p>
+<ul>
+<li>删除 next.config.mjs 文件，修改所有引用为 next.config.js</li>
+</ul>
+</li>
+<li><p>order 页面不正常跳转</p>
+<ul>
+<li>修改跳转 button 的<code>&lt;a&gt;</code>为<code>&lt;Link&gt;</code></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/01/19/build-restful-api/" rel="next" title="Deploying a RESTful API with C#, Docker & AWS ECS">
+                <i class="fa fa-chevron-left"></i> Deploying a RESTful API with C#, Docker & AWS ECS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/01/19/blog-hexo-next/" rel="prev" title="Github pages + Hexo + Next 博客搭建">
+                Github pages + Hexo + Next 博客搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Ella0110" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/ella-chunmeiwu/" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ellawu010@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-EC2"><span class="nav-number">1.</span> <span class="nav-text">配置 EC2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-EC2-%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">配置 EC2 过程中遇到的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ubuntu-%E6%AD%A3%E5%B8%B8%E8%B7%91%E8%B5%B7%E6%9D%A5-docker-compose-%E5%90%8E%EF%BC%8C%E9%85%8D%E7%BD%AE-instance-%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">ubuntu 正常跑起来 docker compose 后，配置 instance 的端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%9F%9F%E5%90%8D%E9%93%BE%E6%8E%A5%E5%88%B0-EC2-%E7%9A%84-ip"><span class="nav-number">4.</span> <span class="nav-text">配置域名链接到 EC2 的 ip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-nginx"><span class="nav-number">5.</span> <span class="nav-text">安装 nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%AF%81%E4%B9%A6-let%E2%80%99s-encrypt-with-shell-access"><span class="nav-number">6.</span> <span class="nav-text">配置证书 let’s encrypt -&gt; with shell access</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%AB%AF%E5%8F%A3%E8%BF%9E%E6%8E%A5-nginx"><span class="nav-number">7.</span> <span class="nav-text">配置端口连接 nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%AFapi"><span class="nav-number">8.</span> <span class="nav-text">配置前端部署后端api</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ella</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

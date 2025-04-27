@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="继上一次后端框架部署完成，这次将我的后端部署到 GitHub Actions，并搭建一个完整的 CI&#x2F;CD 流程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动化 Docker 部署：使用 GitHub Actions 推送 Image 到 EC2">
+<meta property="og:url" content="https://ella0110.github.io/2025/01/30/Docker-EC2-CICD/index.html">
+<meta property="og:site_name" content="Ella&#39;s Blog">
+<meta property="og:description" content="继上一次后端框架部署完成，这次将我的后端部署到 GitHub Actions，并搭建一个完整的 CI&#x2F;CD 流程。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250127174528568.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250127174557571.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250127175151195.png">
+<meta property="article:published_time" content="2025-01-30T09:59:04.978Z">
+<meta property="article:modified_time" content="2025-03-31T15:04:20.135Z">
+<meta property="article:author" content="Ella">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ella0110.github.io/image/image-20250127174528568.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ella0110.github.io/2025/01/30/Docker-EC2-CICD/"/>
+
+
+
+
+
+  <title>自动化 Docker 部署：使用 GitHub Actions 推送 Image 到 EC2 | Ella's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ella's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ella0110.github.io/2025/01/30/Docker-EC2-CICD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ella's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自动化 Docker 部署：使用 GitHub Actions 推送 Image 到 EC2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-01-30T17:59:04+08:00">
+                2025-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>继上一次后端框架部署完成，这次将我的后端部署到 GitHub Actions，并搭建一个完整的 CI&#x2F;CD 流程。</p>
+<span id="more"></span>
+
+<h2 id="1-资料"><a href="#1-资料" class="headerlink" title="1. 资料"></a>1. 资料</h2><p><a target="_blank" rel="noopener" href="https://dev.to/s3cloudhub/automate-docker-deployments-push-your-images-to-ec2-with-github-actions-3a3j">Automate Docker Deployments: Push Your Images to EC2 with GitHub Actions</a></p>
+<p>这篇文章详细讲解了如何使用 GitHub Actions 自动化 Docker 部署，并将镜像推送到 EC2 实例，与我的需求很相似，借鉴了很多。</p>
+<h2 id="2-配置-Secret-变量"><a href="#2-配置-Secret-变量" class="headerlink" title="2. 配置 Secret 变量"></a>2. 配置 Secret 变量</h2><p>在 GitHub 仓库中配置一些 Secret 变量，这些变量主要用于身份验证和安全连接。</p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>Github -&gt;  <code>Settings </code> -&gt; <code>Secrets and variables</code> -&gt;  <code>Actions</code> -&gt;  <code>New repository secret</code></p>
+<p><img src="/image/image-20250127174528568.png" alt="image-20250127174528568"></p>
+<h3 id="需要添加的-Secret-变量"><a href="#需要添加的-Secret-变量" class="headerlink" title="需要添加的 Secret 变量"></a>需要添加的 Secret 变量</h3><p><img src="/image/image-20250127174557571.png" alt="image-20250127174557571"></p>
+<ul>
+<li><p><strong>DOCKERHUB_TOKEN</strong>：</p>
+<ul>
+<li>这个 Token 需要有读写权限，而且生成后只会显示一次，所以一定要记下来。</li>
+<li><strong>获取路径</strong>：登录 Docker Hub → 点击右上角头像进入 <code>Account Settings</code> → <code>Security</code> → <code>Personal Access Tokens</code> → <code>Generate new token</code>。</li>
+</ul>
+</li>
+<li><p><strong>DOCKERHUB_USERNAME</strong>：</p>
+<ul>
+<li>Docker Hub 用户名，通常是邮箱地址。可以运行以下命令来查看：</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker info | grep Username</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>EC2_USER</strong>：根据不同需求选择，我的是<code>ubuntu</code></p>
+<ul>
+<li>根据你的 EC2 实例的 AMI 不同，默认用户名可能不同：<ul>
+<li>对于 Amazon Linux，默认用户名是 <code>ec2-user</code>。</li>
+<li>对于 Ubuntu，默认用户名是 <code>ubuntu</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>SSH_PRIVATE_KEY</strong>：</p>
+<ul>
+<li>需要完整复制你的私钥内容，包括 <code>-----BEGIN RSA PRIVATE KEY-----</code> 和 <code>-----END RSA PRIVATE KEY-----</code> 这些前后缀。</li>
+</ul>
+</li>
+</ul>
+<p><strong>小提示⚠️</strong>：</p>
+<ul>
+<li><strong>DOCKERHUB_TOKEN</strong> 生成后只能看到一次，务必要保存好。</li>
+<li><strong>SSH_PRIVATE_KEY</strong> 一定要包含完整的私钥内容，否则会导致格式错误，无法正常连接。</li>
+</ul>
+<h2 id="3-创建-GitHub-Action-workflow"><a href="#3-创建-GitHub-Action-workflow" class="headerlink" title="3. 创建 GitHub Action workflow"></a>3. 创建 GitHub Action workflow</h2><h3 id="新建-Action-文件"><a href="#新建-Action-文件" class="headerlink" title="新建 Action 文件"></a>新建 Action 文件</h3><ol>
+<li><p><strong>创建 <code>.github/workflows/deploy.yml</code> 文件</strong>：</p>
+<ul>
+<li><p>在你的仓库根目录下，新建一个文件夹 <code>.github/workflows/</code>，然后在里面创建 <code>deploy.yml</code> 文件。</p>
+</li>
+<li><p>也可以从这个入口进去创建：</p>
+<p><img src="/image/image-20250127175151195.png" alt="image-20250127175151195"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>yml 配置</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">name: Deploy Docker Image to EC2</span><br><span class="line"></span><br><span class="line">on:</span><br><span class="line">  push:</span><br><span class="line">    branches:</span><br><span class="line">      - main</span><br><span class="line"></span><br><span class="line">jobs:</span><br><span class="line">  deploy:</span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line"></span><br><span class="line">    steps:</span><br><span class="line">    - name: Checkout repository</span><br><span class="line">      uses: actions/checkout@v2</span><br><span class="line"></span><br><span class="line">    - name: Set up Docker Buildx</span><br><span class="line">      uses: docker/setup-buildx-action@v1</span><br><span class="line"></span><br><span class="line">    - name: Login to Docker Hub</span><br><span class="line">      uses: docker/login-action@v2</span><br><span class="line">      with:</span><br><span class="line">        username: $&#123;&#123; secrets.DOCKERHUB_USERNAME &#125;&#125;</span><br><span class="line">        password: $&#123;&#123; secrets.DOCKERHUB_TOKEN &#125;&#125;</span><br><span class="line"></span><br><span class="line">    - name: Build and push Docker image</span><br><span class="line">      run: |</span><br><span class="line">        docker build -t your-docker-image-name .</span><br><span class="line">        docker push your-dockerhub-username/your-docker-image-name:latest</span><br><span class="line"></span><br><span class="line">    - name: Install SSH Key</span><br><span class="line">      uses: webfactory/ssh-agent@v0.5.3</span><br><span class="line">      with:</span><br><span class="line">        ssh-private-key: $&#123;&#123; secrets.SSH_PRIVATE_KEY &#125;&#125;</span><br><span class="line"></span><br><span class="line">    - name: Deploy Docker image to EC2</span><br><span class="line">      run: |</span><br><span class="line">        ssh -o StrictHostKeyChecking=no $&#123;&#123; secrets.EC2_USER &#125;&#125;@$&#123;&#123; secrets.EC2_INSTANCE_IP &#125;&#125; &lt;&lt; &#x27;EOF&#x27;</span><br><span class="line">        sudo docker pull your-dockerhub-username/your-docker-image-name:latest</span><br><span class="line">        RUNNING_CONTAINERS=$(sudo docker ps -q)</span><br><span class="line">        sudo docker stop $RUNNING_CONTAINERS</span><br><span class="line">        sudo docker rm $RUNNING_CONTAINERS</span><br><span class="line">        sudo docker compose up -d</span><br><span class="line">        EOF</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ul>
+<li>触发条件：当 <code>main</code> 分支有新的提交时，自动触发这个工作流。</li>
+<li>步骤<ol>
+<li><strong>检出代码</strong>：使用 <code>actions/checkout@v2</code> 检出代码库。</li>
+<li><strong>设置 Docker Buildx</strong>：配置 Docker 构建环境。</li>
+<li><strong>登录 Docker Hub</strong>：使用配置好的 Secret 变量进行身份验证。</li>
+<li><strong>构建并推送 Docker 镜像</strong>：构建 Docker 镜像并推送到 Docker Hub。</li>
+<li><strong>部署到 EC2</strong>：通过 SSH 连接到 EC2 实例，执行部署脚本。</li>
+</ol>
+</li>
+</ul>
+<h2 id="4-遇到的报错"><a href="#4-遇到的报错" class="headerlink" title="4. 遇到的报错"></a>4. 遇到的报错</h2><ul>
+<li><p><strong>Docker Token 权限不足</strong></p>
+<ul>
+<li><strong>问题</strong>：无法将镜像推送到 Docker Hub，提示权限不足。</li>
+<li><strong>解决</strong>：检查 <code>DOCKERHUB_TOKEN</code> 是否具有读写权限。如果权限不足，重新生成一个具有正确权限的 Token。</li>
+</ul>
+</li>
+<li><p><strong>SSH 私钥格式错误</strong></p>
+<ul>
+<li><strong>问题</strong>：无法通过 SSH 连接，提示私钥格式错误。</li>
+<li><strong>解决</strong>：确保在 <code>SSH_PRIVATE_KEY</code> 中包含完整的私钥内容，包括 <code>-----BEGIN RSA PRIVATE KEY-----</code> 和 <code>-----END RSA PRIVATE KEY-----</code>，不要遗漏任何部分。</li>
+</ul>
+</li>
+<li><p><strong>Ubuntu 中 Docker 运行失败</strong></p>
+<ul>
+<li><strong>问题</strong>：在 EC2 实例上运行 Docker 命令时失败，提示权限不足。</li>
+<li><strong>解决</strong>：使用 <code>sudo</code>，比如 docker run<code>修改为</code>sudo docker run&#96;。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/01/19/blog-hexo-next/" rel="next" title="Github pages + Hexo + Next 博客搭建">
+                <i class="fa fa-chevron-left"></i> Github pages + Hexo + Next 博客搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/02/02/Golang-Microservices-Docker/" rel="prev" title="Golang微服务通信练习">
+                Golang微服务通信练习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Ella0110" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/ella-chunmeiwu/" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ellawu010@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%B5%84%E6%96%99"><span class="nav-number">1.</span> <span class="nav-text">1. 资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE-Secret-%E5%8F%98%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">2. 配置 Secret 变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%B7%BB%E5%8A%A0%E7%9A%84-Secret-%E5%8F%98%E9%87%8F"><span class="nav-number">2.2.</span> <span class="nav-text">需要添加的 Secret 变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%88%9B%E5%BB%BA-GitHub-Action-workflow"><span class="nav-number">3.</span> <span class="nav-text">3. 创建 GitHub Action workflow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA-Action-%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">新建 Action 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">3.2.</span> <span class="nav-text">配置说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%81%87%E5%88%B0%E7%9A%84%E6%8A%A5%E9%94%99"><span class="nav-number">4.</span> <span class="nav-text">4. 遇到的报错</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ella</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
