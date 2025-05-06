@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记录了从 0 开始学习 Kubernetes 的知识点，学习资料等，长期更新中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes 学习笔记">
+<meta property="og:url" content="https://ella0110.github.io/2025/02/15/05_kubernetes-beginner/index.html">
+<meta property="og:site_name" content="Ella&#39;s Blog">
+<meta property="og:description" content="记录了从 0 开始学习 Kubernetes 的知识点，学习资料等，长期更新中">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://spacelift.io/_next/image?url=https://spaceliftio.wpcomstaging.com/wp-content/uploads/2024/07/kubernetes-diagram.png&w=3840&q=75">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250215141501458.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250215150340569.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250215165607535.png">
+<meta property="article:published_time" content="2025-02-15T09:55:42.414Z">
+<meta property="article:modified_time" content="2025-05-06T04:39:24.248Z">
+<meta property="article:author" content="Ella">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://spacelift.io/_next/image?url=https://spaceliftio.wpcomstaging.com/wp-content/uploads/2024/07/kubernetes-diagram.png&w=3840&q=75">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ella0110.github.io/2025/02/15/05_kubernetes-beginner/"/>
+
+
+
+
+
+  <title>Kubernetes 学习笔记 | Ella's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ella's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ella0110.github.io/2025/02/15/05_kubernetes-beginner/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ella's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes 学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-02-15T17:55:42+08:00">
+                2025-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录了从 0 开始学习 Kubernetes 的知识点，学习资料等，长期更新中</p>
+<span id="more"></span>
+
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4ht22ReBjno">The Illustrated Children’s Guide to Kubernetes</a> 面向小朋友的 k8s 基本讲解，通俗易懂，适用于纯小白了解</p>
+<p><a target="_blank" rel="noopener" href="https://www.reddit.com/r/selfhosted/comments/r2a6og/is_someone_able_to_eli5_the_difference_between/">The difference between docker and Kubernetes</a> reddit 讨论，有些答案通俗易懂，适用于纯小白入门了解</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=s_o8dwzRlu4">Kubernetes Crash Course for Absolute Beginners [NEW]</a> 1 小时课程，初步了解 k8s 的构成，接下来可以看看 Nana 的 4 小时课程及官方文档</p>
+<h2 id="初识-K8s"><a href="#初识-K8s" class="headerlink" title="初识 K8s"></a>初识 K8s</h2><h3 id="Kubernetes-简介"><a href="#Kubernetes-简介" class="headerlink" title="Kubernetes 简介"></a>Kubernetes 简介</h3><ol>
+<li>开源容器编排</li>
+<li>google 开发的</li>
+<li>提供任意环境，包括物理环境、云、虚拟环境等</li>
+</ol>
+<h3 id="解决什么问题"><a href="#解决什么问题" class="headerlink" title="解决什么问题"></a>解决什么问题</h3><ol>
+<li>从单服务到微服务转变的过程中，对多容器运行管理的需求变高</li>
+<li>管理成千上万的容器</li>
+</ol>
+<h3 id="提供什么能力"><a href="#提供什么能力" class="headerlink" title="提供什么能力"></a>提供什么能力</h3><ul>
+<li>高可用（不会 downtime），always accessible by users</li>
+<li>可扩展（scalability）高性能</li>
+<li>容灾恢复（disaster recovery）- backup and store, will not lose data</li>
+</ul>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>Node:</p>
+<ul>
+<li>master node (control panel): much more important, always have backup</li>
+<li>Work node: much bigger and more resource</li>
+</ul>
+<p><img src="https://spacelift.io/_next/image?url=https://spaceliftio.wpcomstaging.com/wp-content/uploads/2024/07/kubernetes-diagram.png&w=3840&q=75" alt="kubernetes diagram"></p>
+<h3 id="组件-Components"><a href="#组件-Components" class="headerlink" title="组件 Components"></a>组件 Components</h3><p><img src="/image/image-20250215141501458.png" alt="image-20250215141501458"></p>
+<p><strong>Pod</strong>:</p>
+<ul>
+<li>k8s 中的最小单元</li>
+<li>代表容器</li>
+<li>通常一个 pod 代表一个应用，比如 1 个 docker</li>
+<li>每个 pod 都有自己的 ip 地址</li>
+<li>pod 可以很容易被替换，新的 pod 会被分配新的 ip</li>
+</ul>
+<p><strong>Service</strong>：</p>
+<ul>
+<li><p>用于通信</p>
+</li>
+<li><p>永久性的静态 ip 地址，</p>
+</li>
+<li><p>即使 pod die，service ip address 不变</p>
+</li>
+<li><p>分为 external service (比如应用) 和 internal service (default type)（比如数据库）</p>
+</li>
+</ul>
+<p><strong>Ingress</strong>:</p>
+<ul>
+<li>route traffic to cluster，路由分配</li>
+</ul>
+<p><strong>ConfigMap</strong>:</p>
+<ul>
+<li>可以从外部配置 pod 数据，比如修改数据库名称或者 url</li>
+<li>只放一些不用于机密的数据</li>
+</ul>
+<p><strong>sercet</strong></p>
+<ul>
+<li>存储一些加密数据</li>
+<li>环境变量</li>
+</ul>
+<p><strong>volumn</strong>：</p>
+<ul>
+<li>保证数据持久化，即使 db 挂掉重新加载也不会丢失</li>
+<li>本地存储或者远程比如云存储</li>
+</ul>
+<p><strong>Deployment</strong>:</p>
+<ul>
+<li>复制 app，防止挂掉</li>
+</ul>
+<p><strong>statefulset</strong>：</p>
+<ul>
+<li>复制 DB</li>
+</ul>
+<p><img src="/image/image-20250215150340569.png" alt="image-20250215150340569"></p>
+<h3 id="创建-configuration-file"><a href="#创建-configuration-file" class="headerlink" title="创建 configuration file"></a>创建 configuration file</h3><ul>
+<li>metadata</li>
+<li>spec</li>
+<li>Status: 由 k8s 自动生成，来源于 etcd（etcd holds the current status of any k8s component）</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment/Servie</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">	<span class="string">name:ngix-deployment</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Minikube-and-Kubectl"><a href="#Minikube-and-Kubectl" class="headerlink" title="Minikube and Kubectl"></a>Minikube and Kubectl</h2><p>Minikube：一个 node 包含 master node process 和 work node process，这个 node 预装了 docker，因此可以在这个 node 跑容器</p>
+<p>Kubectl：commend line tool for k8s cluster，可以用来创建、删除 pod，执行 node 等</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">brew install minikube <span class="comment">#同时也装上了kubectl</span></span><br><span class="line"><span class="comment"># 安装docker，假设已经装好了</span></span><br><span class="line">minikube start --driver docker</span><br><span class="line">minikube status</span><br><span class="line"></span><br><span class="line">kubectl get node</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><p><img src="/image/image-20250215165607535.png" alt="image-20250215165607535"></p>
+<p>四个文件</p>
+<ul>
+<li>Mongo-config.yaml，官网搜索 configmap 查询写法</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">mongo-config</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">    <span class="attr">mongo-url:</span> <span class="string">mongo-service</span> <span class="comment">#服务名，在 mongo.yaml 中定义</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Mongo-secret.yaml，官网搜索 sercet 查询写法</li>
+</ul>
+<p>encode 方式：terminal 运行<code>echo -n name | base64</code> 即可得到 <code>bW9uZ291c2Vy</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">mongo-secret</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">Opaque</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">    <span class="attr">mongo-user:</span> <span class="string">bW9uZ291c2V</span> <span class="comment">#使用 echo 加密</span></span><br><span class="line">    <span class="attr">mongo-password:</span> <span class="string">bW9uZ29wYXNzd29yZA==</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Mongo.yaml，官网搜索 deployment 查询写法，包含 deployment 和 service</li>
+</ul>
+<p><code>Request</code> – <code>port:8080</code> –&gt; <code>Mongo Service</code> – <code>targetPort:27017</code> –&gt; <code>Pod</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">mongo-deployment</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">mongo</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">    <span class="attr">replicas:</span> <span class="number">1</span> <span class="comment">#创建 pod 的个数</span></span><br><span class="line">    <span class="attr">selector:</span></span><br><span class="line">        <span class="attr">matchLabels:</span> <span class="comment">#用来确保这 pod 用于这个 deployment</span></span><br><span class="line">            <span class="attr">app:</span> <span class="string">mongo</span></span><br><span class="line">    <span class="attr">template:</span></span><br><span class="line">        <span class="attr">metadata:</span></span><br><span class="line">            <span class="attr">labels:</span></span><br><span class="line">                <span class="attr">app:</span> <span class="string">mongo</span></span><br><span class="line">        <span class="attr">spec:</span></span><br><span class="line">            <span class="attr">containers:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">mongodb</span></span><br><span class="line">                  <span class="attr">image:</span> <span class="string">mongo:5.0</span> <span class="comment"># 查 dockerhub 官网看 tag</span></span><br><span class="line">                  <span class="attr">ports:</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">27017</span> <span class="comment"># 查 dockerhub 官网看端口</span></span><br><span class="line">                  <span class="attr">env:</span> <span class="comment"># 数据库登陆调用环境变量</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MONGO_INITDB_ROOT_USERNAME</span> <span class="comment"># 数据库用户名，dockerhub 官网找</span></span><br><span class="line">                        <span class="attr">valueFrom:</span></span><br><span class="line">                            <span class="attr">secretKeyRef:</span> <span class="comment"># 这个 yaml 会去 secret 文件中找数据库用户名并赋值给 MONGO_INITDB_ROOT_USERNAME</span></span><br><span class="line">                                <span class="attr">name:</span> <span class="string">mongo-secret</span></span><br><span class="line">                                <span class="attr">key:</span> <span class="string">mongo-user</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MONGO_INITDB_ROOT_PASSWORD</span> <span class="comment"># 数据库密码，dockerhub 官网找</span></span><br><span class="line">                        <span class="attr">valueFrom:</span></span><br><span class="line">                            <span class="attr">secretKeyRef:</span> <span class="comment"># 这个 yaml 会去 secret 文件中找数据库密码并赋值给 MONGO_INITDB_ROOT_PASSWORD</span></span><br><span class="line">                                <span class="attr">name:</span> <span class="string">mongo-secret</span></span><br><span class="line">                                <span class="attr">key:</span> <span class="string">mongo-password</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">mongo-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">    <span class="attr">selector:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">mongo</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">          <span class="attr">port:</span> <span class="number">8080</span> <span class="comment"># service 自己的 port，也可以于 targetport 相同，更简单</span></span><br><span class="line">          <span class="attr">targetPort:</span> <span class="number">27017</span> <span class="comment"># container 的 port</span></span><br></pre></td></tr></table></figure>
+
+<p>webapp.yaml:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">webapp-deployment</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">webapp</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">    <span class="attr">replicas:</span> <span class="number">1</span> <span class="comment"># 创建 pod 的个数</span></span><br><span class="line">    <span class="attr">selector:</span></span><br><span class="line">        <span class="attr">matchLabels:</span> <span class="comment"># 用来确保这 pod 用于这个 deployment</span></span><br><span class="line">            <span class="attr">app:</span> <span class="string">webapp</span></span><br><span class="line">    <span class="attr">template:</span></span><br><span class="line">        <span class="attr">metadata:</span></span><br><span class="line">            <span class="attr">labels:</span></span><br><span class="line">                <span class="attr">app:</span> <span class="string">webapp</span></span><br><span class="line">        <span class="attr">spec:</span></span><br><span class="line">            <span class="attr">containers:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">webapp</span></span><br><span class="line">                  <span class="attr">image:</span> <span class="string">your-image-name:your-image-tag</span> <span class="comment"># 查 dockerhub 官网看 tag</span></span><br><span class="line">                  <span class="attr">ports:</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="string">your</span> <span class="string">application</span> <span class="string">port</span> <span class="comment"># eg node.js port is 3000</span></span><br><span class="line">                  <span class="attr">env:</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">USER_NAME</span> <span class="comment"># 需要自己创建环境变量</span></span><br><span class="line">                        <span class="attr">valueFrom:</span></span><br><span class="line">                            <span class="attr">secretKeyRef:</span> <span class="comment"># 数据库名称</span></span><br><span class="line">                                <span class="attr">name:</span> <span class="string">mongo-secret</span></span><br><span class="line">                                <span class="attr">key:</span> <span class="string">mongo-user</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">USER_PWD</span></span><br><span class="line">                        <span class="attr">valueFrom:</span></span><br><span class="line">                            <span class="attr">secretKeyRef:</span> <span class="comment"># 数据库密码</span></span><br><span class="line">                                <span class="attr">name:</span> <span class="string">mongo-secret</span></span><br><span class="line">                                <span class="attr">key:</span> <span class="string">mongo-password</span></span><br><span class="line">                      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">DB_URL</span></span><br><span class="line">                        <span class="attr">valueFrom:</span></span><br><span class="line">                            <span class="attr">configMapKeyRef:</span> <span class="comment"># 需要连接到数据库</span></span><br><span class="line">                                <span class="attr">name:</span> <span class="string">mongo-config</span></span><br><span class="line">                                <span class="attr">key:</span> <span class="string">mongo-url</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">webapp-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">NodePort</span> <span class="comment"># 默认是 ClusterIP，表示 Internal Service, NodePort 表示 external</span></span><br><span class="line">    <span class="attr">selector:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">webapp</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">          <span class="attr">port:</span> <span class="number">3000</span> <span class="comment"># service 自己的 port</span></span><br><span class="line">          <span class="attr">targetPort:</span> <span class="number">3000</span> <span class="comment"># container 的 port</span></span><br><span class="line">          <span class="attr">nodePort:</span> <span class="number">30100</span> <span class="comment"># 暴露给外部的端口，可以让 url 访问 Service，进而访问所有配置，范围是：30000-32767</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="在-minikube-运行"><a href="#在-minikube-运行" class="headerlink" title="在 minikube 运行"></a>在 minikube 运行</h3><h4 id="启动-minikube"><a href="#启动-minikube" class="headerlink" title="启动 minikube"></a>启动 minikube</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">minikube start --driver docker</span><br><span class="line">minikube status</span><br></pre></td></tr></table></figure>
+
+<h4 id="运行-yaml"><a href="#运行-yaml" class="headerlink" title="运行 yaml"></a>运行 yaml</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f mongo-config.yaml</span><br><span class="line">kubectl apply -f mongo-secret.yaml</span><br><span class="line">kubectl apply -f mongo.yaml</span><br><span class="line">kubectl apply -f webapp.yaml</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取-node’s-ip-address"><a href="#获取-node’s-ip-address" class="headerlink" title="获取 node’s ip address"></a>获取 node’s ip address</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube ip</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取-k8s-组件基本信息"><a href="#获取-k8s-组件基本信息" class="headerlink" title="获取 k8s 组件基本信息"></a>获取 k8s 组件基本信息</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl get node</span><br><span class="line">kubectl get pod</span><br><span class="line">kubectl get svc</span><br><span class="line">kubectl get all</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取组件额外信息"><a href="#获取组件额外信息" class="headerlink" title="获取组件额外信息"></a>获取组件额外信息</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pod -o wide</span><br><span class="line">kubectl get node -o wide</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取特定组件详细信息"><a href="#获取特定组件详细信息" class="headerlink" title="获取特定组件详细信息"></a>获取特定组件详细信息</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe svc &#123;svc-name&#125;</span><br><span class="line">kubectl describe pod &#123;pod-name&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取-log"><a href="#获取-log" class="headerlink" title="获取 log"></a>获取 log</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs &#123;pod-name&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="关闭-Minikube-cluster"><a href="#关闭-Minikube-cluster" class="headerlink" title="关闭 Minikube cluster"></a>关闭 Minikube cluster</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube stop</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/02/02/04_Golang-Microservices-Docker/" rel="next" title="Golang 微服务通信练习">
+                <i class="fa fa-chevron-left"></i> Golang 微服务通信练习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/03/31/07_node-mongodb-backend/" rel="prev" title="Nodejs Express MongoDB 学习笔记">
+                Nodejs Express MongoDB 学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Ella0110" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/ella-chunmeiwu/" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ellawu010@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-number">1.</span> <span class="nav-text">学习资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E8%AF%86-K8s"><span class="nav-number">2.</span> <span class="nav-text">初识 K8s</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes-%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.</span> <span class="nav-text">Kubernetes 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">解决什么问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E4%BE%9B%E4%BB%80%E4%B9%88%E8%83%BD%E5%8A%9B"><span class="nav-number">2.3.</span> <span class="nav-text">提供什么能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">2.4.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6-Components"><span class="nav-number">2.5.</span> <span class="nav-text">组件 Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-configuration-file"><span class="nav-number">2.6.</span> <span class="nav-text">创建 configuration file</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Minikube-and-Kubectl"><span class="nav-number">3.</span> <span class="nav-text">Minikube and Kubectl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">创建文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-minikube-%E8%BF%90%E8%A1%8C"><span class="nav-number">3.3.</span> <span class="nav-text">在 minikube 运行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-minikube"><span class="nav-number">3.3.1.</span> <span class="nav-text">启动 minikube</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C-yaml"><span class="nav-number">3.3.2.</span> <span class="nav-text">运行 yaml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-node%E2%80%99s-ip-address"><span class="nav-number">3.3.3.</span> <span class="nav-text">获取 node’s ip address</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-k8s-%E7%BB%84%E4%BB%B6%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">3.3.4.</span> <span class="nav-text">获取 k8s 组件基本信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%BB%84%E4%BB%B6%E9%A2%9D%E5%A4%96%E4%BF%A1%E6%81%AF"><span class="nav-number">3.3.5.</span> <span class="nav-text">获取组件额外信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%89%B9%E5%AE%9A%E7%BB%84%E4%BB%B6%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="nav-number">3.3.6.</span> <span class="nav-text">获取特定组件详细信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-log"><span class="nav-number">3.3.7.</span> <span class="nav-text">获取 log</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%97%AD-Minikube-cluster"><span class="nav-number">3.3.8.</span> <span class="nav-text">关闭 Minikube cluster</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ella</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

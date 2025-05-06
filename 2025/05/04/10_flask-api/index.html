@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习 flask 笔记，包含官方教程内容及重构时遇到的问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask 学习笔记">
+<meta property="og:url" content="https://ella0110.github.io/2025/05/04/10_flask-api/index.html">
+<meta property="og:site_name" content="Ella&#39;s Blog">
+<meta property="og:description" content="学习 flask 笔记，包含官方教程内容及重构时遇到的问题">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250505190552707.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250504150223091.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250504105351217.png">
+<meta property="article:published_time" content="2025-05-04T02:25:04.826Z">
+<meta property="article:modified_time" content="2025-05-06T04:41:10.413Z">
+<meta property="article:author" content="Ella">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ella0110.github.io/image/image-20250505190552707.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ella0110.github.io/2025/05/04/10_flask-api/"/>
+
+
+
+
+
+  <title>Flask 学习笔记 | Ella's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ella's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ella0110.github.io/2025/05/04/10_flask-api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ella's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Flask 学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-05-04T10:25:04+08:00">
+                2025-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习 flask 笔记，包含官方教程内容及重构时遇到的问题</p>
+<span id="more"></span>
+
+<h1 id="Create-a-REST-API-with-Flask-Mac-0-1"><a href="#Create-a-REST-API-with-Flask-Mac-0-1" class="headerlink" title="Create a REST API with Flask (Mac) (0 - 1)"></a>Create a REST API with Flask (Mac) (0 - 1)</h1><h2 id="安装与环境配置"><a href="#安装与环境配置" class="headerlink" title="安装与环境配置"></a>安装与环境配置</h2><p>Create a project folder and a <code>.venv</code> folder within:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">mkdir</span> flask-demo</span><br><span class="line">$ <span class="built_in">cd</span> flask-demo</span><br><span class="line">$ python3 -m venv .venv</span><br></pre></td></tr></table></figure>
+
+<p>Activate the corresponding environment</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ . .venv/bin/activate</span><br></pre></td></tr></table></figure>
+
+<p>Install Package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装flask</span></span><br><span class="line">$ pip install --trusted-host=pypi.org --trusted-host=files.pythonhosted.org flask</span><br><span class="line"><span class="comment"># 验证flask安装</span></span><br><span class="line">$ pip freeze</span><br><span class="line">Flask==3.1.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="示例-Demo"><a href="#示例-Demo" class="headerlink" title="示例 Demo"></a>示例 Demo</h2><p>Create a new file <code>app.py</code>, which is same level with <code>.venv</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># app.py</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&lt;p&gt;Hello world!&lt;/p&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Run the application, and open <code>http://127.0.0.1:5000/</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># the second app is the name of your application</span></span><br><span class="line">$ flask --app app run</span><br></pre></td></tr></table></figure>
+
+<p>Output requirement file</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip freeze &gt; requirement.txt</span><br></pre></td></tr></table></figure>
+
+<p>If you have a exist requirement.txt, and you want to install all the package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install -r requirement.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用内置-SQLite-Jinja-Flask-Python-写一个博客页面"><a href="#使用内置-SQLite-Jinja-Flask-Python-写一个博客页面" class="headerlink" title="使用内置 SQLite+Jinja+Flask+Python 写一个博客页面"></a>使用内置 SQLite+Jinja+Flask+Python 写一个博客页面</h2><p>项目结构：这里的项目比较小，只有内置数据库+html 实现，没有专门的前端</p>
+<img src="/image/image-20250505190552707.png" alt="image-20250505190552707" style="zoom:50%;" />
+
+<h3 id="步骤：详见官方-Flask-教程"><a href="#步骤：详见官方-Flask-教程" class="headerlink" title="步骤：详见官方 Flask 教程"></a>步骤：详见<a target="_blank" rel="noopener" href="https://flask.palletsprojects.com/zh-cn/stable/tutorial/">官方 Flask 教程</a></h3><h3 id="其他需要学习的点："><a href="#其他需要学习的点：" class="headerlink" title="其他需要学习的点："></a>其他需要学习的点：</h3><p>了解不同项目规模，不同项目结构</p>
+<p>了解 instance，config.py 使用</p>
+<p>了解不同数据库连接与使用，了解 ORM 在 flask 中的使用</p>
+<p>深刻理解 Blueprint</p>
+<p>了解前后端分离在 flask 中的使用，比如不用 Jinja，而使用 React</p>
+<p>思考优化代码，用户认证代码重构</p>
+<p>部署 docker 及其他 devops，了解 flask 应用常规部署方式</p>
+<p>了解 pytest</p>
+<h3 id="其他补充，详见：explore-flask-中译"><a href="#其他补充，详见：explore-flask-中译" class="headerlink" title="其他补充，详见：explore flask 中译"></a>其他补充，详见：<a target="_blank" rel="noopener" href="https://spacewander.github.io/explore-flask-zh/5-configuration.html">explore flask 中译</a></h3><h4 id="配置-Config"><a href="#配置-Config" class="headerlink" title="配置 Config"></a>配置 Config</h4><p>为了加载配置变量，我通常使用<code>app.config.from_object()</code>。如果是单一模块应用中，是在<em>app.py</em>；或者在<em>yourapp&#x2F;<strong>init</strong>.py</em>，如果是基于包的应用。无论在哪种情况下，代码看上去像这样：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config.from_object(<span class="string">&#x27;config&#x27;</span>)</span><br><span class="line"><span class="comment"># 现在通过 app.config[&quot;VAR_NAME&quot;]，我们可以访问到对应的变量</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="instance-文件夹"><a href="#instance-文件夹" class="headerlink" title="instance 文件夹"></a>instance 文件夹</h4><p>有时你需要定义一些不能为人所知的配置变量。为此，你会想要把它们从<em>config.py</em>中的其他变量分离出来，并保持在版本控制之外。你可能要隐藏类似数据库密码和 API 密钥的秘密，或定义特定于当前机器的参数。为了让这更加轻松，Flask 提供了一个叫<em>instance 文件夹</em>的特性。instance 文件夹是根目录的一个子文件夹，包括了一个特定于当前应用实例的配置文件。我们不要把它提交到版本控制中。</p>
+<p>这是一个使用了 instance 文件夹的简单 Flask 应用的结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">config.py</span><br><span class="line">requirements.txt</span><br><span class="line">run.py</span><br><span class="line">instance/</span><br><span class="line">  config.py</span><br><span class="line">yourapp/</span><br><span class="line">  __init__.py</span><br><span class="line">  models.py</span><br><span class="line">  views.py</span><br><span class="line">  templates/</span><br><span class="line">  static/</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用-instance-文件夹"><a href="#使用-instance-文件夹" class="headerlink" title="使用 instance 文件夹"></a>使用 instance 文件夹</h5><p>要想加载定义在 instance 文件夹中的配置变量，你可以使用<code>app.config.from_pyfile()</code>。如果在调用<code>Flask()</code>创建应用时设置了<code>instance_relative_config=True</code>，<code>app.config.from_pyfile()</code>将查看在<em>instance</em>文件夹的特殊文件。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app = Flask(__name__, instance_relative_config=<span class="literal">True</span>)</span><br><span class="line">app.config.from_object(<span class="string">&#x27;config&#x27;</span>)</span><br><span class="line">app.config.from_pyfile(<span class="string">&#x27;config.py&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>现在，你可以在<em>instance&#x2F;config.py</em>中定义变量，一如在<em>config.py</em>。你也应该将 instance 文件夹加入到版本控制系统的忽略名单中。比如假设你用的是 git，你需要在<em>gitignore</em>中新开一行，写下<code>instance/</code>。</p>
+<h4 id="密钥"><a href="#密钥" class="headerlink" title="密钥"></a>密钥</h4><p>instance 文件夹的隐秘属性使得它成为藏匿密钥的好地方。你可以在放入应用的密钥或第三方的 API 密钥。假如你的应用是开源的，或者将会是开源的，这会很重要。我们希望其他人去使用他们自己申请的密钥。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># instance/config.py</span></span><br><span class="line"></span><br><span class="line">SECRET_KEY = <span class="string">&#x27;Sm9obiBTY2hyb20ga2lja3MgYXNz&#x27;</span></span><br><span class="line">STRIPE_API_KEY = <span class="string">&#x27;SmFjb2IgS2FwbGFuLU1vc3MgaXMgYSBoZXJv&#x27;</span></span><br><span class="line">SQLALCHEMY_DATABASE_URI= \</span><br><span class="line"><span class="string">&quot;postgresql://user:TWljaGHFgiBCYXJ0b3N6a2lld2ljeiEh@localhost/databasename&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="最小化依赖于环境的配置"><a href="#最小化依赖于环境的配置" class="headerlink" title="最小化依赖于环境的配置"></a>最小化依赖于环境的配置</h4><p>如果你的生产环境和开发环境之间的差别非常小，你可以使用你的 instance 文件夹抹平配置上的差别。在<em>instance&#x2F;config.py</em>中定义的变量可以覆盖在<em>config.py</em>中设定的值。你只需要在<code>app.config.from_object()</code>之后才调用<code>app.config.from_pyfile()</code>。这样做的其中一个优点是你可以在不同的机器中修改你的应用的配置。你的开发版本库可能看上去像这样：</p>
+<p>config.py</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DEBUG = False</span><br><span class="line">SQLALCHEMY_ECHO = False</span><br></pre></td></tr></table></figure>
+
+<p>instance&#x2F;config.py</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DEBUG = True</span><br><span class="line">SQLALCHEMY_ECHO = True</span><br></pre></td></tr></table></figure>
+
+<p>然后在生产环境中，你将这些代码从<em>instance&#x2F;config.py</em>中移除，它就会改用回<em>config.py</em>中设定的变量。</p>
+<h4 id="依照环境变量来配置"><a href="#依照环境变量来配置" class="headerlink" title="依照环境变量来配置"></a>依照环境变量来配置</h4><p>instance 文件夹不应该在版本控制中。这意味这你将不能追踪你的 instance 配置。在只有一两个变量的情况下这不是什么问题，但如果你有关于多个环境（生产，稳定，开发，等等）的一大堆配置，你不会愿意冒失去它们的风险。</p>
+<p>Flask 给我们提供了根据环境变量选择一个配置文件的能力。这意味着我们可以在我们的版本库中有多个配置文件，并总是能根据具体环境，加载到对的那个。</p>
+<p>当我们到了有多个配置文件共存的境况，是时候把文件都移动到<code>config</code>包之下。下面是在这样的一个版本库中大致的样子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">requirements.txt</span><br><span class="line">run.py</span><br><span class="line">config/</span><br><span class="line">  __init__.py # 空的，只是用来告诉Python它是一个包。</span><br><span class="line">  default.py</span><br><span class="line">  production.py</span><br><span class="line">  development.py</span><br><span class="line">  staging.py</span><br><span class="line">instance/</span><br><span class="line">  config.py</span><br><span class="line">yourapp/</span><br><span class="line">  __init__.py</span><br><span class="line">  models.py</span><br><span class="line">  views.py</span><br><span class="line">  static/</span><br><span class="line">  templates/</span><br></pre></td></tr></table></figure>
+
+<p>在我们有一些不同的配置文件的情况下，可以这样设置：</p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>config&#x2F;default.py</td>
+<td>默认值，适用于所有的环境或交由具体环境进行覆盖。举个例子，在<em>config&#x2F;default.py</em>中设置<code>DEBUG = False</code>，在<em>config&#x2F;development.py</em>中设置<code>DEBUG = True</code>。</td>
+</tr>
+<tr>
+<td>config&#x2F;development.py</td>
+<td>在开发环境中用到的值。这里你可以设定在 localhost 中用到的数据库 URI 链接。</td>
+</tr>
+<tr>
+<td>config&#x2F;production.py</td>
+<td>在生产环境中用到的值。这里你可以设定数据库服务器的 URI 链接，而不是开发环境下的本地数据库 URI 链接。</td>
+</tr>
+<tr>
+<td>config&#x2F;staging.py</td>
+<td>在你的开发过程中，你可能需要在一个模拟生产环境的服务器上测试你的应用。你也许会使用不一样的数据库，想要为稳定版本的应用替换掉一些配置。</td>
+</tr>
+</tbody></table>
+<p>要在不同的环境中指定所需的变量，你可以调用<code>app.config.from_envvar()</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yourapp/__init__.py</span></span><br><span class="line"></span><br><span class="line">app = Flask(__name__, instance_relative_config=<span class="literal">True</span>)</span><br><span class="line">app.config.from_object(<span class="string">&#x27;config.default&#x27;</span>)</span><br><span class="line">app.config.from_pyfile(<span class="string">&#x27;config.py&#x27;</span>) <span class="comment"># 从 instance 文件夹中加载配置</span></span><br><span class="line">app.config.from_envvar(<span class="string">&#x27;APP_CONFIG_FILE&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>app.config.from_envvar(‘APP_CONFIG_FILE’)</code>将加载由环境变量<code>APP_CONFIG_FILE</code>指定的文件。这个环境变量的值应该是一个配置文件的绝对路径。</p>
+<p>这个环境变量的设定方式取决于你运行你的应用的平台。如果你是在一台标准的 Linux 服务器上运行，你可以使用一个 shell 脚本来设置环境变量并运行<code>run.py</code>。</p>
+<p>start.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">APP_CONFIG_FILE=/var/www/yourapp/config/production.py</span><br><span class="line">python run.py</span><br></pre></td></tr></table></figure>
+
+<p><em>start.sh</em>特定于某个环境，所以它也不能放入版本控制当中。如果你把应用托管到 Heroku，你可以用 Heroku 提供的工具设置环境变量参数。对于其他 PAAS 平台也是同样的处理。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>一个简单的应用也许仅需一个配置文件：<em>config.py</em></li>
+<li>instance 文件夹可以帮助我们隐藏不愿为人所知的配置变量。</li>
+<li>instance 文件夹可以用来改变特定环境下的程序配置。</li>
+<li>应对复杂的，基于环境的配置，我们可以结合环境变量和<code>app.config.from_envvar()</code>来使用。</li>
+</ul>
+<h2 id="使用-React-Flask-PostgreSQL-SQLAlchemy-Docker-写博客页面"><a href="#使用-React-Flask-PostgreSQL-SQLAlchemy-Docker-写博客页面" class="headerlink" title="使用 React+Flask+PostgreSQL+SQLAlchemy+Docker 写博客页面"></a>使用 React+Flask+PostgreSQL+SQLAlchemy+Docker 写博客页面</h2><blockquote>
+<p>待补充 …</p>
+</blockquote>
+<h2 id="Fundemental"><a href="#Fundemental" class="headerlink" title="Fundemental"></a>Fundemental</h2><h3 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h3><p>在链接中使用变量，可以在 URL 使用<code>&lt;variable_name&gt;</code>，变量前可以指定变量类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/post/&lt;int:post_id&gt;&#x27;</span></span>) </span><span class="comment">#这里的 int 可写可不写</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show_post</span>(<span class="params">post_id</span>):</span><br><span class="line">    <span class="comment"># show the post with the given id, the id is an integer</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;Post <span class="subst">&#123;post_id&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Unique-URLs-Redirection-Behavior"><a href="#Unique-URLs-Redirection-Behavior" class="headerlink" title="Unique URLs &#x2F; Redirection Behavior"></a>Unique URLs &#x2F; Redirection Behavior</h4><p>两种，</p>
+<p>项目 URL 可以是<code>/project/</code>，如果输入<code>/project</code>会重定向到<code>/project/</code></p>
+<p>端点 URL 是<code>/about</code>，如果输入<code>/about/</code>会报 404 错误</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/projects/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">projects</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;The project page&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/about&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">about</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;The about page&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="URL-Building"><a href="#URL-Building" class="headerlink" title="URL Building"></a><a target="_blank" rel="noopener" href="https://flask.palletsprojects.com/en/stable/quickstart/#url-building">URL Building</a></h4><p>示例：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, url_for, redirect, render_template_string</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;首页&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/login&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;登录页&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/go-login&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">go_login</span>():</span><br><span class="line">    <span class="comment"># 用 url_for 替代 &quot;/login&quot;</span></span><br><span class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;login&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user/&lt;int:uid&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">profile</span>(<span class="params">uid</span>):</span><br><span class="line">    <span class="comment"># 在视图里生成链接</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;&lt;a href=&quot;<span class="subst">&#123; url_for(<span class="string">&quot;index&quot;</span>) &#125;</span>&quot;&gt;回首页&lt;/a&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在模板里更常见：</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/tpl&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tpl</span>():</span><br><span class="line">    tpl_str = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    &lt;a href=&quot;&#123;&#123; url_for(&#x27;login&#x27;) &#125;&#125;&quot;&gt;去登录&lt;/a&gt;</span></span><br><span class="line"><span class="string">    &lt;a href=&quot;&#123;&#123; url_for(&#x27;profile&#x27;, uid=99) &#125;&#125;&quot;&gt;访问用户 99&lt;/a&gt;</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> render_template_string(tpl_str)</span><br></pre></td></tr></table></figure>
+
+<img src="/image/image-20250504150223091.png" alt="image-20250504150223091" style="zoom:50%;" />
+
+<p><strong>避免硬编码 URL</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 硬编码，路径一改全都要改 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/user/42/profile&quot;</span>&gt;</span>用户资料<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 动态生成，根据路由函数名和参数，路径变动时不需改模板 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123; url_for(&#x27;show_profile&#x27;, user_id=42) &#125;&#125;&quot;</span>&gt;</span>用户资料<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>集中管理路由</strong></p>
+<ul>
+<li>当你在 <code>@app.route(&#39;/u/&lt;int:user_id&gt;&#39;)</code> 改为 <code>@app.route(&#39;/member/&lt;int:user_id&gt;&#39;)</code>，只需改这处定义，所有使用 <code>url_for(&#39;show_profile&#39;, user_id=…)</code> 的链接自动跟着更新。</li>
+</ul>
+<p><strong>自动拼接查询参数 &amp; 处理斜杠</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url_for(<span class="string">&#x27;search&#x27;</span>, q=<span class="string">&#x27;Flask&#x27;</span>, page=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># 自动生成 &quot;/search?q=Flask&amp;page=2&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>省去手动拼接 <code>?q=…&amp;page=…</code> 的繁琐，且能正确 URL-encode。</li>
+</ul>
+<p><strong>支持蓝图 &amp; 多模块</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># blueprint user 注册时 name=&#x27;user&#x27;</span></span><br><span class="line"><span class="meta">@user.route(<span class="params"><span class="string">&#x27;/&lt;int:id&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">profile</span>(<span class="params"><span class="built_in">id</span></span>): ...</span><br><span class="line"><span class="comment"># 模板中</span></span><br><span class="line">url_for(<span class="string">&#x27;user.profile&#x27;</span>, <span class="built_in">id</span>=<span class="number">42</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>蓝图名 + 视图名自动拼接，不用自己去记 URL 层级。</li>
+</ul>
+<h4 id="HTTP-Method"><a href="#HTTP-Method" class="headerlink" title="HTTP Method"></a>HTTP Method</h4><p>两种</p>
+<p>一种使用 route() + method</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/login&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> do_the_login()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> show_the_login_form()</span><br></pre></td></tr></table></figure>
+
+<p>一种使用单独的 get(), post() 方法</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&#x27;/login&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_get</span>():</span><br><span class="line">    <span class="keyword">return</span> show_the_login_form()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&#x27;/login&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_post</span>():</span><br><span class="line">    <span class="keyword">return</span> do_the_login()</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，一个路由只响应 <code>GET</code> 请求。</p>
+<h3 id="其他详见：QuickStart"><a href="#其他详见：QuickStart" class="headerlink" title="其他详见：QuickStart"></a>其他详见：<a target="_blank" rel="noopener" href="https://flask.palletsprojects.com/zh-cn/stable/quickstart/">QuickStart</a></h3><h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><h3 id="问题一：terminal-输入pip3-install-Flask-报错"><a href="#问题一：terminal-输入pip3-install-Flask-报错" class="headerlink" title="问题一：terminal 输入pip3 install Flask 报错"></a>问题一：terminal 输入<code>pip3 install Flask</code> 报错</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">WARNING: Retrying (Retry(total=4, connect=None, <span class="built_in">read</span>=None, redirect=None, status=None)) after connection broken by <span class="string">&#x27;SSLError(SSLCertVerificationError(1, &#x27;</span>[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get <span class="built_in">local</span> issuer certificate (_ssl.c:1018)<span class="string">&#x27;))&#x27;</span>: /simple/flask/</span><br><span class="line">WARNING: Retrying (Retry(total=3, connect=None, <span class="built_in">read</span>=None, redirect=None, status=None)) after connection broken by <span class="string">&#x27;SSLError(SSLCertVerificationError(1, &#x27;</span>[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get <span class="built_in">local</span> issuer certificate (_ssl.c:1018)<span class="string">&#x27;))&#x27;</span>: /simple/flask/</span><br><span class="line">WARNING: Retrying (Retry(total=2, connect=None, <span class="built_in">read</span>=None, redirect=None, status=None)) after connection broken by <span class="string">&#x27;SSLError(SSLCertVerificationError(1, &#x27;</span>[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get <span class="built_in">local</span> issuer certificate (_ssl.c:1018)<span class="string">&#x27;))&#x27;</span>: /simple/flask/</span><br><span class="line">WARNING: Retrying (Retry(total=1, connect=None, <span class="built_in">read</span>=None, redirect=None, status=None)) after connection broken by <span class="string">&#x27;SSLError(SSLCertVerificationError(1, &#x27;</span>[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get <span class="built_in">local</span> issuer certificate (_ssl.c:1018)<span class="string">&#x27;))&#x27;</span>: /simple/flask/</span><br><span class="line">WARNING: Retrying (Retry(total=0, connect=None, <span class="built_in">read</span>=None, redirect=None, status=None)) after connection broken by <span class="string">&#x27;SSLError(SSLCertVerificationError(1, &#x27;</span>[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get <span class="built_in">local</span> issuer certificate (_ssl.c:1018)<span class="string">&#x27;))&#x27;</span>: /simple/flask/</span><br><span class="line">Could not fetch URL https://pypi.org/simple/flask/: There was a problem confirming the ssl certificate: HTTPSConnectionPool(host=<span class="string">&#x27;pypi.org&#x27;</span>, port=443): Max retries exceeded with url: /simple/flask/ (Caused by SSLError(SSLCertVerificationError(1, <span class="string">&#x27;[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1018)&#x27;</span>))) - skipping</span><br><span class="line">ERROR: Could not find a version that satisfies the requirement Flask (from versions: none)</span><br><span class="line">Could not fetch URL https://pypi.org/simple/pip/: There was a problem confirming the ssl certificate: HTTPSConnectionPool(host=<span class="string">&#x27;pypi.org&#x27;</span>, port=443): Max retries exceeded with url: /simple/pip/ (Caused by SSLError(SSLCertVerificationError(1, <span class="string">&#x27;[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1018)&#x27;</span>))) - skipping</span><br><span class="line">ERROR: No matching distribution found <span class="keyword">for</span> Flask</span><br></pre></td></tr></table></figure>
+
+<p><img src="/image/image-20250504105351217.png" alt="image-20250504105351217"></p>
+<p>解决：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新pip</span></span><br><span class="line">$ python -m pip install --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org --upgrade pip</span><br><span class="line"><span class="comment"># 安装flask</span></span><br><span class="line">$ pip install --trusted-host=pypi.org --trusted-host=files.pythonhosted.org flask</span><br></pre></td></tr></table></figure>
+
+<p>验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pip freeze</span><br><span class="line">Flask==3.1.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="问题二：Access-to-127-0-0-1-was-denied"><a href="#问题二：Access-to-127-0-0-1-was-denied" class="headerlink" title="问题二：Access to 127.0.0.1 was denied"></a>问题二：Access to 127.0.0.1 was denied</h3><p>解决：open <code>chrome://net-internals/#sockets</code>，click <code>[Flush socket pools]</code>, refresh your website.</p>
+<h3 id="问题三：运行-flask-–app-flaskr-run-–debug-时报错"><a href="#问题三：运行-flask-–app-flaskr-run-–debug-时报错" class="headerlink" title="问题三：运行 flask –app flaskr run –debug 时报错"></a>问题三：运行 flask –app flaskr run –debug 时报错</h3><p>Usage: flask run [OPTIONS] Try ‘flask run –help’ for help. Error: Failed to find Flask application or factory in module ‘flaskr’. Use ‘flaskr:name’ to specify one.</p>
+<p>解决：重开一个新项目，写好代码后重新跑，不再报错</p>
+<h3 id="问题四：运行-pytest，报错-ModuleNotFoundError-No-module-named"><a href="#问题四：运行-pytest，报错-ModuleNotFoundError-No-module-named" class="headerlink" title="问题四：运行 pytest，报错 ModuleNotFoundError: No module named"></a>问题四：运行 pytest，报错 ModuleNotFoundError: No module named</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ImportError <span class="keyword">while</span> loading conftest <span class="string">&#x27;/Users/ella/Documents/Code/Demo/flask-api/tests/conftest.py&#x27;</span>.</span><br><span class="line">tests/conftest.py:5: <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    from flaskr import create_app</span><br><span class="line">E   ModuleNotFoundError: No module named <span class="string">&#x27;flaskr&#x27;</span></span><br><span class="line">.venvella@ellas-MacBook-Pro flask-api %</span><br></pre></td></tr></table></figure>
+
+<p>解决：在 conftest.py 中添加下面代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment"># 把当前文件所在文件夹的父文件夹路径加入到 PYTHONPATH</span></span><br><span class="line">sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))</span><br></pre></td></tr></table></figure>
+
+<p>原因：在 cmd 或者 terminal 控制台中直接使用 python 相关命令来执行程序，不会自动将当前项目加入到 PYTHONPATH 环境变量下，如果涉及到 import 其他文件夹下的变量就会报类似 ImportError: No module named xxx 这样的错误。</p>
+<p><strong>解决方法</strong>是使用 sys.append() 命令把报警包的所在文件夹路径加入到 PYTHONPATH。详见：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hi3254014978/p/15202910.html">ModuleNotFoundError: No module named ‘xxx’可能的解决方案大全</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/04/25/09_React-note/" rel="next" title="React  TailWind CSS  Next.js 学习笔记">
+                <i class="fa fa-chevron-left"></i> React  TailWind CSS  Next.js 学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Ella0110" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/ella-chunmeiwu/" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ellawu010@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Create-a-REST-API-with-Flask-Mac-0-1"><span class="nav-number">1.</span> <span class="nav-text">Create a REST API with Flask (Mac) (0 - 1)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">安装与环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-Demo"><span class="nav-number">1.2.</span> <span class="nav-text">示例 Demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%AE-SQLite-Jinja-Flask-Python-%E5%86%99%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.3.</span> <span class="nav-text">使用内置 SQLite+Jinja+Flask+Python 写一个博客页面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%EF%BC%9A%E8%AF%A6%E8%A7%81%E5%AE%98%E6%96%B9-Flask-%E6%95%99%E7%A8%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">步骤：详见官方 Flask 教程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%9C%80%E8%A6%81%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%82%B9%EF%BC%9A"><span class="nav-number">1.3.2.</span> <span class="nav-text">其他需要学习的点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%A1%A5%E5%85%85%EF%BC%8C%E8%AF%A6%E8%A7%81%EF%BC%9Aexplore-flask-%E4%B8%AD%E8%AF%91"><span class="nav-number">1.3.3.</span> <span class="nav-text">其他补充，详见：explore flask 中译</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-Config"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">配置 Config</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#instance-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">instance 文件夹</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-instance-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.3.3.2.1.</span> <span class="nav-text">使用 instance 文件夹</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%86%E9%92%A5"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">密钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E5%8C%96%E4%BE%9D%E8%B5%96%E4%BA%8E%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">最小化依赖于环境的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%9D%E7%85%A7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%9D%A5%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.3.5.</span> <span class="nav-text">依照环境变量来配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.3.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-React-Flask-PostgreSQL-SQLAlchemy-Docker-%E5%86%99%E5%8D%9A%E5%AE%A2%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.4.</span> <span class="nav-text">使用 React+Flask+PostgreSQL+SQLAlchemy+Docker 写博客页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fundemental"><span class="nav-number">1.5.</span> <span class="nav-text">Fundemental</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Routing"><span class="nav-number">1.5.1.</span> <span class="nav-text">Routing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Unique-URLs-Redirection-Behavior"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">Unique URLs &#x2F; Redirection Behavior</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#URL-Building"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">URL Building</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-Method"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">HTTP Method</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%AF%A6%E8%A7%81%EF%BC%9AQuickStart"><span class="nav-number">1.5.2.</span> <span class="nav-text">其他详见：QuickStart</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%A5%E9%94%99"><span class="nav-number">1.6.</span> <span class="nav-text">报错</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9Aterminal-%E8%BE%93%E5%85%A5pip3-install-Flask-%E6%8A%A5%E9%94%99"><span class="nav-number">1.6.1.</span> <span class="nav-text">问题一：terminal 输入pip3 install Flask 报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9AAccess-to-127-0-0-1-was-denied"><span class="nav-number">1.6.2.</span> <span class="nav-text">问题二：Access to 127.0.0.1 was denied</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%89%EF%BC%9A%E8%BF%90%E8%A1%8C-flask-%E2%80%93app-flaskr-run-%E2%80%93debug-%E6%97%B6%E6%8A%A5%E9%94%99"><span class="nav-number">1.6.3.</span> <span class="nav-text">问题三：运行 flask –app flaskr run –debug 时报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%9B%9B%EF%BC%9A%E8%BF%90%E8%A1%8C-pytest%EF%BC%8C%E6%8A%A5%E9%94%99-ModuleNotFoundError-No-module-named"><span class="nav-number">1.6.4.</span> <span class="nav-text">问题四：运行 pytest，报错 ModuleNotFoundError: No module named</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ella</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
