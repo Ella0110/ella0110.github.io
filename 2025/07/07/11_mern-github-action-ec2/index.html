@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="按照帖子：Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions部署我的新项目及过程中遇到的问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions">
+<meta property="og:url" content="https://ella0110.github.io/2025/07/07/11_mern-github-action-ec2/index.html">
+<meta property="og:site_name" content="Ella&#39;s Blog">
+<meta property="og:description" content="按照帖子：Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions部署我的新项目及过程中遇到的问题">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20240330175542/0newArchitechture.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707110524333.png">
+<meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20240403235411/11MongoDb.png">
+<meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20240330154744/12MongoDb.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707110711615.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707110844905.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707111724897.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707113811566.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707114149496.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707114243626.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707114418869.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707114632558.png">
+<meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20240330202559/43.png">
+<meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20240330203808/44permissiondenied.png">
+<meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20240330203923/45dockerinstalled.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707115852362.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707120018844.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707120757970.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707122123858.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707122341134.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250707123249846.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250706231236611.png">
+<meta property="og:image" content="https://ella0110.github.io/image/image-20250706222411776.png">
+<meta property="article:published_time" content="2025-07-07T04:59:42.217Z">
+<meta property="article:modified_time" content="2025-07-07T05:03:03.991Z">
+<meta property="article:author" content="Ella">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20240330175542/0newArchitechture.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ella0110.github.io/2025/07/07/11_mern-github-action-ec2/"/>
+
+
+
+
+
+  <title>Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions | Ella's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ella's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ella0110.github.io/2025/07/07/11_mern-github-action-ec2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ella's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-07-07T12:59:42+08:00">
+                2025-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>按照帖子：<a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/devops/deploy-mern-stack-on-aws-ec2-with-docker-via-github-actions/">Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions</a>部署我的新项目及过程中遇到的问题</p>
+<span id="more"></span>
+
+<h1 id="Deploy-MERN-Stack-on-AWS-EC2-with-Docker-via-GitHub-Actions"><a href="#Deploy-MERN-Stack-on-AWS-EC2-with-Docker-via-GitHub-Actions" class="headerlink" title="Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions"></a><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/devops/deploy-mern-stack-on-aws-ec2-with-docker-via-github-actions/">Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions</a></h1><h2 id="如何部署"><a href="#如何部署" class="headerlink" title="如何部署"></a>如何部署</h2><p>将 MERN 项目的前端后端分别放在 github 两个仓库中，使用 github action，我们将分别为这两个存储库构建 Docker 镜像。这些镜像将被推送到 DockerHub 并保存在 DockerHub 上的两个不同的存储库中。在 AWS EC2 上，我们分别为前端后端配置 self-host runner。当我们的镜像推送到 dockerhub 后，runner 会自动拉取镜像并在 EC2 上运行。</p>
+<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240330175542/0newArchitechture.png" alt="Architechture"></p>
+<h2 id="Step1-在-DockerHub-创建-public-Respository"><a href="#Step1-在-DockerHub-创建-public-Respository" class="headerlink" title="Step1: 在 DockerHub 创建 public Respository"></a>Step1: 在 DockerHub 创建 public Respository</h2><p>登录到 dockerhub，如果是第一次注册需要记下账号和密码，这很重要；创建两个公共存储库，一个用于前端，另一个用于后端。</p>
+<p><img src="/image/image-20250707110524333.png" alt="image-20250707110524333"></p>
+<p>当我们在 GitHub 上为项目创建存储库时，我们必须将 DockerHub <strong>用户名</strong>和<strong>密码</strong>存储在 GitHub Secrets 中。</p>
+<h2 id="Step-2-允许访问-MongoDB-数据库"><a href="#Step-2-允许访问-MongoDB-数据库" class="headerlink" title="Step 2: 允许访问 MongoDB 数据库"></a>Step 2: 允许访问 MongoDB 数据库</h2><p>因为我的 MERN 项目使用的是 MongoDB Atlas，这允许我在线访问数据库，因此我需要配置从 Internet 上的任何位置访问 MongoDB。登录后，左侧导航栏 -&gt; Security -&gt; Network Access</p>
+<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240403235411/11MongoDb.png" alt="11MongoDb"></p>
+<p>现在，您将看到数据库的 IP 访问列表。如果您看到 IP“0.0.0.0&#x2F;0”，则可以从任何地方访问它。如果您看到任何其他 IP 地址，请删除该地址并输入给定的 IP 地址。</p>
+<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240330154744/12MongoDb.png" alt="MongoDB"></p>
+<h2 id="Step-3-推送代码到-Github-仓库并配置-GitHub-Secrets"><a href="#Step-3-推送代码到-Github-仓库并配置-GitHub-Secrets" class="headerlink" title="Step 3: 推送代码到 Github 仓库并配置 GitHub Secrets"></a>Step 3: 推送代码到 Github 仓库并配置 GitHub Secrets</h2><p>MERN 项目中应该有两个文件夹，一个前端，一个后端，分别连接创建好的 Github 仓库</p>
+<p><img src="/image/image-20250707110711615.png" alt="image-20250707110711615"></p>
+<p>为前端和后端创建两个不同的存储库，并将前端文件夹文件推送到前端 GitHub 存储库，将后端文件夹文件推送到项目的后端 GitHub 存储库。</p>
+<img src="/image/image-20250707110844905.png" alt="image-20250707110844905" style="zoom:50%;" />
+
+<p>新建两个仓库的<strong>GitHub Secrets</strong>：Setting -&gt; 左侧导航栏 -&gt; Security -&gt; secrets and variables -&gt; Action -&gt; New repository secrets</p>
+<p><img src="/image/image-20250707111724897.png" alt="image-20250707111724897"></p>
+<p><strong>GitHub Secrets 作用</strong>：在代码中对我们的用户名、密码和 API 进行硬编码不是好的做法。为了在生产环境中保护我们的凭证，GitHub 提供了添加密钥的功能。这些密钥可以是我们在开发时添加的“env”变量、连接密钥或我们的凭证。</p>
+<p>⚠️：这里两个仓库都需要添加 DockerHub 的用户名及密码，用于后面 Github Action push 和 pull 镜像。</p>
+<h2 id="Step-4-创建-EC2-实例"><a href="#Step-4-创建-EC2-实例" class="headerlink" title="Step 4: 创建 EC2 实例"></a>Step 4: 创建 EC2 实例</h2><p>因为我之前已经申请过 EC2，所以这一步不做赘述，第一次申请详见原贴 Step 4: <a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/devops/deploy-mern-stack-on-aws-ec2-with-docker-via-github-actions/">Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions</a>。</p>
+<p>这里需要额外补充的是：</p>
+<ol>
+<li><p>如果想要在本地登录到 EC2，需要新建 key-pair，点击创建会自动下载到电脑，复制保存到~&#x2F;.ssh&#x2F;文件夹</p>
+<p> 打开本地 terminal，输入<code>ssh -i ~/.ssh/kp-mac.pem ubuntu@your ipaddress </code>其中 kp-mac.pem 是下载的 key-pair</p>
+</li>
+<li><p>EC2 同一个实例可以跑很多不同的项目，只需要新建镜像，开不同的端口，最后用 Nginx 指定端口即可，这样可以节省很多额度。</p>
+</li>
+<li><p>新建端口：选中已有的 <strong>Instance -&gt; Security -&gt; Security groups -&gt; Inbound rules -&gt; Edit Inbound rules -&gt; Add rules</strong></p>
+<p> <img src="/image/image-20250707113811566.png" alt="image-20250707113811566"></p>
+</li>
+</ol>
+<h2 id="Step-5-在-EC2-实例上安装-Docker"><a href="#Step-5-在-EC2-实例上安装-Docker" class="headerlink" title="Step 5: 在 EC2 实例上安装 Docker"></a>Step 5: 在 EC2 实例上安装 Docker</h2><p>登录到 EC2，两种登录方式，一种是在线登录，一种本地登录</p>
+<h3 id="在线登录"><a href="#在线登录" class="headerlink" title="在线登录"></a>在线登录</h3><p>选中 Instance -&gt; Connect</p>
+<p><img src="/image/image-20250707114149496.png" alt="image-20250707114149496"></p>
+<p>选择“EC2 Instance Connect”，选择 ip，然后单击 Connect。</p>
+<p><img src="/image/image-20250707114243626.png" alt="image-20250707114243626"></p>
+<p>现在我们将看到一个 AWS 终端。</p>
+<img src="/image/image-20250707114418869.png" alt="image-20250707114418869" style="zoom:50%;" />
+
+<h3 id="本地登录"><a href="#本地登录" class="headerlink" title="本地登录"></a>本地登录</h3><p>本地终端输入：<code>ssh -i ~/.ssh/kp-mac.pem ubuntu@your_ip_address</code>，也会进入到 AWS 终端</p>
+<img src="/image/image-20250707114632558.png" alt="image-20250707114632558" style="zoom:50%;" />
+
+<h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>先验证 Docker 是否安装，附图是没有安装的结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 验证docker是否安装</span></span><br><span class="line"><span class="built_in">sudo</span> docker --version</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240330202559/43.png" alt="docker --version"></p>
+<p>如果没有安装，则按照下面命令安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br><span class="line"><span class="built_in">sudo</span> apt-get install docker.io -y</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"><span class="built_in">sudo</span> docker run hello-world</span><br><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>此时命令 docker ps 报错：permission denied，是因为我们没给他授权</p>
+<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240330203808/44permissiondenied.png" alt="docker ps"></p>
+<p>授权后 docker ps 命令就不再报错了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果上一行命令docker ps报错：permission denied，我们要给他授权</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> 666 /var/run/docker.sock</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> docker</span><br><span class="line">docker --version</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240330203923/45dockerinstalled.png" alt="Successfully installed Docker"></p>
+<p>现在，我们成功在 EC2 上安装 docker 并授权</p>
+<h2 id="Step-6-在-EC2-上创建-Self-Hosted-Runners"><a href="#Step-6-在-EC2-上创建-Self-Hosted-Runners" class="headerlink" title="Step 6: 在 EC2 上创建 Self-Hosted Runners"></a>Step 6: 在 EC2 上创建 Self-Hosted Runners</h2><p>‼️ 转到 Github 中，针对前端后端仓库分别创建 runner</p>
+<p><strong>github -&gt; bookhub_backend -&gt; Settings -&gt; Actions -&gt; Runners -&gt; New-self-hosted runner</strong></p>
+<p><img src="/image/image-20250707115852362.png" alt="image-20250707115852362"></p>
+<p>我们的 <a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/what-is-elastic-compute-cloud-ec2/">EC2 实例</a>是 Ubuntu，因此请为运行器映像选择“Linux”选项。然后你将看到用于创建运行程序的命令;逐个复制这些命令并在我们的 EC2 终端上运行。</p>
+<img src="/image/image-20250707120018844.png" alt="image-20250707120018844" style="zoom:50%;" />
+
+<p>需要注意的点：</p>
+<ol>
+<li>创建文件夹时需要<strong>sudo</strong></li>
+<li>add the name of the runner, “aws-ec2.”</li>
+<li>其他都默认配置</li>
+</ol>
+<p><strong>将自托管运行器配置为服务</strong>：要在终端中将 Runner 配置为服务，请运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ./svc.sh install</span><br><span class="line"><span class="built_in">sudo</span> ./svc.sh start</span><br><span class="line"><span class="comment"># sudo ./svc.sh stop 是停止的命令，后面重启runner会用到</span></span><br></pre></td></tr></table></figure>
+
+<p>重复上述步骤，分别为前端后端创建 runner，如果有疑问请详见原贴：Step 6: <a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/devops/deploy-mern-stack-on-aws-ec2-with-docker-via-github-actions/">Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions</a>。</p>
+<p><img src="/image/image-20250707120757970.png" alt="image-20250707120757970"></p>
+<h2 id="Step-7-为后端仓库创建-Dockerfile-和-CICD-工作流"><a href="#Step-7-为后端仓库创建-Dockerfile-和-CICD-工作流" class="headerlink" title="Step 7: 为后端仓库创建 Dockerfile 和 CICD 工作流"></a>Step 7: 为后端仓库创建 Dockerfile 和 CICD 工作流</h2><img src="/image/image-20250707122123858.png" alt="image-20250707122123858" style="zoom:50%;" />
+
+<p>我的项目后端是<strong>TypeScript</strong>，Node.js 本身只能识别<strong>JavaScript</strong>，直接 <code>node index.ts</code> 会报找不到模块或语法错误。要在容器里“运行”TypeScript，需要先用 tsc 编译，再跑编译结果</p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><h4 id="在项目根目录里加上-tsconfig-json"><a href="#在项目根目录里加上-tsconfig-json" class="headerlink" title="在项目根目录里加上 tsconfig.json"></a>在项目根目录里加上 <code>tsconfig.json</code></h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;outDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;target&quot;</span><span class="punctuation">:</span> <span class="string">&quot;es2016&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="string">&quot;commonjs&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;esModuleInterop&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;forceConsistentCasingInFileNames&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;strict&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;skipLibCheck&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-package-json："><a href="#修改-package-json：" class="headerlink" title="修改 package.json："></a>修改 <code>package.json</code>：</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx tsc&quot;</span><span class="punctuation">,</span> <span class="comment">// 生成/dist</span></span><br><span class="line">    <span class="attr">&quot;start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node ./dist/index.js&quot;</span><span class="punctuation">,</span> <span class="comment">// 跑 dist 文件夹中的 js 文件</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="项目根目录加上-dockerfile"><a href="#项目根目录加上-dockerfile" class="headerlink" title="项目根目录加上 dockerfile"></a>项目根目录加上 dockerfile</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">20</span>-alpine3.<span class="number">18</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /src</span></span><br><span class="line"><span class="comment"># 先复制并安装依赖（包含 devDependencies）</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package.json package-lock.json tsconfig.json ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install</span></span><br><span class="line"><span class="comment"># 拷入源码并编译</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build <span class="comment"># 之前没有编译，现在需要先build再运行</span></span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">5555</span></span><br><span class="line"><span class="comment"># 只运行编译后的 JS</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [ <span class="string">&quot;npm&quot;</span>, <span class="string">&quot;run&quot;</span>, <span class="string">&quot;start&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="创建工作流"><a href="#创建工作流" class="headerlink" title="创建工作流"></a>创建工作流</h4><p>现在在<code>backend</code>文件夹下创建一个<code>.github</code>文件夹。在<code>.github</code>文件夹中，创建<code>workflow</code>文件夹，并在此文件夹中创建文件<code>cicd.yml</code>。</p>
+<img src="/image/image-20250707122341134.png" alt="image-20250707122341134"  />
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cicd.yml</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">Your_GitHub_Repository_Name</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">    <span class="attr">push:</span></span><br><span class="line">        <span class="attr">branches:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">        <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">        <span class="attr">steps:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span> <span class="string">Source</span></span><br><span class="line">              <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Login</span> <span class="string">to</span> <span class="string">docker</span> <span class="string">hub</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">docker</span> <span class="string">login</span> <span class="string">-u</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DOCKER_USERNAME</span> <span class="string">&#125;&#125;</span> <span class="string">-p</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DOCKER_PASSWORD</span> <span class="string">&#125;&#125;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">Docker</span> <span class="string">Image</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-t</span> <span class="string">DockerHub_Username/Repository_Name</span>  <span class="string">.</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Publish</span> <span class="string">Image</span> <span class="string">to</span> <span class="string">docker</span> <span class="string">hub</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">docker</span> <span class="string">push</span> <span class="string">DockerHub_Username/Repository_Name:latest</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">        <span class="attr">needs:</span> <span class="string">build</span></span><br><span class="line">        <span class="attr">runs-on:</span> <span class="string">self-hosted</span></span><br><span class="line">        <span class="attr">steps:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Pull</span> <span class="string">image</span> <span class="string">from</span> <span class="string">docker</span> <span class="string">hub</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">sudo</span> <span class="string">docker</span> <span class="string">pull</span> <span class="string">DockerHub_Username/Repository_Name:latest</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Delete</span> <span class="string">old</span> <span class="string">container</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">sudo</span> <span class="string">docker</span> <span class="string">rm</span> <span class="string">-f</span> <span class="string">bookhub-backend-container</span></span><br><span class="line">            <span class="comment"># 这里与原贴不同，因为我有很多环境变量因此我创建了一个 env 文件，在 docker run 时用--env-file 导入，可以减少工作量</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Generate</span> <span class="string">.env</span> <span class="string">file</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">                  cat &lt;&lt;EOF &gt; .env</span></span><br><span class="line"><span class="string">                  DATABASE_PASSWORD=$&#123;&#123; secrets.DATABASE_PASSWORD &#125;&#125;</span></span><br><span class="line"><span class="string">                  JWT_COOKIE_EXPIRES_IN=$&#123;&#123; secrets.JWT_COOKIE_EXPIRES_IN &#125;&#125;</span></span><br><span class="line"><span class="string">                  JWT_EXPIRES_IN=$&#123;&#123; secrets.JWT_EXPIRES_IN &#125;&#125;</span></span><br><span class="line"><span class="string">                  JWT_SECRET=$&#123;&#123; secrets.JWT_SECRET &#125;&#125;</span></span><br><span class="line"><span class="string">                  MONGO_CONNECTION_STRING=$&#123;&#123; secrets.MONGO_CONNECTION_STRING &#125;&#125;</span></span><br><span class="line"><span class="string">                  FRONTEND_URL=$&#123;&#123; secrets.FRONTEND_URL &#125;&#125;</span></span><br><span class="line"><span class="string">                  EOF</span></span><br><span class="line"><span class="string"></span>            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Run</span> <span class="string">Docker</span> <span class="string">Container</span></span><br><span class="line">              <span class="comment"># 下面的5555:3001 很重要，这里的 5555 是我在 EC2 上为后端指定的端口，3001 是我在代码中指定的端口，这里可以在代码中传入 5555，也可以按照我下面这样进行映射</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">sudo</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-d</span> <span class="string">-p</span> <span class="number">5555</span><span class="string">:3001</span> <span class="string">--name</span> <span class="string">bookhub-backend-container</span> <span class="string">--env-file</span> <span class="string">.env</span> <span class="string">DockerHub_Username/Repository_Name</span></span><br></pre></td></tr></table></figure>
+
+<p>完成以上配置后，推送代码到 github，github action 会自动构建和部署，成功完成这些步骤后，我们的后端应用程序会部署到 AWS EC2</p>
+<img src="/image/image-20250707123249846.png" alt="image-20250707123249846" style="zoom:50%;" />
+
+<h4 id="验证部署"><a href="#验证部署" class="headerlink" title="验证部署"></a>验证部署</h4><p>验证 cicd 是否正常，ssh 到 ec2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker ps <span class="comment"># 看所有跑起来的docker进程</span></span><br><span class="line"><span class="built_in">sudo</span> docker logs bookhub-frontend-container <span class="comment"># 看log</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker images       <span class="comment"># 列出所有镜像</span></span><br><span class="line"><span class="built_in">sudo</span> docker rmi &lt;image&gt;  <span class="comment"># 删除不需要的镜像</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker ps -a        <span class="comment"># 列出所有容器</span></span><br><span class="line"><span class="built_in">sudo</span> docker <span class="built_in">rm</span> &lt;container&gt;  <span class="comment"># 删除不需要的容器</span></span><br></pre></td></tr></table></figure>
+
+<p>打开后端链接：http:&#x2F;&#x2F;<Your-EC2-Public-IP>:<Allocated-Port-Number>，按照你自己定义的 api 进行验证</p>
+<p>当然，一次性部署成功是小概率的，可能遇到各种各样的问题，需要根据报错信息逐步定位，下面是我部署过程中遇到的问题</p>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><ol>
+<li><p>本地 docker build 报错</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">docker build -t ella0110/bookhub_backend  .</span><br><span class="line">[+] Building 31.4s (3/3) FINISHED                                                                                                 docker:desktop-linux</span><br><span class="line"> =&gt; [internal] load build definition from Dockerfile                                                                                              0.1s</span><br><span class="line"> =&gt; =&gt; transferring dockerfile: 195B                                                                                                              0.0s</span><br><span class="line"> =&gt; ERROR [internal] load metadata <span class="keyword">for</span> docker.io/library/node:alpine3.18                                                                         31.1s</span><br><span class="line"> =&gt; [auth] library/node:pull token <span class="keyword">for</span> registry-1.docker.io                                                                                       0.0s</span><br><span class="line">------</span><br><span class="line"> &gt; [internal] load metadata <span class="keyword">for</span> docker.io/library/node:alpine3.18:</span><br><span class="line">------</span><br><span class="line">Dockerfile:1</span><br><span class="line">--------------------</span><br><span class="line">   1 | &gt;&gt;&gt; FROM node:alpine3.18</span><br><span class="line">   2 |     WORKDIR /src</span><br><span class="line">   3 |     COPY package.json ./</span><br><span class="line">--------------------</span><br><span class="line">ERROR: failed to solve: DeadlineExceeded: DeadlineExceeded: DeadlineExceeded: node:alpine3.18: failed to resolve <span class="built_in">source</span> metadata <span class="keyword">for</span> docker.io/library/node:alpine3.18: failed to authorize: DeadlineExceeded: failed to fetch oauth token: Post <span class="string">&quot;https://auth.docker.io/token&quot;</span>: dial tcp 103.97.3.19:443: i/o <span class="built_in">timeout</span></span><br></pre></td></tr></table></figure>
+
+<p> 原因：Docker daemon 在拉取 <code>node:alpine3.18</code> 镜像时，连不上 Docker Hub 的 Registry &#x2F; Auth 服务，网络请求超时</p>
+<p> 解决：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43674552/article/details/146014899">ERROR: failed to solve: node:18-alpine 解决办法</a>，先 pull 再 build</p>
+</li>
+<li><p>github action deploy 报错：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">permission denied <span class="keyword">while</span> trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post <span class="string">&quot;http://%2Fvar%2Frun%2Fdocker.sock/v1.47/images/create?fromImage=ella0110%2Fbookhub_frontend&amp;tag=latest&quot;</span>: dial unix /var/run/docker.sock: connect: permission denied</span><br></pre></td></tr></table></figure>
+
+<p> 原因：docker 没有 sudo 权限，赋予权限，然后重启 runner</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 把 ubuntu 加到 docker 组</span><br><span class="line">sudo usermod -aG docker ubuntu</span><br><span class="line">cd /home/ubuntu/actions-runner-backend/</span><br><span class="line">sudo ./svc.sh stop</span><br><span class="line">sudo ./svc.sh start</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证 cicd 是否正常，ssh 到 ec2</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps # 看所有跑起来的 docker 进程</span><br><span class="line">sudo docker logs bookhub-frontend-container # 看 log</span><br><span class="line"></span><br><span class="line">sudo docker images       # 列出所有镜像</span><br><span class="line">sudo docker rmi &lt;image&gt;  # 删除不需要的镜像</span><br><span class="line"></span><br><span class="line">sudo docker ps -a        # 列出所有容器</span><br><span class="line">sudo docker rm &lt;container&gt;  # 删除不需要的容器</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>看 log 的报错：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sudo docker logs bookhub-backend-container</span><br><span class="line"></span><br><span class="line">&gt; backend@1.0.0 start</span><br><span class="line">&gt; node index.js</span><br><span class="line"></span><br><span class="line">node:internal/modules/cjs/loader:1189</span><br><span class="line">  throw err;</span><br><span class="line">  ^</span><br><span class="line"></span><br><span class="line">Error: Cannot find module &#x27;/src/index.js&#x27;</span><br><span class="line">    at Module._resolveFilename (node:internal/modules/cjs/loader:1186:15)</span><br><span class="line">    at Module._load (node:internal/modules/cjs/loader:1012:27)</span><br><span class="line">    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:158:12)</span><br><span class="line">    at node:internal/main/run_main_module:30:49 &#123;</span><br><span class="line">  code: &#x27;MODULE_NOT_FOUND&#x27;,</span><br><span class="line">  requireStack: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 这里的 index.js 修改了很多版，包括：把 index.ts 移到根目录下&#x2F;修改 package.json 为<code>&quot;start&quot;: &quot;node src/index.js&quot;</code>等</p>
+<p> 根本原因是：我的代码是 typescript 写的，但这里跑的是 js 的主入口，我指定的是 src 下的 ts 文件，需要增加 dist 编译步骤</p>
+</li>
+<li><p>Github Action 多个环境变量注入</p>
+<p> 使用 <code>--env-file</code>，可以在工作目录里动态生成一个 <code>.env</code>，然后让 Docker 一次性加载：</p>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Generate</span> <span class="string">.env</span> <span class="string">file</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">      cat &lt;&lt;EOF &gt; .env</span></span><br><span class="line"><span class="string">      MONGO_PASSWORD=$&#123;&#123; secrets.MONGO_PASSWORD &#125;&#125;</span></span><br><span class="line"><span class="string">      DB_USER=$&#123;&#123; secrets.DB_USER &#125;&#125;</span></span><br><span class="line"><span class="string">      DB_PASS=$&#123;&#123; secrets.DB_PASS &#125;&#125;</span></span><br><span class="line"><span class="string">      API_KEY=$&#123;&#123; secrets.API_KEY &#125;&#125;</span></span><br><span class="line"><span class="string">      EOF</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Run</span> <span class="string">container</span> <span class="string">with</span> <span class="string">env-file</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">      sudo docker run -d \</span></span><br><span class="line"><span class="string">        --name bookhub-backend-container \</span></span><br><span class="line"><span class="string">        -p 5555:5555 \</span></span><br><span class="line"><span class="string">        --env-file .env \</span></span><br><span class="line"><span class="string">        ella0110/bookhub_backend:latest</span></span><br></pre></td></tr></table></figure>
+
+<p> <code>.env</code> 文件就像本地开发时的那样，变量多了也很整洁。、</p>
+</li>
+<li><p>我的 mern 后端中，index 指定端口为 3001，但是 aws ec2 我开了两个 inbound 端口，分别为前端和后端，后端是 5555，现在我 docker 在 ec2 中正常跑起来了，我想测试后端，但是在浏览器输入<code>http://&lt;Your-EC2-Public-IP&gt;:5555/api/hotels/</code>显示<code>This page isn’t working&lt;Your-EC2-Public-IP&gt; is currently unable to handle this request. HTTP ERROR 502</code></p>
+<p> 原因：在 cicd.yml 中，写的是<code>sudo docker run -d -p 5555:5555 … ella0110/bookhub_backend</code>，同时也没有向里传入 PORT 环境变量，这相当于把宿主机的 5555 转到容器的 5555，可是容器里根本没服务在 5555 上，于是请求转发失败，Nginx／Docker proxy 拿不到后端返回，就返回了 502。</p>
+<p> 解决 1：把宿主的 5555 映射到容器的 3001</p>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">sudo</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-d</span> <span class="string">\</span></span><br><span class="line"><span class="string">-p</span> <span class="number">5555</span><span class="string">:3001</span> <span class="string">\</span></span><br><span class="line"><span class="string">--name</span> <span class="string">bookhub-backend-container</span> <span class="string">\</span></span><br><span class="line"><span class="string">-e</span> <span class="string">MONGO_PASSWORD=&#x27;你的</span> <span class="string">Mongo</span> <span class="string">密码&#x27;</span> <span class="string">\</span></span><br><span class="line"><span class="string">ella0110/bookhub_backend:latest</span></span><br></pre></td></tr></table></figure>
+
+<p> 解决 2：传入 PORT&#x3D;5555</p>
+</li>
+</ol>
+<h2 id="Step-8-部署前端，写-dockerfile-cicd-yml，步骤同后端"><a href="#Step-8-部署前端，写-dockerfile-cicd-yml，步骤同后端" class="headerlink" title="Step 8: 部署前端，写 dockerfile, cicd.yml，步骤同后端"></a>Step 8: 部署前端，写 dockerfile, cicd.yml，步骤同后端</h2><p>但有一些区别，前端的静态文件在 build 阶段就已经确定了，所以不能将 github secrets 在 docker run 时传入，需要提前导入</p>
+<h3 id="部署-1"><a href="#部署-1" class="headerlink" title="部署"></a>部署</h3><h4 id="dockerfile"><a href="#dockerfile" class="headerlink" title="dockerfile"></a>dockerfile</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:alpine3.<span class="number">18</span> as build</span><br><span class="line"><span class="comment"># Build App</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package.json .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 声明两个 build-arg</span></span><br><span class="line"><span class="keyword">ARG</span> VITE_API_BASE_URL</span><br><span class="line"><span class="keyword">ARG</span> VITE_STRIPE_PUB_KEY</span><br><span class="line"><span class="comment"># 然后设置成环境变量，Vite build 时就会替换</span></span><br><span class="line"><span class="keyword">ENV</span> VITE_API_BASE_URL=$&#123;VITE_API_BASE_URL&#125;</span><br><span class="line"><span class="keyword">ENV</span> VITE_STRIPE_PUB_KEY=$&#123;VITE_STRIPE_PUB_KEY&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Serve with Nginx</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.23</span>-alpine</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /usr/share/nginx/html</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">rm</span> -rf *</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=build /app/dist .</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [ <span class="string">&quot;nginx&quot;</span>, <span class="string">&quot;-g&quot;</span>, <span class="string">&quot;daemon off;&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Cicd-yml"><a href="#Cicd-yml" class="headerlink" title="Cicd.yml"></a>Cicd.yml</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">bookhub-frontend</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">    <span class="attr">push:</span></span><br><span class="line">        <span class="attr">branches:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">        <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">        <span class="attr">steps:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span> <span class="string">Source</span></span><br><span class="line">              <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Login</span> <span class="string">to</span> <span class="string">docker</span> <span class="string">hub</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">docker</span> <span class="string">login</span> <span class="string">-u</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DOCKER_USERNAME</span> <span class="string">&#125;&#125;</span> <span class="string">-p</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DOCKER_PASSWORD</span> <span class="string">&#125;&#125;</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">Docker</span> <span class="string">Image</span></span><br><span class="line">              <span class="comment"># 在 dockerfile 中定义的 build-arg 在这里导入</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">--build-arg</span> <span class="string">VITE_API_BASE_URL=&quot;$&#123;&#123;</span> <span class="string">secrets.VITE_API_BASE_URL</span> <span class="string">&#125;&#125;&quot;</span> <span class="string">--build-arg</span> <span class="string">VITE_STRIPE_PUB_KEY=&quot;$&#123;&#123;</span> <span class="string">secrets.VITE_STRIPE_PUB_KEY</span> <span class="string">&#125;&#125;&quot;</span> <span class="string">-t</span> <span class="string">DockerHub_Username/Repository_Name</span>  <span class="string">.</span></span><br><span class="line"></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Publish</span> <span class="string">Image</span> <span class="string">to</span> <span class="string">docker</span> <span class="string">hub</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">docker</span> <span class="string">push</span> <span class="string">DockerHub_Username/Repository_Name:latest</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">        <span class="attr">needs:</span> <span class="string">build</span></span><br><span class="line">        <span class="attr">runs-on:</span> <span class="string">self-hosted</span></span><br><span class="line">        <span class="attr">steps:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Pull</span> <span class="string">image</span> <span class="string">from</span> <span class="string">docker</span> <span class="string">hub</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">docker</span> <span class="string">pull</span> <span class="string">DockerHub_Username/Repository_Name:latest</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Delete</span> <span class="string">old</span> <span class="string">container</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">docker</span> <span class="string">rm</span> <span class="string">-f</span> <span class="string">bookhub-frontend-container</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Run</span> <span class="string">Docker</span> <span class="string">Container</span></span><br><span class="line">              <span class="attr">run:</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-d</span> <span class="string">-p</span> <span class="number">5173</span><span class="string">:80</span> <span class="string">--name</span> <span class="string">bookhub-frontend-container</span> <span class="string">DockerHub_Username/Repository_Name</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="遇到的问题："><a href="#遇到的问题：" class="headerlink" title="遇到的问题："></a>遇到的问题：</h3><ol>
+<li><p>github action deploy 报错：permission denied while trying to connect to the Docker daemon socket</p>
+<p> 原因：docker 没有 sudo 权限，赋予权限，然后重启 runner</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把 ubuntu 加到 docker 组</span></span><br><span class="line"><span class="built_in">sudo</span> usermod -aG docker ubuntu</span><br><span class="line"><span class="comment"># 重启 runner</span></span><br><span class="line"><span class="built_in">cd</span> /home/ubuntu/actions-runner-frontend/</span><br><span class="line"><span class="built_in">sudo</span> ./svc.sh stop</span><br><span class="line"><span class="built_in">sudo</span> ./svc.sh start</span><br></pre></td></tr></table></figure>
+
+<p> 另外，这里给 ubuntu 赋权限是因为，<code>ps aux | grep runsvc.sh</code>，最左边的就是用户组</p>
+<p> <img src="/image/image-20250706231236611.png" alt="image-20250706231236611"></p>
+</li>
+<li><p>前端展示出来了，但是没有图片，后端连接失败，console 中显示报错：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">index-CMKHi_ND.js:42</span><br><span class="line">GET http://&lt;Your-EC2-Public-IP&gt;:5173/api/hotels 404 (Not Found),</span><br></pre></td></tr></table></figure>
+
+<p> 原因：github action 环境变量原来的写法在 docker run 是才导入，但是前端静态文件的编译在 docker build 阶段就已经确定了，所以要把环境变量提前到 docker build 阶段</p>
+ <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dockerfile</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收外部参数，并设为环境变量，Vite 会在 build 时替换</span></span><br><span class="line"><span class="keyword">ARG</span> VITE_API_BASE_URL</span><br><span class="line"><span class="keyword">ENV</span> VITE_API_BASE_URL=$VITE_API_BASE_URL</span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cicd.yml</span></span><br><span class="line"></span><br><span class="line"><span class="string">docker</span> <span class="string">build</span> <span class="string">--build-arg</span> <span class="string">VITE_API_BASE_URL=&quot;$&#123;&#123;</span> <span class="string">secrets.VITE_API_BASE_URL</span> <span class="string">&#125;&#125;&quot;</span> <span class="string">--build-arg</span> <span class="string">VITE_STRIPE_PUB_KEY=&quot;$&#123;&#123;</span> <span class="string">secrets.VITE_STRIPE_PUB_KEY</span> <span class="string">&#125;&#125;&quot;</span> <span class="string">-t</span> <span class="string">ella0110/bookhub_frontend</span>  <span class="string">.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>跨域请求报错：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access to fetch at <span class="string">&#x27;http://&lt;Your-EC2-Public-IP&gt;:5555/api/hotels&#x27;</span> from origin <span class="string">&#x27;http://&lt;Your-EC2-Public-IP&gt;:5173&#x27;</span> has been blocked by CORS policy: No <span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span> header is present on the requested resource.</span><br></pre></td></tr></table></figure>
+
+<p> 原因：在后端没有配置前端的跨域 url，在后端的 github action 新增变量：FRONTEND_URL 指向前端链接及端口</p>
+ <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">    <span class="title function_">cors</span>(&#123;</span><br><span class="line">        <span class="comment">// 让我们的服务器只接收这个链接的请求，并且这个 URL 必须携带 credentials，也就是要有 cookies</span></span><br><span class="line">        <span class="attr">origin</span>: process.<span class="property">env</span>.<span class="property">FRONTEND_URL</span>,</span><br><span class="line">        <span class="attr">credentials</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="域名解析及-Nginx-反向代理"><a href="#域名解析及-Nginx-反向代理" class="headerlink" title="域名解析及 Nginx 反向代理"></a>域名解析及 Nginx 反向代理</h2><ol>
+<li><p>我有一个域名 trillobe.com，我想把 bookhub.trillobe.com 映射到 http:&#x2F;&#x2F;<Your-EC2-Public-IP>:5173&#x2F;，但我现在已经有一个 api.trillobe.com 映射到 http:&#x2F;&#x2F;<Your-EC2-Public-IP>了，我该怎么办</p>
+<p> 解决：DNS 只能把域名指向 IP，<strong>不能</strong>指定端口。增加 A 记录</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">主机记录	类型	记录值	说明</span><br><span class="line">bookhub	A	&lt;Your-EC2-Public-IP&gt;	bookhub.trillobe.com 指向前端服务器</span><br><span class="line">api.bookhub	A	&lt;Your-EC2-Public-IP&gt;	api.bookhub.trillobe.com 指向后端服务器</span><br></pre></td></tr></table></figure>
+
+<p> 此时 bookhub.trillobe.com 和 api.bookhub.trillobe.com 打开应该显示这个界面（因为之前我的 ec2 已经安装过 nginx 了，如果还没安装需要安装后才会显示下面的界面。另外还没配证书所以还是 http 的，显示 Not Secure）</p>
+<p> <img src="/image/image-20250706222411776.png" alt="image-20250706222411776"></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/05/04/10_flask-api/" rel="next" title="Create a REST API with Flask (0 - 1)">
+                <i class="fa fa-chevron-left"></i> Create a REST API with Flask (0 - 1)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Ella0110" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/ella-chunmeiwu/" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ellawu010@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Deploy-MERN-Stack-on-AWS-EC2-with-Docker-via-GitHub-Actions"><span class="nav-number">1.</span> <span class="nav-text">Deploy MERN Stack on AWS EC2 with Docker via GitHub Actions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2"><span class="nav-number">1.1.</span> <span class="nav-text">如何部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step1-%E5%9C%A8-DockerHub-%E5%88%9B%E5%BB%BA-public-Respository"><span class="nav-number">1.2.</span> <span class="nav-text">Step1: 在 DockerHub 创建 public Respository</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2-%E5%85%81%E8%AE%B8%E8%AE%BF%E9%97%AE-MongoDB-%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.3.</span> <span class="nav-text">Step 2: 允许访问 MongoDB 数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3-%E6%8E%A8%E9%80%81%E4%BB%A3%E7%A0%81%E5%88%B0-Github-%E4%BB%93%E5%BA%93%E5%B9%B6%E9%85%8D%E7%BD%AE-GitHub-Secrets"><span class="nav-number">1.4.</span> <span class="nav-text">Step 3: 推送代码到 Github 仓库并配置 GitHub Secrets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4-%E5%88%9B%E5%BB%BA-EC2-%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">Step 4: 创建 EC2 实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-5-%E5%9C%A8-EC2-%E5%AE%9E%E4%BE%8B%E4%B8%8A%E5%AE%89%E8%A3%85-Docker"><span class="nav-number">1.6.</span> <span class="nav-text">Step 5: 在 EC2 实例上安装 Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E7%99%BB%E5%BD%95"><span class="nav-number">1.6.1.</span> <span class="nav-text">在线登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E7%99%BB%E5%BD%95"><span class="nav-number">1.6.2.</span> <span class="nav-text">本地登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Docker"><span class="nav-number">1.6.3.</span> <span class="nav-text">安装 Docker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-6-%E5%9C%A8-EC2-%E4%B8%8A%E5%88%9B%E5%BB%BA-Self-Hosted-Runners"><span class="nav-number">1.7.</span> <span class="nav-text">Step 6: 在 EC2 上创建 Self-Hosted Runners</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-7-%E4%B8%BA%E5%90%8E%E7%AB%AF%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA-Dockerfile-%E5%92%8C-CICD-%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.8.</span> <span class="nav-text">Step 7: 为后端仓库创建 Dockerfile 和 CICD 工作流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-number">1.8.1.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E6%A0%B9%E7%9B%AE%E5%BD%95%E9%87%8C%E5%8A%A0%E4%B8%8A-tsconfig-json"><span class="nav-number">1.8.1.1.</span> <span class="nav-text">在项目根目录里加上 tsconfig.json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-package-json%EF%BC%9A"><span class="nav-number">1.8.1.2.</span> <span class="nav-text">修改 package.json：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%A0%B9%E7%9B%AE%E5%BD%95%E5%8A%A0%E4%B8%8A-dockerfile"><span class="nav-number">1.8.1.3.</span> <span class="nav-text">项目根目录加上 dockerfile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.8.1.4.</span> <span class="nav-text">创建工作流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E9%83%A8%E7%BD%B2"><span class="nav-number">1.8.1.5.</span> <span class="nav-text">验证部署</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.8.2.</span> <span class="nav-text">遇到的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-8-%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%EF%BC%8C%E5%86%99-dockerfile-cicd-yml%EF%BC%8C%E6%AD%A5%E9%AA%A4%E5%90%8C%E5%90%8E%E7%AB%AF"><span class="nav-number">1.9.</span> <span class="nav-text">Step 8: 部署前端，写 dockerfile, cicd.yml，步骤同后端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-1"><span class="nav-number">1.9.1.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dockerfile"><span class="nav-number">1.9.1.1.</span> <span class="nav-text">dockerfile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cicd-yml"><span class="nav-number">1.9.1.2.</span> <span class="nav-text">Cicd.yml</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">1.9.2.</span> <span class="nav-text">遇到的问题：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E5%8F%8A-Nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">1.10.</span> <span class="nav-text">域名解析及 Nginx 反向代理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ella</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
